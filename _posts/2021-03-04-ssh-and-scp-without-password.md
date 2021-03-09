@@ -10,7 +10,7 @@ tags:
   - sftp
 ---
 
-<img src="/assets/img/sadm_ssh.jpg" class="align-left" alt="">  
+<img src="assets/img/sadm_ssh.jpg" class="align-left" alt="">  
 Image by <a href="https://pixabay.com/photos/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=731198">Free-Photos</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=731198">Pixabay</a>
 <br>
 <p>
