@@ -1,0 +1,1862 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/atom.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-03-02T21:09:17-05:00</updated><id>/atom.xml</id><title type="html">LINternUX</title><subtitle>Tips &amp; Tricks for SysAdmin</subtitle><author><name>Jacques Duplessis</name><email>linternux@gmail.com</email></author><entry><title type="html">Linux Administration Book for Free</title><link href="/general/linux-administration-book-for-free/" rel="alternate" type="text/html" title="Linux Administration Book for Free" /><published>2021-03-02T14:40:52-05:00</published><updated>2021-03-02T14:40:52-05:00</updated><id>/general/linux-administration-book-for-free</id><content type="html" xml:base="/general/linux-administration-book-for-free/">&lt;p&gt;A short post to advise you that you can download for free the “&lt;a href=&quot;http://www.linuxinsight.com/files/fta-m2-admin_gnulinux-v1.pdf&quot; title=&quot;Download PDF&quot;&gt;GNU/Linux Advanced Administration&lt;/a&gt;” book in PDF forrmat this &lt;a href=&quot;http://www.linuxinsight.com/gnu-linux-advanced-administration.html&quot;&gt;page&lt;/a&gt;, or &lt;a href=&quot;http://linternux.com/download/pdf/fta-m2-admin_gnulinux-v1.pdf&quot; title=&quot;Download from this site&quot;&gt;from this site&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://linuxcommand.org/tlcl.php&quot;&gt;The Linux Command Line&lt;/a&gt;
+&lt;a href=&quot;https://git-scm.com/book/en/v2&quot;&gt;Pro Git&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;See you soon !&lt;/p&gt;</content><author><name>Jacques Duplessis</name><email>linternux@gmail.com</email></author><category term="general" /><category term="sysadmin" /><summary type="html">A short post to advise you that you can download for free the “GNU/Linux Advanced Administration” book in PDF forrmat this page, or from this site.</summary></entry><entry><title type="html">Making Date Calculation</title><link href="/scripting/making-date-calculation/" rel="alternate" type="text/html" title="Making Date Calculation" /><published>2021-02-28T05:03:03-05:00</published><updated>2021-02-28T05:03:03-05:00</updated><id>/scripting/making-date-calculation</id><content type="html" xml:base="/scripting/making-date-calculation/">&lt;p&gt;You’re doing a script and you need to know what was the date 35 days ago or what will the date be in 21 days. This is where  the “date” command can help you doing that kind of calculation. In this little article we will present some examples to help us making some data calculation. I would like to point out, that all of these date calculation take in consideration the leap year.&lt;/p&gt;
+
+&lt;p&gt;Revision 1.1 - 2 March 2021 - &lt;a href=&quot;/assets/pdf/making-date-calculation.pdf&quot;&gt;Download a pdf version&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;current-date-and-time&quot;&gt;Current date and time&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Command&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Description&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Result&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Get/Show current date &amp;amp; time&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Sun 28 Feb 2021 17:05:41 EST&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date “+%C%y.%m.%d %H:%M:%S”&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Current Date/Time YYYY.MM.DD HH:MM:SS&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2021.02.28 21:09:17&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date “+%C%y.%m.%d %T”&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Current Date/Time YYYY.MM.DD HH:MM:SS&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2021.02.28 21:09:17&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date ‘+%C%y.%m.%d’&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Current Date/Time Format YYYY.MM.DD&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2021.02.28&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date “+%j”&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Day of year (001..366)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;059&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date +%q&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Quarter of year (1..4)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date +%u&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Day of week (1..7); 1 is Monday&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;7&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date +%w&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Day of week (0..6); 0 is Sunday&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date +%U&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;week number of year (00..53)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;09&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date +%d&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Day of month (e.g., 01)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;28&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date +%m&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Month number (01..12)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;02&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date +%y&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Last two digits of year (00..99)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;21&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date +%Y&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Current Year with century&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2021&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date +%H&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Current Hour (00..23)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;21&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date +%M&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Current Minute (00..59)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;09&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date +%S&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Current second (00..60)&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;41&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h2 id=&quot;epoch-time&quot;&gt;Epoch time&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Command&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Description&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Result&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Get current date &amp;amp; time&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Tue 02 Mar 2021 10:42:09 AM EST&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date +%s&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Get current epoch time&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1614699732&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date -d @1614699732 “+%Y/%m/%d %T”&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Convert Epoch Time to a Date format&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2021/03/02 10:42:12&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date=’03/02/2021 10:42:12’ +%s&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Convert a Date to an Epoch Time&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;1614699732&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h2 id=&quot;date-in-the-future&quot;&gt;Date in the future&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Command&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Description&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Result&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date=”35 days”&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date/Time in 35 days&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Sun Apr  4 18:12:51 EDT 2021&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date=”1 month”&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date/Time in one month&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Sun Mar 28 18:58:26 EDT 2021&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date=”this friday”&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date/Time Next Friday&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Fri Mar  5 00:00:00 EST 2021&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date=”next day”&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date/Time Tomorrow&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Mon Mar  1 18:01:42 EST 2021&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date=”tomorrow”&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date/Time Tomorrow&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Mon Mar  1 18:01:42 EST 2021&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date=’fortnight’&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date/Time 15 days ahead&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Sun Mar 14 21:30:30 EDT 2021&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date=’5 fortnight’&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date/Time 5 times 15 days ahead&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Sun May  9 21:38:33 EDT 2021&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date=’2 hour’&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date/Time 2 hours from now&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Sun Feb 28 22:43:30 EST 2021&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date=’20 minute’&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date/Time 20 minutes from now&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Sun Feb 28 21:04:49 EST 2021&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date -dmonday +%Y/%m/%d&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date of next Monday&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2021/03/01&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date -d’monday-fortnight ago’ +%Y%m%d&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Last Monday - 2 weeks from now&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;20210215&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date “next month - $(date +%d) day”&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Last Day of Month&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Wed 31 Mar 2021 10:30:21 AM EDT&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date -dnext-monday +”%Y/%m/%d”&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date/Time of next Monday&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2021/03/01&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date -d’monday+fortnight’ +”%Y/%m/%d”&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Next Monday + 2 weeks from now&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2021/02/15&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date -d’52+monday’ +”%Y%m%d”&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date of 52th Monday from now&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;20220221&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date -d’monday+14 days’ +”%Y%m%d”&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date of next Monday + 14 Days&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;20210315&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;h2 id=&quot;date-in-the-past&quot;&gt;Date in the past&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Command&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Description&lt;/th&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Result&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date=’20 minutes ago’&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date/Time 20 minutes ago&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Sun Feb 28 20:25:25 EST 2021&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date=’2 hours ago’&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date/Time 2 hours ago&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Sun Feb 28 18:44:20 EST 2021&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date=’10 days ago’&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date/Time 10 days ago&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Thu Feb 18 20:51:01 EST 2021&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date=’10 weeks ago’&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date/Time 10 weeks ago&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Sun Dec 20 20:51:28 EST 2020&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date=’10 months ago’&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date/Time 10 months&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Tue Apr 28 21:52:27 EDT 2020&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date=’10 year ago’&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date/Time 10 years ago&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Mon Feb 28 20:52:54 EST 2011&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date=”yesterday” +”%Y/%m/%d %T”&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Yesterday Date&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2021/02/27 20:49:45&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date=’yesterday’&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Yesterday Date/Time&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Sat Feb 27 20:49:49 EST 2021&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date –date=’fortnight ago’&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date/Time 15 days ago&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Sun Feb 14 20:40:06 EST 2021&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date -dlast-monday&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date/Time of Last Monday&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Mon Feb 22 00:00:00 EST 2021&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date -dlast-monday +”%Y/%m/%d”&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Date Last Monday&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;2021/02/22&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;date -d’monday-14 days’ +”%Y/%m/%d %T”&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Two Mondays ago&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;20210215&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</content><author><name>Jacques Duplessis</name><email>linternux@gmail.com</email></author><category term="Scripting" /><category term="Date" /><summary type="html">You’re doing a script and you need to know what was the date 35 days ago or what will the date be in 21 days. This is where  the “date” command can help you doing that kind of calculation. In this little article we will present some examples to help us making some data calculation. I would like to point out, that all of these date calculation take in consideration the leap year.</summary></entry><entry><title type="html">Force user to change password</title><link href="/useradministration/password/force-user-to-change-password-at-next-login/" rel="alternate" type="text/html" title="Force user to change password" /><published>2021-02-09T04:28:10-05:00</published><updated>2021-02-09T04:28:10-05:00</updated><id>/useradministration/password/force-user-to-change-password-at-next-login</id><content type="html" xml:base="/useradministration/password/force-user-to-change-password-at-next-login/">&lt;p&gt;User is calling and say that he forgot is password. So you need to change his password and for security reason you want to force him to change it upon his first login. The command “chage -d 0” (change aging) will force user to change his password upon first login.&lt;/p&gt;
+
+&lt;p&gt;Change his password&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# passwd josblow&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;Set expiration date to 0&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# chage -d 0&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content><author><name>Jacques Duplessis</name><email>linternux@gmail.com</email></author><category term="useradministration" /><category term="password" /><category term="usersadministration" /><category term="password" /><summary type="html">User is calling and say that he forgot is password. So you need to change his password and for security reason you want to force him to change it upon his first login. The command “chage -d 0” (change aging) will force user to change his password upon first login.</summary></entry><entry><title type="html">Using SSH and SCP without entering password</title><link href="/index.php/2009/11/07/ssh-without-password/" rel="alternate" type="text/html" title="Using SSH and SCP without entering password" /><published>2009-11-07T03:58:59-05:00</published><updated>2009-11-07T03:58:59-05:00</updated><id>/index.php/2009/11/07/ssh-without-password</id><content type="html" xml:base="/index.php/2009/11/07/ssh-without-password/">&lt;p&gt;When administrating a lot of Unix servers, there are some situation when you need to run a script from one server to another without entering a password. For example, let’s say that you need to take a cold backup of a Oracle database, but before starting it, you need to stop the application running on another server. In your Oracle backup script, you could “ssh” to application server and run a script that would stop the application before starting the backup.  But to do that with a script, you need a way to log on the application server without having to enter a password.&lt;/p&gt;
+
+&lt;p&gt;In this article, we will demonstrate how to configure SSH in such a way that it will allow you to log from one server to another, without having to enter a password.  Some environment are using the &lt;a href=&quot;http://www.openssh.com/&quot; title=&quot;OpenSSH Home page&quot;&gt;OpenSSH&lt;/a&gt; version on their Linux servers and the commercial &lt;a href=&quot;http://www.ssh.com/&quot; title=&quot;Tectia SSH Home Page&quot;&gt;Tectia SSH&lt;/a&gt; on the &lt;a href=&quot;http://www-03.ibm.com/systems/power/software/aix/index.html&quot; title=&quot;AIX Home Page at IBM&quot;&gt;AIX&lt;/a&gt; servers. OpenSSH and Tectia SSH don’t have the same keys format and depending on the version you are running,  making an automated connection between these two version can become tricky. In our examples, we will demonstrate the setup require, so that user “robert” is able to log from server1 to server2 without having to enter a password in a mixed environment of OpenSSH and Tectia SSH.&lt;/p&gt;
+
+&lt;h4 id=&quot;openssh-server-configuration-etcsshsshd_config&quot;&gt;OpenSSH server configuration (/etc/ssh/sshd_config)&lt;/h4&gt;
+
+&lt;p&gt;If you are using OpenSSH and you have secure your ssh environnent, chance are that you disable direct “root” access to your server with the line “PermitRootLogin no” in your ssh daemon configuration file. If you change that line with “PermitRootLogin without-password”, then direct login to “root” would still be refuse.  But, if you have configure your server to accept public key identification (PubkeyAuthentication yes) and that the proper setup is done, you should be able to log on the server with no password.  Below is the Openssh configuration file that I use for all the examples below.**&lt;br /&gt;
+**&lt;/p&gt;
+
+&lt;pre&gt;Port                     22
+Protocol                 2
+SyslogFacility           AUTH
+SyslogFacility           AUTHPRIV
+LoginGraceTime           120
+PermitRootLogin          without-password
+PubkeyAuthentication    yes
+HostbasedAuthentication  no
+PasswordAuthentication  yes
+RhostsRSAAuthentication  no
+IgnoreRhosts             yes
+StrictModes              yes
+UsePrivilegeSeparation  yes
+AllowTcpForwarding       no
+X11Forwarding            yes
+Subsystem sftp           /usr/libexec/openssh/sftp-server&lt;/pre&gt;
+
+&lt;p&gt;The OpenSSH version used for all the examples below is ;&lt;/p&gt;
+
+&lt;pre&gt;# ssh -V
+OpenSSH_4.3p2, OpenSSL 0.9.8e-fips-rhel5 01 Jul 2008&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;span style=&quot;font-size: medium;&quot;&gt;&lt;strong&gt; &lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;font-size: medium;&quot;&gt;&lt;strong&gt; &lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;tectia-ssh-server-configuration-etcssh2ssh-server-configxml&quot;&gt;Tectia SSH server configuration (/etc/ssh2/ssh-server-config.xml)&lt;/h4&gt;
+
+&lt;p&gt;The only action needed to permit public key authentication for users is to list ‘publickey’ as an allowed authentication method in the &lt;em&gt;ssh-server-config.xml&lt;/em&gt; file:&lt;/p&gt;
+
+&lt;pre&gt;&amp;lt;authentication-methods&amp;gt;
+  &amp;lt;authentication action=&quot;allow&quot;&amp;gt;
+    &amp;lt;auth-publickey /&amp;gt;
+    ...
+  &amp;lt;/authentication&amp;gt;
+&amp;lt;/authentication-methods&amp;gt;&lt;/pre&gt;
+
+&lt;p&gt;Other authentication methods can also be allowed. Place the least interactive method first.&lt;/p&gt;
+
+&lt;p&gt;For all the Tectia SSH examples below we used the following version ;&lt;/p&gt;
+
+&lt;pre&gt;# sshg3 -V
+sshg3.bin: SSH Tectia Client 6.1.3 on powerpc-ibm-aix5.1.0.0
+Build: 59
+Product: SSH Tectia Client&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-&quot;&gt;** &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;/span&gt;**&lt;/h2&gt;
+
+&lt;h2 id=&quot;--1&quot;&gt;** &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;/span&gt;**&lt;/h2&gt;
+
+&lt;h2 id=&quot;automating-ssh-connection-from-openssh-to-openssh&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;Automating SSH connection from OpenSSH to OpenSSH&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://192.168.1.88/wp-content/uploads/2009/11/openssh_2_openssh1.png&quot;&gt;&lt;img loading=&quot;lazy&quot; class=&quot;size-medium wp-image-1134 alignnone&quot; title=&quot;openssh_2_openssh&quot; src=&quot;http://192.168.1.88/wp-content/uploads/2009/11/openssh_2_openssh1-300x212.PNG&quot; alt=&quot;openssh_2_openssh&quot; width=&quot;300&quot; height=&quot;212&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;!--more--&gt;
+&lt;p&gt;This example demonstrate how to setup public key authentication so that user “robert” can log from server1 (OpenSSH) to server2 (OpenSSH), without having to enter a password.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1) Generate the private and public key for user “robert” on server1.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server1:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh-keygen&lt;/span&gt;
+&lt;/strong&gt;Generating public/private rsa key pair.
+Enter file in which to save the key (/home/robert/.ssh/id_rsa):
+Created directory '/home/robert/.ssh'.
+Enter passphrase (empty for no passphrase): &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;&amp;lt;CR&amp;gt;&lt;/strong&gt;&lt;/span&gt;
+Enter same passphrase again: &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;CR&amp;gt;&lt;/span&gt;&lt;/strong&gt;
+Your identification has been saved in /home/robert/.ssh/id_rsa.
+Your public key has been saved in /home/robert/.ssh/id_rsa.pub.
+The key fingerprint is:
+6f:17:ac:ac:b6:9c:13:90:57:aa:ee:1c:b1:e0:93:e2
+&lt;a href=&quot;mailto:robert@server1robert@server1:~$&quot;&gt;robert@server1
+
+robert@server1:~$&lt;/a&gt; &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cd .ssh&lt;/span&gt;&lt;/strong&gt;
+robert@server1:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ls -l&lt;/span&gt;&lt;/strong&gt;
+total 3
+-rw------- 1 robert robert 1675 Nov 22 08:19 &lt;span style=&quot;color: #0000ff;&quot;&gt;id_rsa&lt;/span&gt;
+-rw-r--r-- 1 robert robert  404 Nov 22 08:19 &lt;span style=&quot;color: #0000ff;&quot;&gt;id_rsa.pub&lt;/span&gt;
+robert@server1:~/.ssh$&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;2) Copy the public key file to a more descriptive name.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server1:~/.ssh$&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt; cp id_rsa.pub server1_rsa.pub&lt;/span&gt;&lt;/strong&gt;
+robert@server1:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ls -l&lt;/span&gt;&lt;/strong&gt;
+total 4
+-rw------- 1 robert robert 1675 Nov 22 08:19 id_rsa
+-rw-r--r-- 1 robert robert  404 Nov 22 08:19 id_rsa.pub
+-rw-r--r-- 1 robert robert  404 Nov 22 08:24 &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;server1_rsa.pub&lt;/span&gt;&lt;/strong&gt;
+robert@server1:~/.ssh$&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;3) Create the .ssh directory on the remote server and copy the public key from server1 onto server2.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server2:~$&lt;strong&gt; &lt;span style=&quot;color: #0000ff;&quot;&gt;pwd&lt;/span&gt;&lt;/strong&gt;
+&lt;strong&gt;/home/robert&lt;/strong&gt;
+robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;mkdir .ssh&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;chmod 700 .ssh&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cd .ssh&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;scp robert@server1:/home/robert/.ssh/server1_rsa.pub .&lt;/span&gt;&lt;/strong&gt;
+The authenticity of host 'server1 (192.168.1.101)' can't be established.
+RSA key fingerprint is b4:8d:56:71:c9:7e:97:ba:79:87:95:0d:8a:29:fc:9a.
+Are you sure you want to continue connecting (yes/no)? &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;yes&lt;/span&gt;&lt;/strong&gt;
+Warning: Permanently added 'server1,192.168.1.101' (RSA) to the list of known hosts.
+robert@server1's password: &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;*********&lt;/strong&gt;&lt;/span&gt;
+server1_rsa.pub                                    100%  404     0.4KB/s   00:00&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;4) Add “robert” public key from server1 to the authorized_keys file on server2&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server2:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ls -l&lt;/span&gt;&lt;/strong&gt;
+total 2
+-rw-r--r-- 1 robert robert 401 Nov 22 08:29 known_hosts
+-rw-r--r-- 1 robert robert 404 Nov 22 08:31 &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;server1_rsa.pub&lt;/strong&gt;&lt;/span&gt;
+robert@server2:~/.ssh$
+robert@server2:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cat server1_rsa.pub &amp;gt;&amp;gt; authorized_keys&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;chmod 644 authorized_keys&lt;/span&gt;&lt;/strong&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;5) Test our automated ssh connection from server1 to server2&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The first time you will need to accept connection. After that first connection, there will be no confirmation needed.&lt;/p&gt;
+
+&lt;pre&gt;robert@server1:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh server2&lt;/span&gt;&lt;/strong&gt;
+The authenticity of host 'server2 (192.168.1.133)' can't be established.
+RSA key fingerprint is 28:cc:97:fb:ec:79:94:7f:bf:ef:82:bd:d2:c4:41:d2.
+Are you sure you want to continue connecting (yes/no)? &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;yes&lt;/span&gt;&lt;/strong&gt;
+Warning: Permanently added 'server2,192.168.1.133' (RSA) to the list of known hosts.
+robert@server2:~$
+
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;robert@server1&lt;/strong&gt;&lt;/span&gt;:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh server2&lt;/span&gt;&lt;/strong&gt;
+Last login: Sun Nov 22 08:36:41 2009 from server1.maison.ca
+&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;robert@server2&lt;/span&gt;&lt;/strong&gt;:~$&lt;/pre&gt;
+
+&lt;h2 id=&quot;--2&quot;&gt;** &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;/span&gt;**&lt;/h2&gt;
+
+&lt;h2 id=&quot;--3&quot;&gt;** &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;/span&gt;**&lt;/h2&gt;
+
+&lt;h2 id=&quot;automating-ssh-connection-from-openssh-to-tectia-ssh&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;Automating SSH connection from OpenSSH to Tectia SSH&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://192.168.1.88/wp-content/uploads/2009/11/openssh2ssh2.png&quot;&gt;&lt;img loading=&quot;lazy&quot; class=&quot;alignnone size-medium wp-image-1137&quot; title=&quot;openssh2ssh2&quot; src=&quot;http://192.168.1.88/wp-content/uploads/2009/11/openssh2ssh2-300x229.PNG&quot; alt=&quot;openssh2ssh2&quot; width=&quot;300&quot; height=&quot;229&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This example demonstrate how to setup public key authentication so that user “robert” can log from server1 (OpenSSH) to server2 (Tectia SSH), without having to enter a password.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;1) Generate “robert” private and public keys on the local server (server1).&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server1:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh-keygen&lt;/span&gt;&lt;/strong&gt;
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/robert/.ssh/id_rsa):
+Created directory '/home/robert/.ssh'.
+Enter passphrase (empty for no passphrase): &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;CR&amp;gt;&lt;/span&gt;&lt;/strong&gt;
+Enter same passphrase again: &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;CR&amp;gt;&lt;/span&gt;&lt;/strong&gt;
+Your identification has been saved in /home/robert/.ssh/id_rsa.
+Your public key has been saved in /home/robert/.ssh/id_rsa.pub.
+The key fingerprint is:
+6f:17:ac:ac:b6:9c:13:90:57:aa:ee:1c:b1:e0:93:e2
+&lt;a href=&quot;mailto:robert@server1robert@server1:~$&quot;&gt;robert@server1:~$&lt;/a&gt;
+
+&lt;a href=&quot;mailto:robert@server1:~$&quot;&gt;robert@server1:~$&lt;/a&gt; &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cd .ssh&lt;/span&gt;&lt;/strong&gt;
+robert@server1:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ls -l&lt;/span&gt;&lt;/strong&gt;
+total 3
+-rw------- 1 robert robert 1675 Nov 22 08:19 &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;id_rsa&lt;/strong&gt;&lt;/span&gt;
+-rw-r--r-- 1 robert robert  404 Nov 22 08:19 &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;id_rsa.pub&lt;/strong&gt;&lt;/span&gt;
+robert@server1:~/.ssh$&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;2) Copy the public key to a more descriptive name and convert to Tectia SSH format&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server1:~/.ssh$&quot;&gt;robert@server1:~/.ssh$&lt;/a&gt; &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cp id_rsa.pub server1_rsa.pub&lt;/span&gt;&lt;/strong&gt;
+robert@server1:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh-keygen -e -f server1_rsa.pub &amp;gt; server1_ssh2.pub&lt;/span&gt;&lt;/strong&gt;
+robert@server1:~/.ssh$ ls -l
+total 6
+-rw------- 1 robert robert 1675 Nov 22 08:19 id_rsa
+-rw-r--r-- 1 robert robert  404 Nov 22 08:19 id_rsa.pub
+-rw-r--r-- 1 robert robert  401 Nov 22 08:36 known_hosts
+-rw-r--r-- 1 robert robert  404 Nov 22 08:24 server1_rsa.pub
+-rw-rw-r-- 1 robert robert  514 Nov 22 10:15 &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;server1_ssh2.pub&lt;/span&gt;&lt;/strong&gt;
+robert@server1:~/.ssh$&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;3) From the remote server (server2) get “robert” Tectia SSH public key from server1.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server2:~/$&quot;&gt;&lt;span style=&quot;color: #000000;&quot;&gt;robert@server2:~/$&lt;/span&gt;&lt;/a&gt; &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ls -al&lt;/span&gt;&lt;/strong&gt;
+total 4
+drwxr-xr-x   2 robert   staff           512 Nov 22 08:59 .
+drwxr-xr-x   7 bin      bin             512 Nov 22 08:58 ..
+-rwxr-----   1 robert   staff           254 Nov 22 08:58 .profile
+-rw-------   1 robert   staff           110 Nov 22 10:08 .sh_history
+
+robert@server2:~/$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;mkdir .ssh2&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~/$ &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;chmod 700 .ssh2&lt;/strong&gt;&lt;/span&gt;
+robert@server2:~/$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cd .ssh2&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~/$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;scpg3 robert@server1:/home/robert/.ssh/server1_ssh2.pub .&lt;/span&gt;&lt;/strong&gt; (replace scpg3 by scp if using V4)
+robert@server1 password: &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;********&lt;/strong&gt;&lt;/span&gt;
+server1_rsa_ssh2.pub                        |   514B |   3.7kiB/s | TOC: 00:00:00 | 100%
+robert@server2:~/$&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;4) Add “robert” public key on server1 to the authorization file on server2.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server2:~/$&quot;&gt;robert@server2:~/$&lt;/a&gt; &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;echo &quot;Key server1_ssh2.pub&quot; &amp;gt;&amp;gt; ~/.ssh2/authorization&lt;/strong&gt;&lt;/span&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;5) Test our automated ssh connection from server1 to server2&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server1:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh robert@server2&lt;/span&gt;&lt;/strong&gt;
+The authenticity of host 'server2 (192.168.1.130)' can't be established.
+RSA key fingerprint is cb:98:02:be:4c:0d:80:8e:bc:20:cf:45:03:fc:70:54.
+Are you sure you want to continue connecting (yes/no)? &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;yes&lt;/strong&gt;&lt;/span&gt;
+Warning: Permanently added 'server2,192.168.1.130' (RSA) to the list of known hosts.
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;robert@server2&lt;/strong&gt;&lt;/span&gt;:~/.ssh$ 
+
+robert@server1:~/.ssh$ &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;ssh robert@server2 date&lt;/strong&gt;&lt;/span&gt;
+Sun Nov 22 10:16:06 EST 2009
+robert@server1:~/.ssh$&lt;/pre&gt;
+
+&lt;h2 id=&quot;--4&quot;&gt;** &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;/span&gt;**&lt;/h2&gt;
+
+&lt;h2 id=&quot;--5&quot;&gt;** &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;/span&gt;**&lt;/h2&gt;
+
+&lt;h2 id=&quot;automating-ssh-connection-from-tectia-ssh-to-openssh&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;Automating SSH connection from Tectia SSH to OpenSSH&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://192.168.1.88/wp-content/uploads/2009/11/ssh2_2_openssh.png&quot;&gt;&lt;img loading=&quot;lazy&quot; class=&quot;alignnone size-medium wp-image-1139&quot; title=&quot;ssh2_2_openssh&quot; src=&quot;http://192.168.1.88/wp-content/uploads/2009/11/ssh2_2_openssh-300x223.PNG&quot; alt=&quot;ssh2_2_openssh&quot; width=&quot;300&quot; height=&quot;223&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This example demonstrate how to setup public key authentication so that user “robert” can log from server1 (Tectia SSH) to server2 (OpenSSH), without having to enter a password.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;1) Generate  Tectia SSH private and public keys for user “robert” on server1.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;$&lt;/a&gt; &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;ssh-keygen-g3&lt;/strong&gt;&lt;/span&gt; (use ssh-key if using V4)
+Generating 2048-bit dsa key pair
+153 oOOo.oOo.oOo
+Key generated.
+2048-bit dsa, robert@server1, Sun Nov 22 2009 19:21:21 -0500
+Passphrase :&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt; &amp;lt;CR&amp;gt;&lt;/span&gt;&lt;/strong&gt;
+Again      :&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt; &amp;lt;CR&amp;gt;&lt;/strong&gt;&lt;/span&gt;
+Key is stored with NULL passphrase.
+(You can ignore the following warning if you are generating hostkeys.)
+This is not recommended. Don't do this unless you know what you're doing.
+If file system protections fail (someone can access the keyfile),
+or if the super-user is malicious, your key can be used without the deciphering effort.
+Private key saved to /home/robert/.ssh2/id_dsa_2048_a
+Public key saved to /home/robert/.ssh2/id_dsa_2048_a.pub
+&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;$
+&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;1a) Identify the private key name in the identification file (&lt;em&gt;Not needed for version 5 and above&lt;/em&gt;)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server1:~/ $ &lt;strong&gt;echo &quot;IdKey id_dsa_2048_a&lt;/strong&gt;&lt;strong&gt;&quot; &amp;gt;&amp;gt; identification&lt;/strong&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;2) Copy the public key to a more descriptive name.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;$&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt; pwd&lt;/span&gt;&lt;/strong&gt;
+/home/robert
+&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cd .ssh2&lt;/span&gt;&lt;/strong&gt;
+&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;$ &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;ls -l&lt;/strong&gt;&lt;/span&gt;
+total 11
+-rw-------   1 robert   staff          1389 Nov 22 19:25 id_dsa_2048_a
+-rw-r--r--   1 robert   staff          1257 Nov 22 19:25 &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;id_dsa_2048_a.pub&lt;/span&gt;&lt;/strong&gt;
+&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cp id_dsa_2048_a.pub server1_ssh2.pub&lt;/span&gt;&lt;/strong&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;3) From the remote server (server2) get “robert” Tectia SSH public key from server1.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;pwd&lt;/span&gt;&lt;/strong&gt;
+/home/robert
+robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;mkdir .ssh&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;chmod 700 .ssh&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cd .ssh&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;scp robert@server1:/home/robert/.ssh2/server1_ssh2.pub .&lt;/span&gt;&lt;/strong&gt;
+The authenticity of host 'server1' (192.168.1.130)' can't be established.
+RSA key fingerprint is cb:98:02:be:4c:0d:80:8e:bc:20:cf:45:03:fc:70:54.
+Are you sure you want to continue connecting (yes/no)? &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;yes&lt;/span&gt;&lt;/strong&gt;
+Warning: Permanently added 'server1,192.168.1.130' (RSA) to the list of known hosts.
+Password Authentication:
+robert's password: &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;********&lt;/span&gt;&lt;/strong&gt;
+
+server1_ssh2.pub                                            100% 1257     1.2KB/s   00:00&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;4) Convert Tectia SSH key to OpenSSH format &amp;amp; add it to the authorization file.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server2:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh-keygen -i -f server1_ssh2.pub &amp;gt; server1_ssh.pub&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cat server1_ssh.pub &amp;gt;&amp;gt; authorized_keys&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;chmod 644 authorized_keys&lt;/span&gt;&lt;/strong&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt; &lt;/strong&gt;&lt;/span&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;5) Test “robert” automated ssh connection from server1 to server2&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/$&lt;/a&gt; &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;sshg3 robert@server2&lt;/span&gt;&lt;/strong&gt;
+Please select how you want to proceed.
+cancel) Cancel the connection.
+once) Proceed with the connection but do not save the key.
+save) Proceed with the connection and save the key for future use.
+Please select one (cancel, once, save): &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;save&lt;/span&gt;&lt;/strong&gt;
+Authentication successful.
+Last login: Sun Nov 22 08:38:03 2009 from server1.maison.ca
+robert@server2:~$
+
+&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;sshg3 robert@server1 date&lt;/span&gt;&lt;/strong&gt;
+Authentication successful.
+Sun Nov 22 19:56:04 EST 2009
+&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;$&lt;/pre&gt;
+
+&lt;h2 id=&quot;--6&quot;&gt;** &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;/span&gt;**&lt;/h2&gt;
+
+&lt;h2 id=&quot;--7&quot;&gt;** &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;/span&gt;**&lt;/h2&gt;
+
+&lt;h2 id=&quot;automating-ssh-connection-from-tectia-ssh-to-tectia-ssh&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;Automating SSH connection from Tectia SSH to Tectia SSH&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://192.168.1.88/wp-content/uploads/2009/11/ssh2_2_ssh2.png&quot;&gt;&lt;img loading=&quot;lazy&quot; class=&quot;alignnone size-medium wp-image-1140&quot; title=&quot;ssh2_2_ssh2&quot; src=&quot;http://192.168.1.88/wp-content/uploads/2009/11/ssh2_2_ssh2-300x216.PNG&quot; alt=&quot;ssh2_2_ssh2&quot; width=&quot;300&quot; height=&quot;216&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This example demonstrate the step needed so that user “robert” can log from server1 (Tectia SSH) to server2 who is also running Tectia SSH, without having to enter a password.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;1) Generate “robert” Tectia SSH private and public keys on server1.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;$&lt;/a&gt; &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh-keygen-g3&lt;/span&gt;&lt;/strong&gt; (ssh-keygen for version 4)
+Generating 2048-bit dsa key pair
+153 oOOo.oOo.oOo
+Key generated.
+2048-bit dsa, &lt;a href=&quot;mailto:robert@server1&quot;&gt;robert@server1&lt;/a&gt;, Sun Nov 22 2009 19:21:21 -0500
+Passphrase : &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;CR&amp;gt;&lt;/span&gt;&lt;/strong&gt;
+Again      : &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;CR&amp;gt;&lt;/span&gt;&lt;/strong&gt;
+Key is stored with NULL passphrase.
+(You can ignore the following warning if you are generating hostkeys.)
+This is not recommended. Don't do this unless you know what you're doing.
+If file system protections fail (someone can access the keyfile),
+or if the super-user is malicious, your key can be used without the deciphering effort.
+Private key saved to /home/robert/.ssh2/id_dsa_2048_a
+Public key saved to /home/robert/.ssh2/id_dsa_2048_a.pub
+&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;$&lt;/a&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;2) Copy the public key to a more descriptive name.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;robert@server1:~$ &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;pwd&lt;/strong&gt;&lt;/span&gt;
+/home/robert
+robert@server1:~ $ c&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;d .ssh2&lt;/span&gt;&lt;/strong&gt;
+robert@server1:~ $ &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;ls -l&lt;/strong&gt;
+&lt;/span&gt;total 11
+-rw-------   1 robert   staff          1389 Nov 22 19:25 id_dsa_2048_a
+-rw-r--r--   1 robert   staff          1257 Nov 22 19:25 &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;id_dsa_2048_a.pub&lt;/span&gt;&lt;/strong&gt;
+robert@server1:~ $
+robert@server1:~ $ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cp id_dsa_2048_a.pub server1_ssh2.pub&lt;/span&gt;&lt;/strong&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;3) Identify the private key name in the identification file (&lt;em&gt;&lt;span style=&quot;color: #800000;&quot;&gt;Not needed for version 5 and above&lt;/span&gt;&lt;/em&gt;)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server1:~/ $ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;echo &quot;IdKey id_dsa_2048_a&lt;/span&gt;&lt;/strong&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&quot; &amp;gt;&amp;gt; identification&lt;/span&gt;&lt;/strong&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;4) Get “robert” Tectia SSH public key from server1 onto server2.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server2:~/&quot;&gt;robert@server2:~/&lt;/a&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;$&lt;/a&gt; &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;scpg3 &lt;/span&gt;&lt;/strong&gt;&lt;a href=&quot;mailto:robert@server1:/home/robert/.ssh2/server1_ssh2.pub&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;robert@server1:/home/robert/.ssh2/server1_ssh2.pub&lt;/span&gt;&lt;/strong&gt;&lt;/a&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt; .&lt;/span&gt;&lt;/strong&gt; (use scp in V4)
+robert@server1s password: &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;********&lt;/span&gt;&lt;/strong&gt;
+server1_ssh2.pub                                   |   514B |   3.7kiB/s | TOC: 00:00:00 | 100%
+&lt;a href=&quot;mailto:robert@server2:~/&quot;&gt;robert@server2:~/&lt;/a&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;$&lt;/a&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;5) Add “robert” public key from  server1 to the authorization file on server2.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server2:~/$&quot;&gt;robert@server2:~/$&lt;/a&gt; &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;echo &quot;Key server1_ssh2.pub&quot; &amp;gt;&amp;gt; ~/.ssh2/authorization&lt;/strong&gt;&lt;/span&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;6) Test our automated ssh connection from server1 to server2&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;$&lt;/a&gt; &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;sshg3 &lt;/span&gt;&lt;/strong&gt;&lt;a href=&quot;mailto:robert@server2&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;robert@server2&lt;/span&gt;&lt;/strong&gt;&lt;/a&gt;
+Please select how you want to proceed.
+cancel) Cancel the connection.
+once) Proceed with the connection but do not save the key.
+save) Proceed with the connection and save the key for future use.
+Please select one (cancel, once, save): &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;save&lt;/span&gt;&lt;/strong&gt;
+Authentication successful.
+Last login: Sun Nov 22 08:38:03 2009 from server1.maison.ca
+&lt;a href=&quot;mailto:robert@server2:~$&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;robert@server2:~$&lt;/span&gt;&lt;/strong&gt;&lt;/a&gt;
+
+&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;$&lt;/a&gt; &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;sshg3 robert@server1 date&lt;/span&gt;&lt;/strong&gt;
+Authentication successful.
+Sun Nov 22 19:56:04 EST 2009
+&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;$&lt;/a&gt;&lt;/pre&gt;
+
+&lt;p&gt;Hope this article will be usefull for many of us and I hope that you will come back to it when ever you need it.&lt;/p&gt;
+
+&lt;p&gt;See you soon.&lt;/p&gt;</content><author><name>jacques</name></author><category term="Network" /><category term="ssh" /><summary type="html">When administrating a lot of Unix servers, there are some situation when you need to run a script from one server to another without entering a password. For example, let’s say that you need to take a cold backup of a Oracle database, but before starting it, you need to stop the application running on another server. In your Oracle backup script, you could “ssh” to application server and run a script that would stop the application before starting the backup.  But to do that with a script, you need a way to log on the application server without having to enter a password.</summary></entry><entry><title type="html">Secure Shell Filesystem</title><link href="/index.php/2009/10/04/secure-shell-filesystem/" rel="alternate" type="text/html" title="Secure Shell Filesystem" /><published>2009-10-04T07:11:18-04:00</published><updated>2009-10-04T07:11:18-04:00</updated><id>/index.php/2009/10/04/secure-shell-filesystem</id><content type="html" xml:base="/index.php/2009/10/04/secure-shell-filesystem/">&lt;p&gt;&lt;a href=&quot;http://192.168.1.88/wp-content/uploads/2009/10/sshfs.png&quot;&gt;&lt;img loading=&quot;lazy&quot; class=&quot;alignleft size-full wp-image-974&quot; title=&quot;sshfs&quot; src=&quot;http://192.168.1.88/wp-content/uploads/2009/10/sshfs.png&quot; alt=&quot;sshfs&quot; width=&quot;115&quot; height=&quot;115&quot; /&gt;&lt;/a&gt;In this article, we are looking at SSHFS, the Secure Shell Filesystem. We can use it to mount a remote filesystem using the SSH Protocol.  So the information flowing between the two systems is completely encrypted. SSHFS is a client based application, so beside the SSH server, there is nothing to installed on the remote server to use it.  FUSE is a linux kernel module that allow non-privilege user to mount their own filesystem without the help of any kernel code. One of the interesting feature of SSHFS is that you can securely mount a filesystem over the internet, this is impossible with Samba and not very secure with NFS. If you like more information on SSHFS, you can visit the  &lt;a href=&quot;http://fuse.sourceforge.net/sshfs.html&quot; title=&quot;Secure Shell Filesystem Home Page&quot;&gt;SSHFS homepage&lt;/a&gt; and the &lt;a href=&quot;http://en.wikipedia.org/wiki/SSHFS&quot; title=&quot;Secure Shell Filesystem Wiki &quot;&gt;Wiki&lt;/a&gt; of the SSHFS package. There is also a &lt;a href=&quot;http://www.youtube.com/watch?v=E5BDkadiaZo&quot; title=&quot;YouTube Video about SSHFS&quot;&gt;YouTube video&lt;/a&gt; that show how to use SSHFS on a Fedora system. For those interested in a windows version of sshfs, there is a free version available at the &lt;a href=&quot;http://dokan-dev.net/en/&quot;&gt;Dokan site&lt;/a&gt;, you need to install the Dokan Library first, then install SSHFS. I have done some simple test with it and I didn’t had any problem.&lt;/p&gt;
+
+&lt;h3 id=&quot;installing-fuse-and-fuse-sshfs&quot;&gt;Installing fuse and fuse-sshfs&lt;/h3&gt;
+
+&lt;p&gt;FUSE and FUSE-SSHFS use the ssh protocol, so SSH needs to be installed on our client system. The only required package on the remote system,  is “openssh” (may work with other version of ssh). The package FUSE and FUSE-SSHFS  don’t need to be install on the remote system, only on the local server.  The first thing we  need to do is to get the &lt;a href=&quot;http://dag.wieers.com/rpm/packages/fuse/&quot;&gt;latest version the “fuse” at this page&lt;/a&gt; and &lt;a href=&quot;http://dag.wieers.com/rpm/packages/fuse-sshfs/&quot; title=&quot;Page to download fuse-sshfs&quot;&gt;“fuse-sshfs” packages from this page&lt;/a&gt; and install them on our local system. The package “fuse” is now part of the RedHat/Centos 5.4, but you still need to get “fuse-sshfs” cause it isn’t included. Should the other site be unresponsive, you can download the rpm from Linternux site.&lt;/p&gt;
+
+&lt;center&gt;
+  &amp;lt;/p&amp;gt; &lt;table align=&quot;center&quot;&gt; 
+  
+  &lt;tr&gt;
+    &lt;td&gt;
+      RedHat/Centos 5
+    &lt;/td&gt;
+    
+    &lt;td&gt;
+      &lt;a title=&quot;fuse for RedHat/Centos 5&quot; href=&quot;http://linternux.com/download/sshfs/fuse-2.7.4-1.el5.rf.i386.rpm&quot;&gt;fuse-2.7.4-1.el5.rf.i386.rpm&lt;/a&gt;
+    &lt;/td&gt;
+    
+    &lt;td&gt;
+      &lt;a title=&quot;fuse-sshfs for RedHat/Centos 5&quot; href=&quot;http://linternux.com/download/sshfs/fuse-sshfs-2.2-5.el5.i386.rpm&quot;&gt;fuse-sshfs-2.2-5.el5.i386.rpm&lt;/a&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  
+  &lt;tr&gt;
+    &lt;td&gt;
+      RedHat/Centos 4
+    &lt;/td&gt;
+    
+    &lt;td&gt;
+      &lt;a title=&quot;fuse for RedHat/Centos 4&quot; href=&quot;http://linternux.com/download/sshfs/fuse-2.7.4-1.el4.rf.i386.rpm&quot;&gt;fuse-2.7.4-1.el4.rf.i386.rpm&lt;/a&gt;
+    &lt;/td&gt;
+    
+    &lt;td&gt;
+      &lt;a title=&quot;fuse-sshfs for RedHat/Centos 4&quot; href=&quot;http://linternux.com/download/sshfs/fuse-sshfs-2.2-1.el4.rf.i386.rpm&quot;&gt;fuse-sshfs-2.2-1.el4.rf.i386.rpm&lt;/a&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  
+  &lt;tr&gt;
+    &lt;td&gt;
+      RedHat/Centos 3
+    &lt;/td&gt;
+    
+    &lt;td&gt;
+      &lt;a title=&quot;fuse for RedHat/Centos 3&quot; href=&quot;http://linternux.com/download/sshfs/fuse-2.7.4-1.el3.rf.i386.rpm&quot;&gt;fuse-2.7.4-1.el3.rf.i386.rpm&lt;/a&gt;
+    &lt;/td&gt;
+    
+    &lt;td&gt;
+      &lt;a title=&quot;fuse-sshfs for RedHat/Centos 3&quot; href=&quot;http://linternux.com/download/sshfs/fuse-sshfs-2.2-1.el3.rf.i386.rpm&quot;&gt; fuse-sshfs-2.2-1.el3.rf.i386.rpm&lt;/a&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  
+  &lt;tr&gt;
+    &lt;td&gt;
+      Fedora 10
+    &lt;/td&gt;
+    
+    &lt;td&gt;
+      &lt;a title=&quot;fuse for Fedora 10&quot; href=&quot;http://linternux.com/download/sshfs/fuse-2.7.4-2.fc10.i386.rpm&quot;&gt;fuse-2.7.4-2.fc10.i386.rpm&lt;/a&gt;
+    &lt;/td&gt;
+    
+    &lt;td&gt;
+      &lt;a title=&quot;fuse-sshfs for Fedora 10&quot; href=&quot;http://linternux.com/download/sshfs/fuse-sshfs-2.2-5.fc10.i386.rpm&quot;&gt;fuse-sshfs-2.2-5.fc10.i386.rpm&lt;/a&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+  
+  &lt;tr&gt;
+    &lt;td&gt;
+      Fedora 11
+    &lt;/td&gt;
+    
+    &lt;td&gt;
+      &lt;a title=&quot;fuse for Fedora 11&quot; href=&quot;http://linternux.com/download/sshfs/fuse-2.7.4-3.fc11.i586.rpm&quot;&gt;fuse-2.7.4-3.fc11.i586.rpm&lt;/a&gt;
+    &lt;/td&gt;
+    
+    &lt;td&gt;
+      &lt;a title=&quot;fuse-sshfs for Fedora 11&quot; href=&quot;http://linternux.com/download/sshfs/fuse-sshfs-2.2-2.fc11.i586.rpm&quot;&gt;fuse-sshfs-2.2-2.fc11.i586.rpm&lt;/a&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;&lt;/table&gt; 
+  
+  &lt;p&gt;
+    &amp;lt;/center&amp;gt;
+  &lt;/p&gt;
+  
+  &lt;pre&gt;# &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;ls -l&lt;/strong&gt;&lt;/span&gt;
+total 296
+-rw-rw-r-- 1 jacques jacques 255149 Sep  6 13:15 &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;fuse-2.7.3-1.el5.rf.i386.rpm&lt;/strong&gt;&lt;/span&gt;
+-rw-rw-r-- 1 jacques jacques  43203 Sep  6 13:15 &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;fuse-sshfs-1.9-1.el5.rf.i386.rpm&lt;/span&gt;
+&lt;/strong&gt;
+# &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;rpm -ivh fuse*&lt;/strong&gt;&lt;/span&gt;
+warning: fuse-2.7.3-1.el5.rf.i386.rpm: Header V3 DSA signature: NOKEY, key ID 6b8d79e6
+Preparing...             ########################################### [100%]
+1:fuse                   ########################################### [ 50%]
+2:fuse-sshfs             ########################################### [100%]
+#&lt;/pre&gt;
+  
+  &lt;h3&gt;
+    &lt;!--more--&gt;
+  &lt;/h3&gt;
+  
+  &lt;h3&gt;
+    Mounting the filesystem
+  &lt;/h3&gt;
+  
+  &lt;p&gt;
+    You will notice that all of the commands we used below are done with a normal user account, you can use &amp;#8220;root&amp;#8221; if needed but I would recommend sticking with your user account.  Now we need to create our SSHFS mount point, &lt;strong&gt;it is important that the user that will do the sshfs mount be part of the group &amp;#8220;fuse&amp;#8221;&lt;/strong&gt;, otherwise&lt;strong&gt; &lt;/strong&gt; you will get this error message &amp;#8220;fuse: failed to open /dev/fuse: Permission denied&amp;#8221;. So, in the example below, we will create the mount point &amp;#8220;remdir&amp;#8221; in our home directory. We can then issue the &amp;#8220;sshfs&amp;#8221; command to log on the remote system with the user &amp;#8220;jacques&amp;#8221; and mount the remote directory named &amp;#8220;/home/jacques&amp;#8221;  on our local directory &amp;#8220;/home/jacques/remdir&amp;#8221;. The password of the user we selected will be prompted and then the sshfs filesystem will be mounted. To confirm that the filesystem is mounted, we issue the &amp;#8220;df -h&amp;#8221; command.
+  &lt;/p&gt;
+  
+  &lt;pre&gt;[jacques@local ~]$&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt; pwd&lt;/strong&gt;&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;/home/jacques&lt;/span&gt;
+[jacques@local ~]$ &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;mkdir remdir&lt;/strong&gt;&lt;/span&gt;
+
+[jacques@local ~]$ &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;sshfs jacques@remote_host:/home/jacques /home/jacques/workdir&lt;/strong&gt;&lt;/span&gt;
+jacques@remote_host's password: xxxxxxxxxx
+
+[jacques@local ~]$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;df -h /home/jacques/remdir&lt;/span&gt;&lt;/strong&gt;
+Filesystem                                 Size  Used Avail Use%  Mounted on&lt;strong&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;sshfs#jacques@remote_host:/home/jacques   1000G    0  1000G   0%  /home/jacques/remdir&lt;/span&gt;&lt;/strong&gt;
+[jacques@local ~]$&lt;/pre&gt;
+  
+  &lt;p&gt;
+    You will notice that the data of the filesystem presented by the &amp;#8220;df -h&amp;#8221; is wrong, this seems to be normal at this point and do not cause any problem. Every test I made, I would get the same value so don&amp;#8217;t rely on these number. If you do not specify the remote directory, the HOME directory is use.
+  &lt;/p&gt;
+  
+  &lt;h3&gt;
+    Unmounting the filesystem
+  &lt;/h3&gt;
+  
+  &lt;p&gt;
+    When you need to unmount the filesystem, we will use the &amp;#8220;fusermount&amp;#8221; command with the &amp;#8220;-u&amp;#8221; parameter.
+  &lt;/p&gt;
+  
+  &lt;pre&gt;[jacques@local ~]$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;fusermount -u /home/jacques/remdir&lt;/span&gt;&lt;/strong&gt;&lt;/pre&gt;
+  
+  &lt;p&gt;
+    Hope that you have found this article interesting. The Secure Shell Filesystem may become handy is some situation. So keep coming back, I have a lot of ideas for new articles (but not much time) and I hope to see you soon.
+  &lt;/p&gt;
+&lt;/center&gt;</content><author><name>jacques</name></author><category term="Network" /><category term="Storage" /><category term="Network" /><category term="ssh" /><summary type="html">In this article, we are looking at SSHFS, the Secure Shell Filesystem. We can use it to mount a remote filesystem using the SSH Protocol.  So the information flowing between the two systems is completely encrypted. SSHFS is a client based application, so beside the SSH server, there is nothing to installed on the remote server to use it.  FUSE is a linux kernel module that allow non-privilege user to mount their own filesystem without the help of any kernel code. One of the interesting feature of SSHFS is that you can securely mount a filesystem over the internet, this is impossible with Samba and not very secure with NFS. If you like more information on SSHFS, you can visit the  SSHFS homepage and the Wiki of the SSHFS package. There is also a YouTube video that show how to use SSHFS on a Fedora system. For those interested in a windows version of sshfs, there is a free version available at the Dokan site, you need to install the Dokan Library first, then install SSHFS. I have done some simple test with it and I didn’t had any problem.</summary></entry><entry><title type="html">Yum Revisited (Part 2)</title><link href="/index.php/2009/09/20/yum-revisited-part-2/" rel="alternate" type="text/html" title="Yum Revisited (Part 2)" /><published>2009-09-20T03:40:11-04:00</published><updated>2009-09-20T03:40:11-04:00</updated><id>/index.php/2009/09/20/yum-revisited-part-2</id><content type="html" xml:base="/index.php/2009/09/20/yum-revisited-part-2/">&lt;p&gt;&lt;a href=&quot;http://192.168.1.88/wp-content/uploads/2009/09/timthumb.png&quot;&gt;&lt;img loading=&quot;lazy&quot; class=&quot;alignleft size-full wp-image-779&quot; title=&quot;YUM - Yellowdog Updater Modified&quot; src=&quot;http://192.168.1.88/wp-content/uploads/2009/09/timthumb.png&quot; alt=&quot;YUM - Yellowdog Updater Modified&quot; width=&quot;96&quot; height=&quot;96&quot; /&gt;&lt;/a&gt; Here is the second article dedicated to the “yum” command. We will demonstrate some useful option of the command and how-to recover in some problematic situation. Keeping your system up to date is important, knowing how to do it and how to correct some issue related to rpm are also important. So let’s see if everyone can find something new about the “yum” command and see if we can apply it in our daily system admin job. You can also consult the &lt;a href=&quot;http://yum.baseurl.org/&quot; title=&quot;YUM Website&quot;&gt;“yum” website&lt;/a&gt; or the &lt;a href=&quot;http://en.wikipedia.org/wiki/Yellowdog_Updater,_Modified&quot; title=&quot;YUM Wiki&quot;&gt;“yum” wiki&lt;/a&gt; to obtain more information. As always, I will try to make this article as useful as it can be, so we  can all come back to it and use it as a reference to the “yum” command.&lt;/p&gt;
+
+&lt;h3 id=&quot;checking-if-update-are-available&quot;&gt;&lt;strong&gt;Checking if update are available&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Let’s say you want to be advise when new update are available and want to be emailed with the list of packages included in the update.  When we run the “yum” command with the “check-update” parameter, it actually go and check if any update are available at the repository you have defined in your “/etc/yum.repos.d” directory. If any update are available, they will be listed and the program exit code returned will be 100. If no update are available then the exit code will be 0.&lt;/p&gt;
+
+&lt;pre&gt;#&lt;strong&gt; &lt;span style=&quot;color: #0000ff;&quot;&gt;yum check-update ; echo $?&lt;/span&gt;&lt;/strong&gt;
+Loaded plugins: changelog, fastestmirror, priorities
+Loading mirror speeds from cached hostfile
+* base: mirrors.portafixe.com
+* updates: mirrors.portafixe.com
+* addons: mirrors.portafixe.com
+* extras: mirrors.portafixe.com
+cman.i386                                2.0.98-1.el5_3.7       updates
+ksh.i386                                 20080202-2.el5_3.1     updates
+openais.i386                             0.80.3-22.el5_3.9      updates
+rgmanager.i386                           2.0.46-1.el5.centos.4  updates
+tzdata.noarch                            2009k-1.el5            updates
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;100&lt;/strong&gt;&lt;/span&gt;
+#&lt;/pre&gt;
+
+&lt;p&gt;We can easily make a little script that we can put in our system crontab file, that will check if any update are available. If there are any, then a list of the updated package will be send to you by email&lt;/p&gt;
+
+&lt;pre&gt;#!/bin/sh
+/usr/bin/yum check-update &amp;gt; /tmp/cu$$ 2&amp;gt;&amp;amp;1
+RET=$?
+if [ $RET -eq 100 ]; then
+   cat /tmp/cu$$ | mail -s &quot;System Update Available&quot; yourname@gmail.com
+fi
+rm /tmp/cu$$ &amp;gt; /dev/null 2&amp;gt;&amp;amp;1&lt;/pre&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;updating-your-system&quot;&gt;&lt;strong&gt;Updating your system&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;To apply all the update available for your system, use the “yum update” command. Updated packages will be downloaded and then a confirmation will be ask before applying them. If you wish to download and install all the update without confirmation use “-y” parameter to skip the confirmation.&lt;/p&gt;
+
+&lt;pre&gt;# &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;yum -y update&lt;/strong&gt;&lt;/span&gt;
+Loaded plugins: downloadonly, fastestmirror
+Loading mirror speeds from cached hostfile
+ * extras: mirrors.portafixe.com
+ * base: mirrors.portafixe.com
+ * updates: mirrors.portafixe.com
+ * addons: mirrors.portafixe.com
+Setting up Update Process
+No Packages marked for Update
+#&lt;/pre&gt;
+
+&lt;h3 id=&quot;removing-a-package&quot;&gt;&lt;strong&gt;Removing a package&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;To remove a package, simply specify the name of the package to be remove, using the “yum erase” command.&lt;/p&gt;
+
+&lt;pre&gt;# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;yum erase bind&lt;/span&gt;&lt;/strong&gt;&lt;/pre&gt;
+
+&lt;h3 id=&quot;what-rpm-provide-this-file-&quot;&gt;&lt;strong&gt;What RPM provide this file ?&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Let’s say, you need a file, a library or a program and you are wondering what package is providing it. Well, there are two ways you can find what rpm include the file you are searching. If the file is already installed on your server and you want to know what package is supplying it, you can use the ” rpm” command to find it. But you have to specify the full path of the program in order to work. As an example, let’s say you want to know what package is supplying the “awk” program and that it is already installed on your server, you can use the instruction below.&lt;/p&gt;
+
+&lt;pre&gt;# &lt;span style=&quot;color: #000000;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;rpm -qf awk&lt;/span&gt;   (Need to specify full path &amp;amp; must exist on your server)&lt;/strong&gt;
+&lt;/span&gt;error: file /awk: No such file or directory
+
+# &lt;strong&gt;Must be on server &amp;amp; need to specify full path in order to find the rpm
+&lt;/strong&gt;# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;type awk&lt;/span&gt;&lt;/strong&gt;
+awk is /usr/bin/awk
+# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;rpm -qf /usr/bin/awk&lt;/span&gt;&lt;/strong&gt;
+gawk-3.1.5-14.el5
+#&lt;/pre&gt;
+
+&lt;p&gt;But let’s say the file, program or library you are searching is not installed on your server. The rpm command will not be useful in that situation, this is when the ” yum”  command can help us. In the example below, we are searching for the program “compress”. We will use the “yum” command with the “provides” option and then the “*/compress” parameters. By specifying the “*/compress”, we are telling “yum” to display matching file that end with ” compress”  and that it could in any (*) directory. I am sure we will use this command often from now on, right ?&lt;/p&gt;
+
+&lt;pre&gt;# &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;yum provides */compress&lt;/strong&gt; &lt;/span&gt;  &lt;strong&gt;(We do not have to know where the program is or will be located)&lt;/strong&gt;
+Loaded plugins: changelog, fastestmirror, priorities
+Loading mirror speeds from cached hostfile
+ * base: centos.mirror.iweb.ca
+ * updates: centos.mirror.iweb.ca
+ * addons: centos.mirror.iweb.ca
+ * extras: centos.mirror.iweb.ca
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;ncompress-4.2.4-47.i386&lt;/strong&gt;&lt;/span&gt; : Fast compression and decompression utilities.
+Matched from:
+Filename    : /usr/bin/compress
+#&lt;/pre&gt;
+
+&lt;h3 id=&quot;using-yum-to-download-package-without-installing-them-&quot;&gt;&lt;span style=&quot;color: #000000;&quot;&gt;&lt;strong&gt;Using yum to download package without installing them&lt;br /&gt; &lt;/strong&gt;&lt;/span&gt;&lt;/h3&gt;
+
+&lt;p&gt;There are situation when you only need to download the package without installing it. By using the option “–downloadonly” of the “yum install” command, we can do just that.&lt;/p&gt;
+
+&lt;p&gt;But first, we need to install the plugins “yum-downloadonly” to add that functionality to the “yum” command.&lt;/p&gt;
+
+&lt;pre&gt;# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;yum install -y yum-downloadonly&lt;/span&gt;&lt;/strong&gt;&lt;/pre&gt;
+
+&lt;p&gt;After installing the plugin, when ever we need to download a package without installing it, we can use the “–downloadonly” option of the “yum install” command to do it. By default, the package will be downloaded in the directory “/var/cache/yum/base/packages”. If you need to download the package in a particular directory, you can specify it with the “–downloaddir” option (example below).&lt;/p&gt;
+
+&lt;pre&gt;# &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;yum install -y --downloadonly --downloaddir=/tmp zsh&lt;/strong&gt;&lt;/span&gt;
+Loaded plugins: changelog, downloadonly, rhnplugin
+Setting up Install Process
+Parsing package install arguments
+Resolving Dependencies
+--&amp;gt; Running transaction check
+---&amp;gt; Package zsh.i386 0:4.2.6-3.el5 set to be updated
+--&amp;gt; Finished Dependency Resolution
+
+Dependencies Resolved
+==================================================================
+ Package         Arch       Version       Repository         Size
+==================================================================
+Installing:
+ zsh             i386      4.2.6-3.el5  rhel-i386-server-5   1.7 M
+Transaction Summary
+==================================================================
+Install      1 Package(s)
+Update       0 Package(s)
+Remove       0 Package(s)
+Total size: 1.7 M
+Downloading Packages:
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;exiting because --downloadonly specified&lt;/strong&gt;&lt;/span&gt;
+#
+# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ls -l /tmp/zsh*&lt;/span&gt;&lt;/strong&gt;
+-rw-r--r-- 1 root root 1787914 May  6 11:31 &lt;span style=&quot;color: #0000ff;&quot;&gt;/tmp/zsh-4.2.6-3.el5.i386.rpm&lt;/span&gt;
+#&lt;/pre&gt;
+
+&lt;h3 id=&quot;installing-a-local-rpm-and-resolving-dependencies&quot;&gt;&lt;strong&gt;Installing a local rpm and resolving dependencies&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Let’s say you have a rpm package on your server that you want to install. You have tried to install it with the regular “rpm” install command, but the package have some rpm dependencies that you do not have. You can then use the “yum localinstall” command to install your package and let “yum” try to resolve these dependencies. For example, we have a package named “shutter”, we cannot install it with the regular rpm command because it has a lot of dependencies. Below, we use to “yum localinstall” to resolve them. The example below represent only a partial screen output.&lt;/p&gt;
+
+&lt;pre&gt;#&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt; ls -l shutter-0.70.1-1.ppa2.fc10.noarch.rpm &lt;/span&gt;&lt;/strong&gt;
+-rw-rw-r-- 1 jacques jacques 780953 Sep 19 12:02 shutter-0.70.1-1.ppa2.fc10.noarch.rpm
+# 
+
+#&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt; yum localinstall shutter-0.70.1-1.ppa2.fc10.noarch.rpm &lt;/span&gt;&lt;/strong&gt;
+Loaded plugins: downloadonly, fastestmirror
+Setting up Local Package Process
+Examining shutter-0.70.1-1.ppa2.fc10.noarch.rpm: shutter-0.70.1-1.ppa2.fc10.noarch
+Marking shutter-0.70.1-1.ppa2.fc10.noarch.rpm to be installed
+Loading mirror speeds from cached hostfile
+ * extras: mirrors.portafixe.com
+ * base: mirrors.portafixe.com
+ * updates: mirrors.portafixe.com
+ * addons: mirrors.portafixe.com
+&lt;span style=&quot;color: #0000ff;&quot;&gt;Resolving Dependencies&lt;/span&gt;
+--&amp;gt; Running transaction check
+---&amp;gt; Package shutter.noarch 0:0.70.1-1.ppa2.fc10 set to be updated
+--&amp;gt; Processing Dependency: gnome-web-photo for package: shutter
+--&amp;gt; Processing Dependency: gtklp for package: shutter
+--&amp;gt; Processing Dependency: perl(Gnome2) for package: shutter
+--&amp;gt; Processing Dependency: perl(Gnome2::Canvas) for package: shutter
+--&amp;gt; Processing Dependency: perl(Gnome2::GConf) for package: shutter
+--&amp;gt; Processing Dependency: perl(Gnome2::VFS) for package: shutter
+--&amp;gt; Processing Dependency: perl(Gnome2::Wnck) for package: shutter
+--&amp;gt; Processing Dependency: perl(Goo::Canvas) for package: shutter
+--&amp;gt; Processing Dependency: perl(Gtk2) for package: shutter
+....
+....&lt;/pre&gt;
+
+&lt;h3 id=&quot;listing-packages&quot;&gt;&lt;strong&gt;Listing packages&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;With the “list” parameter as you can guess, we will obtain a list of the packages available. With no parameter, the “list” will list all packages available. On the last column displayed, we will notice that it will informed us if the &lt;em&gt;package is actually &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;installed&lt;/span&gt;&lt;/strong&gt; or there is an &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;update&lt;/span&gt;&lt;/strong&gt;&lt;/em&gt; for it and &lt;em&gt;if it is not installed it will display the &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;repository that offer the package&lt;/span&gt;&lt;/strong&gt;&lt;/em&gt;.&lt;/p&gt;
+
+&lt;pre&gt;root@rhel5:~# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;yum list | grep -i openssh or yum list openssh*&lt;/span&gt;&lt;/strong&gt;
+openssh.i386                              4.3p2-29.el5                 &lt;span style=&quot;color: #0000ff;&quot;&gt;installed&lt;/span&gt;
+openssh-askpass.i386                      4.3p2-29.el5                 &lt;span style=&quot;color: #0000ff;&quot;&gt;installed&lt;/span&gt;
+openssh-clients.i386                      4.3p2-29.el5                 &lt;span style=&quot;color: #0000ff;&quot;&gt;installed&lt;/span&gt;
+openssh-server.i386                       4.3p2-29.el5                 &lt;span style=&quot;color: #0000ff;&quot;&gt;installed&lt;/span&gt;
+
+root@rhel5:~# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;yum list | grep -i openswan&lt;/span&gt;&lt;/strong&gt;
+openswan.i386                             2.6.14-1.el5_3.3            &lt;span style=&quot;color: #0000ff;&quot;&gt; updates&lt;/span&gt;
+openswan-doc.i386                         2.6.14-1.el5_3.3             &lt;span style=&quot;color: #0000ff;&quot;&gt;updates&lt;/span&gt;
+
+root@rhel5:~# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;yum list | grep -i openvpn&lt;/span&gt;&lt;/strong&gt;
+NetworkManager-openvpn.i386               1:0.7.0-18.svn11.el5.1       &lt;span style=&quot;color: #0000ff;&quot;&gt;epel&lt;/span&gt;
+openvpn.i386                              2.1-0.29.rc15.el5            &lt;span style=&quot;color: #0000ff;&quot;&gt;epel&lt;/span&gt;
+openvpn-auth-ldap.i386                    2.0.3-3.el5                  &lt;span style=&quot;color: #0000ff;&quot;&gt;epel&lt;/span&gt;
+root@rhel5:~#&lt;/pre&gt;
+
+&lt;h3 id=&quot;search-for-pattern-in-all-packages-name-description-and-summary&quot;&gt;&lt;strong&gt;S&lt;/strong&gt;&lt;strong&gt;earch for pattern in all packages name, description and summary&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;The search option checks the names, descriptions, summaries and listed package maintainers of all of the available packages to find those that match. For example, to search for all packages that relate to “zip”, type:&lt;/p&gt;
+
+&lt;pre&gt;# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;yum search zip&lt;/span&gt;&lt;/strong&gt;
+Loaded plugins: downloadonly, fastestmirror
+Loading mirror speeds from cached hostfile
+ * extras: mirrors.portafixe.com
+ * base: mirrors.portafixe.com
+ * updates: mirrors.portafixe.com
+ * addons: mirrors.portafixe.com
+======================= Matched: zip =================================================
+mc.i386 : User-friendly text console file manager and visual shell
+kdeutils.i386 : K Desktop Environment - Utilities
+bzip2.i386 : A file compression utility.
+bzip2-devel.i386 : Header files and libraries for developing apps which will use bzip2.
+bzip2-libs.i386 : Libraries for applications using bzip2
+eject.i386 : A program that ejects removable media using software control.
+gzip.i386 : The GNU data compression program.
+java-1.4.2-gcj-compat-src.i386 : Source files for libgcj
+libgsf.i386 : GNOME Structured File library
+mikmod.i386 : A MOD music file player.
+mono-core.i386 : The Mono CIL runtime, suitable for running .NET code
+ncompress.i386 : Fast compression and decompression utilities.
+perl-Archive-Tar.noarch : A module for Perl manipulation of .tar files
+perl-Archive-Zip.noarch : Perl library for accessing Zip archives
+perl-Compress-Zlib.i386 : A module providing Perl interfaces to the zlib compression library.
+perl-String-CRC32.i386 : Perl interface for cyclic redundency check generation
+rar.i386 : RAR archiver to create and manage RAR archives
+unzip.i386 : A utility for unpacking zip files.
+xarchiver.i386 : Archive manager for Xfce
+zip.i386 : A file compression and packaging utility compatible with PKZIP.
+zlib.i386 : The zlib compression and decompression library.
+zlib-devel.i386 : Header files and libraries for Zlib development.
+[root@boris packages]
+#&lt;/pre&gt;
+
+&lt;p&gt;We can use any of the standard wildcard characters to run any search option with a partial word or name: ? to represent any one character, and * to mean zero or more characters. Always add the escape character () before wildcards.&lt;/p&gt;
+
+&lt;h3 id=&quot;getting-information-about-a-package&quot;&gt;&lt;strong&gt;Getting information about a package&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;The “info” parameter allow you to display information about the package you specified.&lt;/p&gt;
+
+&lt;pre&gt;# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;yum info python&lt;/span&gt;&lt;/strong&gt;
+Loaded plugins: downloadonly, fastestmirror
+Loading mirror speeds from cached hostfile
+ * extras: mirrors.portafixe.com
+ * base: mirrors.portafixe.com
+ * updates: mirrors.portafixe.com
+ * addons: mirrors.portafixe.com
+Installed Packages
+Name       : python
+Arch       : i386
+Version    : 2.4.3
+Release    : 24.el5_3.6
+Size       : 21 M
+Repo       : installed
+Summary    : An interpreted, interactive, object-oriented programming language.
+URL        : http://www.python.org/
+License    : PSF - see LICENSE
+Description:
+Python is an interpreted, interactive, object-oriented programming language often compared to Tcl, Perl, Scheme or Java. Python
+includes modules, classes, exceptions, very high level dynamic data types and dynamic typing. Python supports interfaces to many
+system calls and libraries, as well as to various windowing systems (X11, Motif, Tk, Mac and MFC).  Programmers can write new
+built-in modules for Python in C or C++. Python can be used as an extension language for applications that need a programmable
+interface. This package contains most of the standard Python modules, as well as modules for interfacing to the Tix widget set for
+Tk and RPM.  Note that documentation for Python is provided in the python-docs package.
+#&lt;/pre&gt;
+
+&lt;h3 id=&quot;correcting-yum-operation-error&quot;&gt;**Correcting yum operation error&lt;/h3&gt;
+&lt;p&gt;**&lt;/p&gt;
+
+&lt;p&gt;You may sometime encounter situation when trying to update your system, you keep getting error. This can occur, when download have been have been terminated abnormally. The first thing we should do in that situation is to run the “yum clean all” command. This will clear the yum cache directory (/var/cache/yum) and most of the time it resolve the problem.&lt;/p&gt;
+
+&lt;pre&gt;# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;yum clean all&lt;/span&gt;&lt;/strong&gt;
+Loaded plugins: downloadonly, fastestmirror
+Cleaning up Everything
+Cleaning up list of fastest mirrors
+#&lt;/pre&gt;
+
+&lt;h3 id=&quot;listing-package-group&quot;&gt;&lt;strong&gt;Listing package group&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;This “grouplist” option, list the package group that are installed on your server and that are available for you to download. The example below was run on a Centos 5 server, on a Redhat server some package group may not show. Centos have more package group than Red hat. The list have also been shortened, to take less space on this page.&lt;/p&gt;
+
+&lt;pre&gt;# &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;yum grouplist&lt;/strong&gt;&lt;/span&gt;
+&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;Installed Groups:&lt;/span&gt;&lt;/strong&gt;
+   Administration Tools
+   DNS Name Server
+   FTP Server
+   Mail Server
+   Multimedia
+   MySQL Database
+   ...
+   Text-based Internet
+   Web Server
+   Windows File Server
+   X Software Development
+   X Window System
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;Available Groups:&lt;/strong&gt;&lt;/span&gt;
+   Development Tools
+   GNOME Software Development
+    ...
+   News Server
+   Web Development
+   Window Managers
+Done
+#&lt;/pre&gt;
+
+&lt;h3 id=&quot;getting-information-about-a-package-group&quot;&gt;&lt;span style=&quot;color: #000000;&quot;&gt;&lt;strong&gt;Getting information about a package group&lt;/strong&gt;&lt;/span&gt;&lt;/h3&gt;
+
+&lt;p&gt;The “groupinfo” option of the “yum” command display the list the packages that are part of the specified group. The “&lt;strong&gt;Default Packages&lt;/strong&gt;” section, list the packaged that will be installed when that group is install. The “&lt;strong&gt;Mandatory&lt;/strong&gt;” section, list packages that requires to be installed for the package group to work. Depending on the group you specify, there may be a “&lt;strong&gt;Optional Packages&lt;/strong&gt;” section in the list, these packages are the part of the group but won’t be install by default, you will need to install them one by one should you require one of them.&lt;/p&gt;
+
+&lt;pre&gt;# &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;yum groupinfo Graphics&quot;&lt;/strong&gt;&lt;/span&gt;
+[root@boris ~]# yum groupinfo &quot;DNS Name Server&quot;
+Loaded plugins: downloadonly, fastestmirror
+Setting up Group Process
+Loading mirror speeds from cached hostfile
+ * extras: centos.mirror.iweb.ca
+ * base: centos.mirror.iweb.ca
+ * updates: centos.mirror.iweb.ca
+ * addons: centos.mirror.iweb.ca
+
+Group: DNS Name Server
+ Description: This package group allows you to run a DNS name server (BIND) on the system.
+ &lt;strong&gt;Mandatory Packages&lt;/strong&gt;:
+   bind
+ &lt;strong&gt;Default Packages&lt;/strong&gt;:
+   bind-chroot
+#&lt;/pre&gt;
+
+&lt;h3 id=&quot;installing-a-package-group-&quot;&gt;&lt;span style=&quot;color: #000000;&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #000000;&quot;&gt;Installing a package group &lt;/span&gt;&lt;/strong&gt;&lt;/span&gt;&lt;/h3&gt;
+
+&lt;p&gt;As you may already guess, the “groupinstall” option allow you to install the default (and required if needed) of the specified group. In the example below, we have install the “DNS Name Server” group.&lt;/p&gt;
+
+&lt;pre&gt;root@anemone:/# &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;yum groupinstall &quot;DNS Name Server&quot;&lt;/strong&gt;&lt;/span&gt;
+Package 30:bind-9.3.4-10.P1.el5_3.3.i386 already installed and latest version
+Resolving Dependencies
+--&amp;gt; Running transaction check
+---&amp;gt; Package bind-chroot.i386 30:9.3.4-10.P1.el5_3.3 set to be updated
+--&amp;gt; Finished Dependency Resolution
+Dependencies Resolved
+===============================================
+ Package      Arch    Version
+===============================================
+Installing:
+ bind-chroot  i386   30:9.3.4-10.P1.el5_3.3     
+
+Transaction Summary
+===============================================
+Install      1 Package(s)
+Update       0 Package(s)
+Remove       0 Package(s)         
+
+Total download size: 42 k
+Is this ok [y/N]: y
+Downloading Packages:
+bind-chroot-9.3.4-10.P1.el5_3.3.i386.rpm                        |  42 kB     00:00
+Running rpm_check_debug
+Running Transaction Test
+Finished Transaction Test
+Transaction Test Succeeded
+Running Transaction
+  Installing     : bind-chroot                                       [1/1]
+Installed: bind-chroot.i386 30:9.3.4-10.P1.el5_3.3
+Complete!
+#&lt;/pre&gt;</content><author><name>jacques</name></author><category term="Admin" /><category term="Admin" /><category term="rpm" /><category term="yum" /><summary type="html">Here is the second article dedicated to the “yum” command. We will demonstrate some useful option of the command and how-to recover in some problematic situation. Keeping your system up to date is important, knowing how to do it and how to correct some issue related to rpm are also important. So let’s see if everyone can find something new about the “yum” command and see if we can apply it in our daily system admin job. You can also consult the “yum” website or the “yum” wiki to obtain more information. As always, I will try to make this article as useful as it can be, so we  can all come back to it and use it as a reference to the “yum” command.</summary></entry><entry><title type="html">Yum Revisited (Part 1)</title><link href="/index.php/2009/09/04/yum-revisited-part-1/" rel="alternate" type="text/html" title="Yum Revisited (Part 1)" /><published>2009-09-04T07:01:27-04:00</published><updated>2009-09-04T07:01:27-04:00</updated><id>/index.php/2009/09/04/yum-revisited-part-1</id><content type="html" xml:base="/index.php/2009/09/04/yum-revisited-part-1/">&lt;p&gt;&lt;a href=&quot;http://192.168.1.88/wp-content/uploads/2009/07/Yum.png&quot;&gt;&lt;img loading=&quot;lazy&quot; class=&quot;alignleft size-full wp-image-680&quot; title=&quot;Yum&quot; src=&quot;http://192.168.1.88/wp-content/uploads/2009/07/Yum.png&quot; alt=&quot;Yum&quot; width=&quot;185&quot; height=&quot;70&quot; /&gt;&lt;/a&gt;This is a first of a series of two articles dedicated to the “yum” program. In this first article, we will mainly look at the configuration files. In the next article, we will look at some advance usage, that will help us in administrating our servers.  As always, will build our article, in a way that we can come back to it and use it as a reference if we need some information about “yum”. We will concentrate on the command line version of “yum”, but I would like mention that there is a graphical version called “yumex” that I would recommend. It is not the fastest one, but it is simple to use and it work.  Visit the  &lt;a href=&quot;http://www.yum-extender.org/blog/&quot; title=&quot;yumex home page&quot;&gt;“yumex” home page&lt;/a&gt;, you can aloso &lt;a href=&quot;http://linternux.com/download/yumex/yumex-2.0.5-3.el5.noarch.rpm&quot; title=&quot;Download yumex rpm&quot;&gt;download the RedHat/Centos 5 rpm&lt;/a&gt; from here.&lt;/p&gt;
+
+&lt;h3 id=&quot;main-configuration-file-etcyumconf&quot;&gt;Main configuration file (/etc/yum.conf)&lt;/h3&gt;
+
+&lt;p&gt;We can say that “yum” configuration break in two parts, the main configuration file yum.conf  located in the /etc directory and the /etc/yum.repos.d directory that contains separated files for each repository that “yum” can connect to, for updating/installing our system. Below is a modified version of the yum.conf file that include comment for every option line, so we could use it as a reference. I think all options, along  with the comments included are self explanatory .&lt;/p&gt;
+
+&lt;pre&gt;# The Main section must exist for yum to do anything
+&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;[main]&lt;/span&gt;&lt;/strong&gt;
+
+# Directory where packages are downloaded
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;cachedir=/var/cache/yum&lt;/strong&gt;&lt;/span&gt;
+
+# 0=Remove packages &amp;amp; headers after they are install/update
+# 1=Keep downloaded packages after update
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;keepcache=0&lt;/strong&gt;&lt;/span&gt;
+
+# Debug Level. Valid numbers are 0-10, default is 2
+&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;debuglevel=2&lt;/span&gt;&lt;/strong&gt;
+
+# Where yum log file is located
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;logfile=/var/log/yum.log&lt;/strong&gt;&lt;/span&gt;
+
+# Distribution Package Name (Fedora=fedora-release, RedHat/Centos=redhat-release)
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;distroverpkg=redhat-release&lt;/strong&gt;&lt;/span&gt;
+
+# 1=Complaint when package aleady install is installed, 0=not tolerant
+# For example, if you request to install foo, bar and baz and baz is installed;
+# yum won't error out complaining that baz is already installedt
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;tolerant=1&lt;/strong&gt;&lt;/span&gt;
+
+# 1=Only update the architectures of packages that is installed, 0=Override Check
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;exactarch=1&lt;/strong&gt;&lt;/span&gt;
+
+# Let yum determine if package is obsolete during update (1=Activate 0=Deactivate)
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;obsoletes=1&lt;/strong&gt;&lt;/span&gt;
+
+# Confirms that all packages are cryptographically verified
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;gpgcheck=1&lt;/strong&gt;&lt;/span&gt;
+
+# 1=Enabling yum plugins, 0=Disable yum plugins
+# Once plugins are enabled in yum.conf, you may install yum plugins and use them.
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;plugins=1&lt;/strong&gt;&lt;/span&gt;
+
+# Determine when repositories metedata expire after it is received.
+# Note: yum-RHN-plugin doesn't honor this.
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;metadata_expire=1h&lt;/strong&gt;&lt;/span&gt;
+
+# Some package (like kernel) can only be install and not updated
+# So here we would keep 5 versions of the kernel.
+# When the sixth one is installed, the oldest one will get deleted.
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;installonly_limit = 5
+&lt;/strong&gt;&lt;/span&gt;
+# List of packages to exclude from updates or installs.
+# Uncomment below if you want to autoupdate also the kernel rpms
+# Reboot is necessary to use the new kernel, once installed.
+#&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt; exclude=kernel*&lt;/strong&gt;&lt;/span&gt;
+
+# PUT YOUR REPOS HERE OR IN separate files named file.repo
+# in /etc/yum.repos.d
+#&lt;/pre&gt;
+
+&lt;h3&gt;&lt;!--more--&gt;&lt;/h3&gt;
+
+&lt;h3 id=&quot;yum-repository-directory-etcyumreposd&quot;&gt;Yum repository directory (/etc/yum.repos.d)&lt;/h3&gt;
+
+&lt;p&gt;In the “/etc/yum.repos.d”  directory, we will find one file for each repository we want to use to download or install packages. In a simple RedHat installation we will have one file, name “rhel-debuginfo.repo”. You can find the content and description of this file below. RedHat standard repository seems to be hidden or hard coded somewhere (check /etc/yum directory). Centos on the other side, have explicitly place 2 files in this directory (CentOS-Base.repo and CentOS-Media.repo), one for installing and updating our system from internet and the other one from CD/DVD.&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;# Section title - Can have multiple sections in the file
+&lt;/strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;[rhel-debuginfo]&lt;/span&gt;
+
+&lt;strong&gt;# Friendly name for the repository&lt;/strong&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;name=Red Hat Enterprise Linux $releasever - $basearch - Debug&lt;/span&gt;
+
+&lt;strong&gt;# Full URL to the packages (Can be http:// frp:// or file://)&lt;/strong&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;Baseurl=ftp://ftp.redhat.com/pub/redhat/linux/enterprise/$releasever/en/os/$basearch/Debuginfo/&lt;/span&gt;
+
+&lt;strong&gt;# Activate(1) or De-Activate(0) the repositor&lt;/strong&gt;y
+&lt;span style=&quot;color: #0000ff;&quot;&gt;enable=1&lt;/span&gt;
+
+&lt;strong&gt;# Enable(1)/Disable(0) - Packages cryptographic check&lt;/strong&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;gpgcheck=1 &lt;/span&gt;
+
+&lt;strong&gt;# GPG key &lt;/strong&gt;&lt;span style=&quot;color: #000000;&quot;&gt;&lt;strong&gt;used to verify RPM packages built and signed by Red Hat/Centos /Fedora&lt;/strong&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-releas&lt;/span&gt;e
+&lt;/span&gt;&lt;/pre&gt;
+
+&lt;p&gt;There are many additional repositories that we can subscribe for our RedHat/Centos/Fedora server. For example, there is the “&lt;a href=&quot;https://fedoraproject.org/wiki/EPEL&quot; title=&quot;EPEL Repository&quot;&gt;Extra Packages for Enterprise Linux (EPEL)&lt;/a&gt;“, you can find the &lt;a href=&quot;https://fedoraproject.org/wiki/EPEL/FAQ#howtouse&quot; title=&quot;Hot-to subscribe to EPEL&quot;&gt;procedure for subscribing to it&lt;/a&gt;, but basically you download and install the &lt;a href=&quot;http://download.fedora.redhat.com/pub/epel/4/i386/repoview/epel-release.html&quot; title=&quot;EPEL RHEL 4 Packages Page&quot;&gt;RHEL4&lt;/a&gt; and &lt;a href=&quot;http://download.fedora.redhat.com/pub/epel/5/i386/repoview/epel-release.html&quot; title=&quot;EPEL RHEL 5 Packages Page&quot;&gt;RHEL5&lt;/a&gt; rpm. There is also the &lt;a href=&quot;https://rpmrepo.org/RPMforge&quot; title=&quot;RPM Forge Site&quot;&gt;RPMforge repository&lt;/a&gt; where you will find packages for RedHat/Centos. Download the &lt;a href=&quot;http://packages.sw.be/rpmforge-release/rpmforge-release-0.3.6-1.el5.rf.i386.rpm&quot; title=&quot;RedHat/Centos5 32 Bits RPM&quot;&gt;RedHat 5/Centos 5 rpm&lt;/a&gt; or the &lt;a href=&quot;http://packages.sw.be/rpmforge-release/rpmforge-release-0.3.6-1.el4.rf.i386.rpm&quot; title=&quot;RedHat/Centos4 32 Bits RPM&quot;&gt;RedHat 4/Centos 4 rpm&lt;/a&gt; and follow the same procedure describe above for EPEL repository. There is also the &lt;a href=&quot;http://dag.wieers.com/rpm/&quot; title=&quot;Dag rpm site&quot;&gt;DAG site&lt;/a&gt; and you can &lt;a href=&quot;http://dag.wieers.com/rpm/FAQ.php#B&quot; title=&quot;Download Subscribing page&quot;&gt;subscribe to the repository from this page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Example, subscribing to EPEL RedHat 5 repository ;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;GPG Repositories keys before subscribing&lt;/strong&gt;
+&lt;/span&gt;root@rhel5:/etc/yum.repos.d# ls -l /etc/pki/rpm-gpg/
+total 16
+-rw-r--r-- 1 root root 1512 Mar 16 21:30 RPM-GPG-KEY-beta
+-rw-r--r-- 1 root root 1504 Mar 16 21:30 RPM-GPG-KEY-CentOS-5
+
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;Yum repository directory before&lt;/strong&gt;&lt;/span&gt;
+root@rhel5:/etc/yum.repos.d# ls -l
+total 16
+-rw-r--r-- 1 root root 2323 Mar 16 21:30 CentOS-Base.repo
+-rw-r--r-- 1 root root  626 Mar 16 21:30 CentOS-Media.repo
+root@rhel5:/etc/yum.repos.d#
+
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;Subcribing to EPEL RedHat 5 repository&lt;/strong&gt;&lt;/span&gt;
+# rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm
+Retrieving http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm
+warning: /var/tmp/rpm-xfer.hoNaf4: Header V3 DSA signature: NOKEY, key ID 217521f6
+Preparing...                ########################################### [100%]
+ 1:epel-release           ########################################### [100%]
+
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;Yum repository directory after subscribing&lt;/strong&gt;&lt;/span&gt;
+root@rhel5:/etc/yum.repos.d# ls -l
+total 24
+-rw-r--r-- 1 root root 2323 Mar 16 21:30 CentOS-Base.repo
+-rw-r--r-- 1 root root  626 Mar 16 21:30 CentOS-Media.repo
+-rw-r--r-- 1 root root  954 Apr 25  2008 &lt;span style=&quot;color: #0000ff;&quot;&gt;epel.repo&lt;/span&gt;
+-rw-r--r-- 1 root root 1054 Apr 25  2008 &lt;span style=&quot;color: #0000ff;&quot;&gt;epel-testing.repo
+&lt;/span&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;GPG Repositories keys after subscribing&lt;/strong&gt;&lt;/span&gt;
+root@rhel5:/etc/yum.repos.d# ls -l /etc/pki/rpm-gpg/
+total 20
+-rw-r--r-- 1 root root 1512 Mar 16 21:30 RPM-GPG-KEY-beta
+-rw-r--r-- 1 root root 1504 Mar 16 21:30 RPM-GPG-KEY-CentOS-5
+-rw-r--r-- 1 root root 1698 Apr  3  2007 &lt;span style=&quot;color: #0000ff;&quot;&gt;RPM-GPG-KEY-EPEL
+&lt;/span&gt;root@rhel5:/etc/yum.repos.d#&lt;/pre&gt;
+
+&lt;p&gt;Always be careful when you subscribe to a new repositories, you may encounter problem on some update afterward. If you do use additional repositories, I would suggest that you activate it to download the needed packages and then deactivate it by changing the line “enable=1” to “enable=0”, in the proper file in /etc/yum.repos.d directory. If you ever need again, just activate the “enable” line.&lt;/p&gt;
+
+&lt;p&gt;In the next article, we will focus on the using the “yum” command itself, see you soon.&lt;/p&gt;</content><author><name>jacques</name></author><category term="Admin" /><category term="Admin" /><category term="rpm" /><category term="yum" /><summary type="html">This is a first of a series of two articles dedicated to the “yum” program. In this first article, we will mainly look at the configuration files. In the next article, we will look at some advance usage, that will help us in administrating our servers.  As always, will build our article, in a way that we can come back to it and use it as a reference if we need some information about “yum”. We will concentrate on the command line version of “yum”, but I would like mention that there is a graphical version called “yumex” that I would recommend. It is not the fastest one, but it is simple to use and it work.  Visit the  “yumex” home page, you can aloso download the RedHat/Centos 5 rpm from here.</summary></entry><entry><title type="html">Setting up your own NTP server</title><link href="/index.php/2009/07/24/setting-up-ntp-server/" rel="alternate" type="text/html" title="Setting up your own NTP server" /><published>2009-07-24T09:38:43-04:00</published><updated>2009-07-24T09:38:43-04:00</updated><id>/index.php/2009/07/24/setting-up-ntp-server</id><content type="html" xml:base="/index.php/2009/07/24/setting-up-ntp-server/">&lt;p&gt;As a system administrator, we must ensure that time synchronization is working at all time. Time synchronization have been proven to be helpful when we try to trace a chain of events that occurs on multiple servers or when trying to synchronize time sensitive-transactions. In this article, we will setup one NTP (Network Time Protocol) server running on RedHat/Centos 5, but it could be applied to the major Linux distribution.  As always, I have tried to make the article to be used a reference source, so that we can come back when ever you will play with the NTP tools.&lt;/p&gt;
+
+&lt;p&gt;The configuration have been done on my Linux server at home (gumby – 192.168.1.101).  We will setup a NTP   that will synchronize with NTP servers on the internet and it will answer NTP query on my internal network (192.168.1.0/24). This will allow desktop or laptop to synchronize with this NTP server.&lt;/p&gt;
+
+&lt;h3 id=&quot;brief-history-of-ntp&quot;&gt;Brief history of NTP&lt;/h3&gt;
+
+&lt;p&gt;The NTP protocol was born on the Unix operating system around the 1980’s and have been initiated by &lt;a href=&quot;http://www.eecis.udel.edu/~mills/&quot; title=&quot;Dave l&amp;gt; Mills Home Page&quot;&gt;Dave L. Mills&lt;/a&gt;. Currently there are two versions of NTP that can be used intermixed, the version 3 is very stable and it run on a number of operating systems. The version 4 have some enhancements and better support for the latest operating systems. There is also a simplified version of NTP called SNTP (Simple Network Time Protocol &lt;a href=&quot;http://www.faqs.org/rfcs/rfc2030.html&quot; title=&quot;RFC2030 - SNTP&quot;&gt;RFC2030&lt;/a&gt;), but it provides a reduced precision due to a simpler algorithms. Some earlier version of NTP included some programs starting with xntp (like xntpd), with version 4 the naming convention were changed and now all the ntp programs included with package, start with ntp. For more information you can consult the &lt;a href=&quot;http://www.ntp.org/&quot; title=&quot;NTP Home page&quot;&gt;NTP home page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;functionality-overview&quot;&gt;Functionality overview&lt;/h3&gt;
+
+&lt;p&gt;NTP use a hierarchical time synchronization structure. The hierarchical level of the time synchronization are called &lt;strong&gt;stratum&lt;/strong&gt;. At the top of this hierarchy, there is a daemon that provide the most accuracy. &lt;a href=&quot;http://en.wikipedia.org/wiki/Atomic_clock&quot; title=&quot;Atomic Clock Wiki&quot;&gt;Atomic clock&lt;/a&gt; are stratum zero, it is by far the most accurate method of keeping time with a precision of less than a second lost every 100 million years.  All NTP time server devices are referred to as stratum 1 devices. This is because they are on the next level (strata) down from an atomic clock (a stratum 0 device). Devices that a &lt;a href=&quot;http://www.galsys.co.uk/&quot;&gt;NTP time server&lt;/a&gt; synchronises are known as stratum 2 devices and these too can distribute their time signal to other devices which become stratum 3 and so on.&lt;/p&gt;
+
+&lt;p&gt;In large organization, they should be at least one or two NTP servers that synchronize with time server on the internet NTP servers (probably located in the DMZ).  Some NTP servers located in the corporate network, could then synchronize their time with the NTP servers located in the DMZ and be used as corporate NTP servers. This will ensure that all the clients have the same date and time.  Before continuing, I would like to state that the NTP protocol use &lt;strong&gt;UDP port 123.&lt;/strong&gt; To be able to synchronize with its trusted time servers and to respond to client query the firewall configuration must allow UDP traffic to destination port 123.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h3 id=&quot;setting-your-time-zone&quot;&gt;Setting your time zone&lt;/h3&gt;
+
+&lt;p&gt;The first we must check, is the time zone define on our system, it have to be define correctly. My server is located in Montreal and is define accordingly.&lt;/p&gt;
+
+&lt;pre&gt;root@gumby:/# &lt;strong&gt;cat /etc/sysconfig/clock&lt;/strong&gt;
+# The ZONE parameter is only evaluated by system-config-date.
+# The timezone of the system is defined by the contents of /etc/localtime.
+ZONE=&quot;&lt;strong&gt;America/Montreal&lt;/strong&gt;&quot;
+UTC=&lt;strong&gt;true&lt;/strong&gt;
+ARC=false
+root@gumby:/#&lt;/pre&gt;
+
+&lt;p&gt;If your is not setup correctly, you can use the change your time zone by using the command “timeconfig” that will display an ASCII text menu or use the GUI version by typing the command “system-config-time”. These programs modify the content of the files /etc/sysconfig/clock (ascii format) and /etc/localtime (binary format).&lt;/p&gt;
+
+&lt;h3 id=&quot;ntp-software&quot;&gt;NTP Software&lt;/h3&gt;
+
+&lt;p&gt;Verify that the NTP package is installed on your server by using the “&lt;strong&gt;rpm -qi ntp&lt;/strong&gt;” command. If not,  install it using the command “&lt;strong&gt;yum install ntp&lt;/strong&gt;” or “&lt;strong&gt;up2date –nox -i ntp&lt;/strong&gt;”  if you are using RedHat/Centos V3 or V4.&lt;/p&gt;
+
+&lt;pre&gt;root@gumby:/etc# &lt;strong&gt;rpm -qi ntp&lt;/strong&gt;
+Name        : ntp                          Relocations: (not relocatable)
+Version     : 4.2.2p1                           Vendor: Red Hat, Inc.
+Release     : 9.el5_3.2                     Build Date: Thu 14 May 2009 09:01:12 AM EDT
+Install Date: Thu 02 Jul 2009 09:29:46 PM EDT      Build Host: hs20-bc1-5.build.redhat.com
+Group       : System Environment/Daemons    Source RPM: ntp-4.2.2p1-9.el5_3.2.src.rpm
+Size        : 2540868                          License: distributable
+Signature   : DSA/SHA1, Fri 15 May 2009 09:53:46 AM EDT, Key ID 5326810137017186
+Packager    : Red Hat, Inc. &amp;lt;http://bugzilla.redhat.com/bugzilla&amp;gt;
+URL         : http://www.ntp.org
+Summary     : Synchronizes system time using the Network Time Protocol (NTP).
+Description :
+The Network Time Protocol (NTP) is used to synchronize a computer's
+time with another reference time source. The ntp package contains
+utilities and daemons that will synchronize your computer's time to
+Coordinated Universal Time (UTC) via the NTP protocol and NTP servers.
+The ntp package includes ntpdate (a program for retrieving the date
+and time from remote machines via a network) and ntpd (a daemon which
+continuously adjusts system time).
+
+Install the ntp package if you need tools for keeping your system's
+time synchronized via the NTP protocol.
+root@gumby:#&lt;/pre&gt;
+
+&lt;h3 id=&quot;choosing-our-internet-ntp-servers&quot;&gt;Choosing our internet NTP servers&lt;/h3&gt;
+
+&lt;p&gt;It is a good practice that our NTP server synchronize with more that one servers. There is a project called &lt;a href=&quot;http://www.pool.ntp.org/&quot; title=&quot;The NTP Pool Cluster Project&quot;&gt;NTP Project Pool&lt;/a&gt; that is a big virtual cluster of NTP server spread across the world. In &lt;a href=&quot;http://www.pool.ntp.org/zone/north-america&quot; title=&quot;NTP Servers in North America&quot;&gt;North-America&lt;/a&gt; they have more that 575 NTP servers and more than 50 in &lt;a href=&quot;http://www.pool.ntp.org/zone/ca&quot; title=&quot;NTP Cluster in Canada&quot;&gt;Canada&lt;/a&gt;. We will use the Canadian cluster to setup our NTP server. You will find the ntp servers name at the top of  the &lt;a href=&quot;http://www.pool.ntp.org/zone/ca&quot; title=&quot;NTP Cluster for Canada&quot;&gt;Canadian virtual cluster page&lt;/a&gt;.  The IP address assigned to these names always change, this spread the load within the cluster and allow us to have a good response from these NTP servers. Below is the result of two “nslookup” of “0.ca.pool.ntp.org”, you will notice that the IP returned are not the same for the two “nslookup”. These servers are normally have a stratum of 2 or 3. If you wish to use a even more accurate NTP server, I suggest visiting this page that contain a &lt;a href=&quot;http://support.ntp.org/bin/view/Servers/StratumOneTimeServers&quot; title=&quot;Stratum One server&quot;&gt;list of stratum one server&lt;/a&gt; on the internet and choose one or two servers located near you.&lt;/p&gt;
+
+&lt;pre&gt;root@gumby:~# &lt;strong&gt;nslookup 0.ca.pool.ntp.org&lt;/strong&gt;
+Server:         192.168.1.101
+Address:        192.168.1.101#53
+
+Non-authoritative answer:
+&lt;span style=&quot;color: #ff0000;&quot;&gt;&lt;strong&gt;Name:   0.ca.pool.ntp.org
+Address: 66.96.30.35&lt;/strong&gt;&lt;/span&gt;
+Name:   0.ca.pool.ntp.org
+Address: 174.142.75.135
+Name:   0.ca.pool.ntp.org
+Address: 206.248.189.157
+Name:   0.ca.pool.ntp.org
+Address: 209.139.209.82
+Name:   0.ca.pool.ntp.org
+Address: 216.221.88.81
+
+root@gumby:~# &lt;strong&gt;nslookup 0.ca.pool.ntp.org&lt;/strong&gt;
+Server:         192.168.1.101
+Address:        192.168.1.101#53
+
+Non-authoritative answer:
+&lt;strong&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt;Name:   0.ca.pool.ntp.org
+Address: 216.221.88.81&lt;/span&gt;&lt;/strong&gt;
+Name:   0.ca.pool.ntp.org
+Address: 66.96.30.35
+Name:   0.ca.pool.ntp.org
+Address: 174.142.75.135
+Name:   0.ca.pool.ntp.org
+Address: 206.248.189.157
+Name:   0.ca.pool.ntp.org
+Address: 209.139.209.82
+root@gumby:~#&lt;/pre&gt;
+
+&lt;h3 id=&quot;ntp-server-configuration-file&quot;&gt;NTP server configuration file&lt;/h3&gt;
+
+&lt;p&gt;The NTP configuration file is called ntp.conf and is located in the /etc directory. Here is the configuration file for my home network. We will be using the 4 virtual servers of the Canadian NTP pool.&lt;/p&gt;
+
+&lt;pre&gt;root@gumby:~# cat /etc/ntp.conf
+# Default restriction
+# kod           When access violation occurs send the &quot;Kiss Of Death&quot; - Drop Packet
+# nomodify      Deny queries which attempt to modify the state of the server.
+# nopeer        Deny packets which would result in mobilizing a new association.
+# noquery       Deny Queries.
+# notrap        Deny trap service -  subsystem of ntpdq control message protocol
+#               intended for use by remote event logging programs.
+&lt;strong&gt;restrict default kod nomodify notrap nopeer noquery&lt;/strong&gt;
+
+# Use public servers from the pool.ntp.org project.
+# Please consider joining the pool (http://www.pool.ntp.org/join.html).
+&lt;strong&gt;server 0.ca.pool.ntp.org
+server 1.ca.pool.ntp.org
+server 2.ca.pool.ntp.org
+server 3.ca.pool.ntp.org&lt;/strong&gt;
+
+# Permit all access over the loopback interface.
+&lt;strong&gt;restrict 127.0.0.1&lt;/strong&gt;
+
+# Hosts on local network are less restricted (Can Query)
+&lt;strong&gt;restrict 192.168.1.0 mask 255.255.255.0 nomodify notrap&lt;/strong&gt;
+
+# Undisciplined Local Clock. This is a fake driver intended for backup
+# and when no outside source of synchronized time is available.
+&lt;strong&gt;fudge   127.127.1.0 stratum 10&lt;/strong&gt;
+
+# Drift file.  Put this in a directory which the daemon can write to.
+&lt;strong&gt;driftfile /var/lib/ntp/drift&lt;/strong&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;For security reason, we disallow access to our NTP server. This line “&lt;strong&gt;restrict default kod nomodify notrap nopeer noquery&lt;/strong&gt;” prevent clients, servers or hacker to query our NTP configuration.  (See explanation of each flag see the comment included in example above).&lt;/li&gt;
+  &lt;li&gt;We then specify the server names we took from the &lt;a href=&quot;http://www.pool.ntp.org/zone/ca&quot; title=&quot;NTP Cluster for Canada&quot;&gt;NTP project pool, for cluster of servers located in Canada&lt;/a&gt; “&lt;strong&gt;server 0.ca.pool.ntp.org … server 3.ca.pool.ntp.org&lt;/strong&gt;“. We are using four servers names that are actually a pool of more than 50 servers located in Canada, this will ensure that we will always a quick response to our queries.&lt;/li&gt;
+  &lt;li&gt;We give full access to the local host “&lt;strong&gt;restrict 127.0.0.1&lt;/strong&gt;“.&lt;/li&gt;
+  &lt;li&gt;With the line “&lt;strong&gt;restrict 192.168.1.0 mask 255.255.255.0 nomodify notrap&lt;/strong&gt;“, we permit query but no modification or trap request to our internal network. In the example, it is my home network (192.168.1.0/24). You need to replace the IP and netmask by the network that you wish to allow synchronization with this server.&lt;/li&gt;
+  &lt;li&gt;The line “&lt;strong&gt;fudge 127.127.1.0 stratum 10&lt;/strong&gt;“, in a “just in case” line. If connection with the outside world is not working (internet network problem), the NTP service will continue to work and your internal server will still be able to synchronize with your server.&lt;/li&gt;
+  &lt;li&gt;The line “&lt;strong&gt;driftfile /var/lib/ntp/drift&lt;/strong&gt;” is added because the NTP daemon computes the drift of the system clock compared to the reference time. The daemon could then can save the drift rate to a file to have it available at the next restart. If the daemon is maintaining the drift file, this will increase synchronization speed.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;starting-ntp-service&quot;&gt;Starting NTP service&lt;/h3&gt;
+
+&lt;p&gt;We want to make sure that the NTP service start at each system reboot. Type the following command to activate the service for system run level 3 and 5.&lt;/p&gt;
+
+&lt;pre&gt;root@gumby:~# &lt;strong&gt;chkconfig --level 35 ntpd on&lt;/strong&gt;&lt;/pre&gt;
+
+&lt;p&gt;The NTP Service can be stopped, started or restarted using the following command ;&lt;/p&gt;
+
+&lt;pre&gt;root@gumby:~# &lt;strong&gt;service ntpd stop&lt;/strong&gt;
+Shutting down ntpd:                                        [  OK  ]
+root@gumby:~# &lt;strong&gt;service ntpd start&lt;/strong&gt;
+Starting ntpd:                                             [  OK  ]
+root@gumby:~# &lt;strong&gt;service ntpd restart&lt;/strong&gt;
+Shutting down ntpd:                                        [  OK  ]
+Starting ntpd:                                             [  OK  ]
+root@gumby:~#&lt;/pre&gt;
+
+&lt;p&gt;Every time we make change to the configuration file we need to do a restart of the NTP service for the changes to take effect on the running process.&lt;/p&gt;
+
+&lt;h3 id=&quot;initial-synchronization&quot;&gt;Initial Synchronization&lt;/h3&gt;
+
+&lt;p&gt;If your system date and time is very different from the actual time the NTP daemon may terminate. We should run the “ntpdate -u” command to force the system clock to become synchronize with our NTP cluster. If you encounter any problem with your time server, remember to check the “/var/log/messages” file for error messages.&lt;/p&gt;
+
+&lt;p&gt;To test our NTP server configuration we will change the date and time of our server to January the 1th of 2008 at 20:05:10 and use the “ntpdate -u” command to bring it back to the actual date and time.&lt;/p&gt;
+
+&lt;pre&gt;root@gumby:~# &lt;strong&gt;date&lt;/strong&gt;
+Fri Jul 24 10:09:53 EDT &lt;strong&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt;2009&lt;/span&gt;&lt;/strong&gt;
+
+root@gumby:~# &lt;strong&gt;date 010120052008.10&lt;/strong&gt;
+Tue Jan  1 20:05:10 EST &lt;span style=&quot;color: #ff0000;&quot;&gt;&lt;strong&gt;2008&lt;/strong&gt;&lt;/span&gt;
+
+root@gumby:~# &lt;strong&gt;date&lt;/strong&gt;
+&lt;strong&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt;Tue Jan  1 20:05:18 EST 2008&lt;/span&gt;&lt;/strong&gt;
+
+root@gumby:~# &lt;strong&gt;ntpdate -u  0.ca.pool.ntp.org&lt;/strong&gt;
+24 Jul 10:10:19 ntpdate[1820]: step time server 132.214.200.120 offset 49208692.700394 sec
+root@gumby:~# &lt;strong&gt;ntpdate -u  0.ca.pool.ntp.org&lt;/strong&gt;
+24 Jul 10:10:23 ntpdate[1821]: adjust time server 24.215.0.24 offset -0.031689 sec
+
+root@gumby:~# &lt;strong&gt;date&lt;/strong&gt;
+&lt;strong&gt;&lt;span style=&quot;color: #ff0000;&quot;&gt;Fri Jul 24 10:10:25 EDT 2009&lt;/span&gt;&lt;/strong&gt;
+root@gumby:~#&lt;/pre&gt;
+
+&lt;h3 id=&quot;checking-our-ntp-server-status&quot;&gt;Checking our NTP server status&lt;/h3&gt;
+
+&lt;p&gt;The best way to confirm that NTP is working is to use the &lt;a href=&quot;https://www.eecis.udel.edu/~mills/ntp/html/ntpq.html&quot; title=&quot;ntpq man page&quot;&gt;ntp utility&lt;/a&gt;. This command can be use to check the NTP service status on either the local server or on a remote server. We will use the “ntpq -p”  to print the status of our local NTP server. Looking at this result we can that the preferred time server was “woodlane.webcon”, because it have a “*” at the beginning of the line and that it is a stratum 3 server.&lt;/p&gt;
+
+&lt;pre&gt;root@gumby:~# &lt;strong&gt;ntpq -p&lt;/strong&gt;
+ &lt;strong&gt;remote           refid          st t when poll reach   delay   offset  jitter&lt;/strong&gt;
+==============================================================================
+-ntp1.sscgateway 209.87.233.53    3 u  367 1024  377   21.003  -111.05  17.218
+&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;*&lt;/span&gt;&lt;/strong&gt;woodlane.webcon 132.246.168.164  3 u  645 1024  377   14.413   10.323   1.840
++chavez.x2a.org  132.246.168.164  3 u  393 1024  377   33.589   12.340   0.097
++ns1.ptpbroadban 192.135.48.21    3 u  146 1024  337   30.564   26.666   1.955
+root@gumby:~#&lt;/pre&gt;
+
+&lt;p&gt;The output above is showing that we have 4 references time sources, this what we expected.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;strong&gt;remote column&lt;/strong&gt; indicate the name of the NTP server. We can also use the command “ntpq -pn” to display the IP instead of the name.&lt;br /&gt;
+If the first character at the beginning of each is not blank, it is used as a qualifier for the time source on the line.&amp;lt;/p&amp;gt;
+    &lt;ul&gt;
+      &lt;li&gt;“&lt;strong&gt;***” indicate that this server is the **preferred time source&lt;/strong&gt; for our NTP daemon.&lt;/li&gt;
+      &lt;li&gt;“&lt;strong&gt;+&lt;/strong&gt;” indicate that this server is a consider as a &lt;strong&gt;high quality time source&lt;/strong&gt; and could be used if the preferred time source is not available.&lt;/li&gt;
+      &lt;li&gt;“-” indicate that this server is &lt;strong&gt;discarded&lt;/strong&gt; by the clustering algorithm as an outlyer&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;The “&lt;strong&gt;refid&lt;/strong&gt;” does not indicate an IP address but a reference to the type of clock the server is using.&lt;br /&gt;
+The “&lt;strong&gt;st&lt;/strong&gt;” column indicate the stratum number of the server. All servers have a stratum of 3.&lt;/li&gt;
+  &lt;li&gt;The &lt;strong&gt;when&lt;/strong&gt; and the &lt;strong&gt;poll&lt;/strong&gt; column are related. Each time NTP daemon query the time server identified on the same line it increment the &lt;strong&gt;when&lt;/strong&gt; counter until it reach the &lt;strong&gt;poll&lt;/strong&gt; number, at that point the when counter get rest to zero. The result of each cycle are used as a measure to the clock’s quality and availability.&lt;/li&gt;
+  &lt;li&gt;The &lt;strong&gt;reach&lt;/strong&gt; column shows the status of the availability register.This &lt;strong&gt;**column must be interpreted as an 8 bit shift register, displayed in octal. When the NTP service is started the value of the reach column is set to zero. Each time a query is successful a ‘1’ is shitfted to the right, so after the first query it contains a value of 1, after the second a value of 3, after the third a value of 7 (0,1,3,7,17,37,77,177,377). When it reach a **value of 377 this means that the last eight queries were successful&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;The remaining entries show the latest &lt;strong&gt;delay&lt;/strong&gt;, &lt;strong&gt;offset&lt;/strong&gt; and &lt;strong&gt;jitter&lt;/strong&gt; in milliseconds, they show timing values which are derived from the query results. The &lt;strong&gt;delay&lt;/strong&gt; is calculated from the roundtrip time of the NTP query. The &lt;strong&gt;offset&lt;/strong&gt; is the difference between our server and the reference time server. The &lt;strong&gt;jitter&lt;/strong&gt; value should be under 100 and indicates the magnitude of jitter between several time queries.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We have now a working NTP server running on our Linux server.&lt;/p&gt;
+
+&lt;p&gt;Hope that this article have been of interest for you and hope to see you soon.&lt;/p&gt;</content><author><name>jacques</name></author><category term="Network" /><category term="Network" /><category term="NTP" /><summary type="html">As a system administrator, we must ensure that time synchronization is working at all time. Time synchronization have been proven to be helpful when we try to trace a chain of events that occurs on multiple servers or when trying to synchronize time sensitive-transactions. In this article, we will setup one NTP (Network Time Protocol) server running on RedHat/Centos 5, but it could be applied to the major Linux distribution.  As always, I have tried to make the article to be used a reference source, so that we can come back when ever you will play with the NTP tools.</summary></entry><entry><title type="html">Viewing and changing netword card setting</title><link href="/index.php/2009/07/05/view-change-nic-setting/" rel="alternate" type="text/html" title="Viewing and changing netword card setting" /><published>2009-07-05T07:52:57-04:00</published><updated>2009-07-05T07:52:57-04:00</updated><id>/index.php/2009/07/05/view-change-nic-setting</id><content type="html" xml:base="/index.php/2009/07/05/view-change-nic-setting/">&lt;h3 id=&quot;checking-our-network-card-current-setting&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;Checking our network card current setting&lt;/span&gt;&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;There are two commands that we can use to check our current network card setting. The first command is “mii-tool”, it  has been around almost since the beginning of Linux and will be depreciated in the future version of Linux. If we don’t specify any parameter to the “mii-tool” command, we will get one line of information per network card. It will display the current speed of the network card, the duplex mode it’s using and if you have a link or not.  If we don’t have a link up (no link) and it is suppose to be, I suggest to verify that your cable is connected to the server and that the port on the network switch is activate.  If this is the case, you may want to try another network cable and see if the link come up.&lt;/p&gt;
+
+&lt;pre&gt;# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;mii-tool&lt;/span&gt;&lt;/strong&gt;
+eth0: &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;100 Mbit, full duplex, link ok&lt;/span&gt;&lt;/strong&gt;
+eth1: 100 Mbit, full duplex, no link
+#&lt;/pre&gt;
+
+&lt;p&gt;If we add the verbose parameter (-v), we will get some additional information about each network card.&lt;/p&gt;
+
+&lt;pre&gt;# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;mii-tool -v&lt;/span&gt;&lt;/strong&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;eth0&lt;/strong&gt;&lt;/span&gt;: 100 Mbit, full duplex, link ok
+ product info: vendor 00:aa:00, model 50 rev 0
+&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt; basic mode:   100 Mbit, full duplex
+ basic status: link ok&lt;/span&gt;
+&lt;/strong&gt; capabilities: 100baseTx-FD 100baseTx-HD 10baseT-FD 10baseT-HD
+ advertising:  100baseTx-FD 100baseTx-HD 10baseT-FD 10baseT-HD flow-control
+&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;eth1:&lt;/span&gt;&lt;/strong&gt; 100 Mbit, full duplex, no link
+ product info: vendor 00:10:18, model 23 rev 6
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt; basic mode:   100 Mbit, full duplex
+ basic status: no link&lt;/strong&gt;&lt;/span&gt;
+ capabilities: 100baseTx-FD 100baseTx-HD 10baseT-FD 10baseT-HD
+ advertising:  100baseTx-FD 100baseTx-HD 10baseT-FD 10baseT-HD flow-control
+#&lt;/pre&gt;
+
+&lt;p&gt;I would suggest using the “ethtool” command instead of the depreciated “mii-tool”. The “mii-tool” may not work with some of the newer network card and  may be excluded from future version of RedHat/Centos/Fedora. With the “ethtool” command,  we need to specify the name of the interface that we want to see the current state. In all of our example, we will use the interface “eth0”.&lt;/p&gt;
+
+&lt;pre&gt;# &lt;strong&gt;&lt;span style=&quot;color: #000000;&quot;&gt;e&lt;span style=&quot;color: #0000ff;&quot;&gt;thtool eth0&lt;/span&gt;&lt;/span&gt;&lt;/strong&gt;
+Settings for eth0:
+ Supported ports: [ TP MII ]
+ Supported link modes:   10baseT/Half 10baseT/Full
+ 100baseT/Half 100baseT/Full
+ Supports auto-negotiation: Yes
+ Advertised link modes:  10baseT/Half 10baseT/Full
+ 100baseT/Half 100baseT/Full
+&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt; Advertised auto-negotiation: No
+ Speed: 100Mb/s
+ Duplex: Full&lt;/span&gt;&lt;/strong&gt;
+ Port: MII
+ PHYAD: 1
+ Transceiver: internal
+ &lt;span style=&quot;color: #993300;&quot;&gt;&lt;strong&gt;Auto-negotiation: off&lt;/strong&gt;&lt;/span&gt;
+ Supports Wake-on: g
+ Wake-on: g
+ Current message level: 0x00000007 (7)
+&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt; Link detected: yes&lt;/span&gt;&lt;/strong&gt;
+#&lt;/pre&gt;
+
+&lt;h3 id=&quot;display-driver-information&quot;&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;!--more--&gt;Display driver information&lt;/span&gt;&lt;/h3&gt;
+
+&lt;p&gt;If we want to see some driver information about our network card, use the “-i” parameter next to the “ethtool” command.&lt;/p&gt;
+
+&lt;p&gt;In this example, we can see that the driver we are using for this card is “e100″.  Effectively, if we use the “lsmod” (list module) we found out the the “e100″ is actually loaded.&lt;/p&gt;
+
+&lt;pre&gt;# &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;ethtool -i eth0&lt;/strong&gt;
+&lt;/span&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;driver: e100
+version: 3.5.10-k2-NAPI&lt;/span&gt;&lt;/strong&gt;
+firmware-version: N/A
+bus-info: 0000:05:08.0
+#
+#&lt;strong&gt; &lt;span style=&quot;color: #0000ff;&quot;&gt;lsmod | grep e100&lt;/span&gt;&lt;/strong&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;e100                   &lt;/strong&gt;&lt;/span&gt;36809  0
+mii                     9409  2 3c59x,&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;e100&lt;/span&gt;&lt;/strong&gt;
+#&lt;/pre&gt;
+
+&lt;h3 id=&quot;display-statistics-information&quot;&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;Display statistics information&lt;/span&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;span style=&quot;color: #000000;&quot;&gt;With the “-S” parameter,  we can display statistics about our network card. &lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;span style=&quot;color: #000000;&quot;&gt;This information could be valuable if you are experimenting some problem with that interface. It will confirm your doubt or it will indicate that you should check somewhere else to identify the problem.&lt;/span&gt;&lt;br /&gt; &lt;/span&gt;&lt;/p&gt;
+
+&lt;pre&gt;# &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;ethtool -S eth0&lt;/strong&gt;&lt;/span&gt;
+NIC statistics:
+ rx_packets: 12684
+ tx_packets: 7638
+ rx_bytes: 14990414
+ tx_bytes: 621100
+ rx_errors: 8
+ tx_errors: 0
+ rx_dropped: 0
+ tx_dropped: 0
+ multicast: 0
+ collisions: 0
+ rx_length_errors: 7
+ rx_over_errors: 0
+ rx_crc_errors: 1
+ rx_frame_errors: 0
+ rx_fifo_errors: 0
+ rx_missed_errors: 0
+ tx_aborted_errors: 0
+ tx_carrier_errors: 0
+ tx_fifo_errors: 0
+ tx_heartbeat_errors: 0
+ tx_window_errors: 0
+ tx_deferred: 0
+ tx_single_collisions: 0
+ tx_multi_collisions: 0
+ tx_flow_control_pause: 0
+ rx_flow_control_pause: 0
+ rx_flow_control_unsupported: 0
+ tx_tco_packets: 0
+ rx_tco_packets: 0
+#&lt;/pre&gt;
+
+&lt;h3 id=&quot;network-adapter-self-test&quot;&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;Network adapter self test&lt;/span&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;span style=&quot;color: #000000;&quot;&gt;You can also run a self test on the network card.  Beside the interface name you can specify two types of tests:  &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;offline&lt;/strong&gt; &lt;/span&gt;(default) means to perform full set of tests possibly causing normal operation interruption during the tests, &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;online&lt;/strong&gt; &lt;/span&gt;means to perform limited set of tests do not interrupting normal adapter operation.&lt;/span&gt; &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;pre&gt;# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ethtool -t eth0 online&lt;/span&gt;&lt;/strong&gt;
+The test result is PASS
+The test extra info:
+Link test     (on/offline)       0
+Eeprom test   (on/offline)       0
+Self test        (offline)       0
+Mac loopback     (offline)       0
+Phy loopback     (offline)       0
+
+# &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;ethtool -t eth0 offline&lt;/strong&gt;&lt;/span&gt;
+The test result is PASS
+The test extra info:
+Link test     (on/offline)       0
+Eeprom test   (on/offline)       0
+Self test        (offline)       0
+Mac loopback     (offline)       0
+Phy loopback     (offline)       0
+#&lt;/pre&gt;
+
+&lt;h3 id=&quot;changing-network-card-setting-interactively&quot;&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;Changing network card setting interactively&lt;/span&gt;&lt;/h3&gt;
+
+&lt;p&gt;Below we change the network card setting from the command line. I strongly recommend doing these changes on the console,  if not you may loose your network connection with the your server.&lt;br /&gt;
+In this example we will set the interface “eth0” speed to 10Mb/s and the duplex mode to half. After doing the change we use again the “ethtool” command to verify that our change have took place.&lt;/p&gt;
+
+&lt;pre&gt;# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ethtool -s eth0 speed 10 duplex half&lt;/span&gt;&lt;/strong&gt;
+# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ethtool eth0&lt;/span&gt;&lt;/strong&gt;
+Settings for eth0:
+Supported ports: [ TP MII ]
+Supported link modes:   10baseT/Half 10baseT/Full
+100baseT/Half 100baseT/Full
+Supports auto-negotiation: Yes
+Advertised link modes:  10baseT/Half 10baseT/Full
+100baseT/Half 100baseT/Full
+&lt;span style=&quot;color: #000000;&quot;&gt;Advertised auto-negotiation: No&lt;/span&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;
+Speed: 10Mb/s
+Duplex: Half&lt;/span&gt;&lt;/strong&gt;
+Port: MII
+PHYAD: 1
+Transceiver: internal
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;Auto-negotiation: off&lt;/strong&gt;&lt;/span&gt;
+Supports Wake-on: g
+Wake-on: g
+Current message level: 0x00000007 (7)
+Link detected: yes
+#&lt;/pre&gt;
+
+&lt;p&gt;We will now set back our network card speed back to 100Mb/s, the duplex mode to “Full” and activate the speed autonegociate.&lt;/p&gt;
+
+&lt;p&gt;Again we verify that our change have took place by issuing the “ethtool -s eth0” command.&lt;/p&gt;
+
+&lt;pre&gt;# &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;ethtool -s eth0 speed 100 duplex full autoneg on&lt;/strong&gt;
+&lt;/span&gt;# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ethtool eth0&lt;/span&gt;&lt;/strong&gt;
+Settings for eth0:
+ Supported ports: [ TP MII ]
+ Supported link modes:   10baseT/Half 10baseT/Full
+ 100baseT/Half 100baseT/Full
+ Supports auto-negotiation: Yes
+ Advertised link modes:  100baseT/Full
+ Advertised auto-negotiation: Yes
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt; Speed: 100Mb/s
+ Duplex: Full&lt;/strong&gt;&lt;/span&gt;
+ Port: MII
+ PHYAD: 1
+ Transceiver: internal
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt; Auto-negotiation: on&lt;/strong&gt;&lt;/span&gt;
+ Supports Wake-on: g
+ Wake-on: g
+ Current message level: 0x00000007 (7)
+ Link detected: yes
+#&lt;/pre&gt;
+
+&lt;h3 id=&quot;setting-speed-and-duplex-at-boot-time&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;Setting speed and duplex at boot time&lt;/span&gt;&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;If we want to set the network card setting permanently, so they are preserve even after rebooting the the server, we need to open the file:&lt;/p&gt;
+
+&lt;pre&gt;# vi /etc/sysconfig/network-scripts/ifcfg-eth0&lt;/pre&gt;
+
+&lt;p&gt;Append following line:&lt;/p&gt;
+
+&lt;pre&gt;ETHTOOL_OPTS=&quot;speed 100 duplex full autoneg off&quot;&lt;/pre&gt;
+
+&lt;p&gt;If you want that change to become effective now, you will need to restart the network service. Be aware that people and/or processes running on the system may be affected by this restart.&lt;/p&gt;
+
+&lt;pre&gt;# service network restart&lt;/pre&gt;
+
+&lt;p&gt;Hoping this article will be prove to be useful and see you soon.&lt;/p&gt;</content><author><name>jacques</name></author><category term="Network" /><category term="ethtool" /><category term="Network" /><summary type="html">Checking our network card current setting</summary></entry><entry><title type="html">Adding SAN disk without rebooting</title><link href="/index.php/2009/06/23/adding-san-disk/" rel="alternate" type="text/html" title="Adding SAN disk without rebooting" /><published>2009-06-23T10:00:15-04:00</published><updated>2009-06-23T10:00:15-04:00</updated><id>/index.php/2009/06/23/adding-san-disk</id><content type="html" xml:base="/index.php/2009/06/23/adding-san-disk/">&lt;p&gt;The production system is running, the database filesystem is almost full. We need more disk space on the server. The server is attached to the San so we can add disk without bringing down the server. In this article, we will demonstrate what is needed to make the new San disk available to the server without disturbing the running application. Although that theses commands have been tested and used on production environment,  I suggest that you build your confidence first, by trying them on a development system.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;On Red Hat / Centos 5&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;In our example, we have presently one disk accessible via one fiber HBA on our server. We can use to “lsscsi” command to list our scsi device. If you do not have the command ‘lsscsi’ command installed, you can install it by issuing the following command “yum install lsscsi”.&lt;/p&gt;
+
+&lt;p&gt;Our server can see one disk at the moment ;&lt;/p&gt;
+
+&lt;pre&gt;#  lsscsi
+[0:0:0:0]    disk    HITACHI  OPEN-V           5009   /dev/sda&lt;/pre&gt;
+
+&lt;p&gt;Let rescan our SCSI bus. Since we have only one fiber card in our server, we will scan only the first HBA (host0). If you have two fiber card, you may need to issue the “partprobe” command for the disk to be seen on the second interface.&lt;/p&gt;
+
+&lt;pre&gt;# echo &quot;1&quot; &amp;gt; /sys/class/fc_host/host0/issue_lip&lt;/pre&gt;
+
+&lt;p&gt;We now see the new SAN disk that was newly allocated to the system.&lt;/p&gt;
+
+&lt;pre&gt;# lsscsi
+[0:0:0:0]    disk    HITACHI  OPEN-V           5009   /dev/sda
+[0:0:0:1]    disk    HITACHI  OPEN-V           5009   /dev/sdb&lt;/pre&gt;
+
+&lt;p&gt;For other kind of SCSI attached storage, we should rescan the bus with this command :&lt;/p&gt;
+
+&lt;pre&gt;# echo &quot;- - -&quot; &amp;gt; /sys/class/scsi_host/host0/scan   (First hba)
+# echo &quot;- - -&quot; &amp;gt; /sys/class/scsi_host/host1/scan   (Second hba, if present)&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;!--more--&gt;On Red Hat / Centos 3 and 4&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The current situation is that we have one disk (lun 2), that is seen by the two fiber cards on our server.&lt;/p&gt;
+
+&lt;pre&gt;# cd /proc/scsi/sg
+# cat device_hdr devices
+host    chan    id      lun     type    opens   qdepth  busy    online
+0       0       0       2       0       1       64      0       1
+1       0       0       2       0       1       64      0       1
+#&lt;/pre&gt;
+
+&lt;p&gt;These commands trigger the driver to initiate lun discovery process&lt;/p&gt;
+
+&lt;pre&gt;# echo &quot;scsi-qlascan&quot; &amp;gt; /proc/scsi/qla2300/0    # For Qlogic Fiber card 0
+# echo &quot;scsi-qlascan&quot; &amp;gt; /proc/scsi/qla2300/1    # For Qlogic Fiber card 1&lt;/pre&gt;
+
+&lt;p&gt;Lets force the scsi mid layer to do its own scan and build the device table entry for the new device:&lt;br /&gt;
+We are adding the LUN 04&lt;/p&gt;
+
+&lt;pre&gt;# echo &quot;scsi add-single-device 00 00 00 04&quot; &amp;gt; /proc/scsi/scsi
+# echo &quot;scsi add-single-device 01 00 00 04&quot; &amp;gt; /proc/scsi/scsi&lt;/pre&gt;
+
+&lt;p&gt;Let see if the new LUN was Assigned (Visible) by Linux&lt;/p&gt;
+
+&lt;pre&gt;# cd /proc/scsi/sg
+# cat device_hdr devices
+host    chan    id      lun     type    opens   qdepth  busy    online
+0       0       0       2       0       1       64      0       1
+&lt;strong&gt;0       0       0       4       0       0       64      0       1&lt;/strong&gt;
+1       0       0       2       0       1       64      0       1
+&lt;strong&gt;1       0       0       4       0       0       64      0       1&lt;/strong&gt;
+#&lt;/pre&gt;
+
+&lt;p&gt;In the command “echo “scsi add-single-device HH CC TT LL ” &amp;gt;/proc/scsi/scsi”&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;The path name should have the following format HHCCTTLL :&lt;br /&gt;
+HH=Adapter number (HBA#)    CC=Channel ID    TT=SCSI ID   LL=LUN ID OF DEVICE&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;**&lt;/em&gt;&lt;figure id=&quot;attachment_512&quot; aria-describedby=&quot;caption-attachment-512&quot; style=&quot;width: 300px&quot; class=&quot;wp-caption alignleft&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;**&lt;img loading=&quot;lazy&quot; class=&quot;size-medium wp-image-512&quot; title=&quot;scli&quot; src=&quot;http://192.168.1.88/wp-content/uploads/2009/06/scli-300x290.png&quot; alt=&quot;Qlogic Command Line Interface&quot; width=&quot;300&quot; height=&quot;290&quot; /&gt;&lt;/strong&gt;**&amp;lt;figcaption id=&quot;caption-attachment-512&quot; class=&quot;wp-caption-text&quot;&amp;gt;Qlogic Command Line Interface&amp;lt;/figcaption&amp;gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;Qlogic have a command line tool called “scli” that really simplify the operation of adding SAN disk on Redhat/Centos/Fedora. It can also be used to obtain Fiber card information and setting.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;file:///C:/DOCUME~1/JADUPL~1.SLA/LOCALS~1/Temp/moz-screenshot.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Download it for &lt;a href=&quot;http://driverdownloads.qlogic.com/QLogicDriverDownloads_UI/SearchByOs.aspx?ProductCategory=39&amp;amp;OsCategory=2&amp;amp;Os=26&amp;amp;OsCategoryName=Linux&amp;amp;ProductCategoryName=Fibre%20Channel%20HBAs&amp;amp;OSName=Linux%20Red%20Hat%20(32-bit)&quot; title=&quot;Qlogic RedHat 32 Bits Download Page&quot;&gt;Redhat 32 Bits&lt;/a&gt; or &lt;a href=&quot;http://driverdownloads.qlogic.com/QLogicDriverDownloads_UI/SearchByOs.aspx?ProductCategory=39&amp;amp;OsCategory=2&amp;amp;Os=65&amp;amp;OsCategoryName=Linux&amp;amp;ProductCategoryName=Fibre%20Channel%20HBAs&amp;amp;OSName=Linux%20Red%20Hat%20(64-bit)&quot; title=&quot;Qlogic RedHat 64 Bits Download Page&quot;&gt;RedHat 64Bits&lt;/a&gt;.&lt;br /&gt;
+Hope to see you soon !&lt;/p&gt;</content><author><name>jacques</name></author><category term="Storage" /><category term="disk" /><category term="san" /><summary type="html">The production system is running, the database filesystem is almost full. We need more disk space on the server. The server is attached to the San so we can add disk without bringing down the server. In this article, we will demonstrate what is needed to make the new San disk available to the server without disturbing the running application. Although that theses commands have been tested and used on production environment,  I suggest that you build your confidence first, by trying them on a development system.</summary></entry></feed>

@@ -1,0 +1,12 @@
+# Sample Authors
+# Remove file or replace with your own
+
+Jacques Duplessis:
+  name: Jacques Duplessis
+  picture: /assets/img/Jack_Email.png
+  twitter: "@linternux"
+  links:
+    - title: Twitter
+      url: https://twitter.com/linternux
+      icon: fab fa-twitter-square
+

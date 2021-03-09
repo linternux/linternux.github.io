@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<!--
+    So Simple Jekyll Theme 3.2.0
+    Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+    Free for personal and commercial use under the MIT license
+    https://github.com/mmistakes/so-simple-theme/blob/master/LICENSE
+-->
+<html lang="en-US" class="no-js">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  
+
+  
+    
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>Yum Revisited (Part 1) | LINternUX</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="Yum Revisited (Part 1)" />
+<meta name="author" content="jacques" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="This is a first of a series of two articles dedicated to the “yum” program. In this first article, we will mainly look at the configuration files. In the next article, we will look at some advance usage, that will help us in administrating our servers.  As always, will build our article, in a way that we can come back to it and use it as a reference if we need some information about “yum”. We will concentrate on the command line version of “yum”, but I would like mention that there is a graphical version called “yumex” that I would recommend. It is not the fastest one, but it is simple to use and it work.  Visit the  “yumex” home page, you can aloso download the RedHat/Centos 5 rpm from here." />
+<meta property="og:description" content="This is a first of a series of two articles dedicated to the “yum” program. In this first article, we will mainly look at the configuration files. In the next article, we will look at some advance usage, that will help us in administrating our servers.  As always, will build our article, in a way that we can come back to it and use it as a reference if we need some information about “yum”. We will concentrate on the command line version of “yum”, but I would like mention that there is a graphical version called “yumex” that I would recommend. It is not the fastest one, but it is simple to use and it work.  Visit the  “yumex” home page, you can aloso download the RedHat/Centos 5 rpm from here." />
+<meta property="og:site_name" content="LINternUX" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2009-09-04T07:01:27-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Yum Revisited (Part 1)" />
+<meta name="twitter:site" content="@linternux" />
+<meta name="twitter:creator" content="@jacques" />
+<script type="application/ld+json">
+{"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/assets/img/logo/logo_linternux_200x200.jpg"},"name":"jacques"},"url":"/index.php/2009/09/04/yum-revisited-part-1/","author":{"@type":"Person","name":"jacques"},"headline":"Yum Revisited (Part 1)","dateModified":"2009-09-04T07:01:27-04:00","datePublished":"2009-09-04T07:01:27-04:00","description":"This is a first of a series of two articles dedicated to the “yum” program. In this first article, we will mainly look at the configuration files. In the next article, we will look at some advance usage, that will help us in administrating our servers.  As always, will build our article, in a way that we can come back to it and use it as a reference if we need some information about “yum”. We will concentrate on the command line version of “yum”, but I would like mention that there is a graphical version called “yumex” that I would recommend. It is not the fastest one, but it is simple to use and it work.  Visit the  “yumex” home page, you can aloso download the RedHat/Centos 5 rpm from here.","mainEntityOfPage":{"@type":"WebPage","@id":"/index.php/2009/09/04/yum-revisited-part-1/"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+  <script>
+    /* Cut the mustard */
+    if ( 'querySelector' in document && 'addEventListener' in window ) {
+      document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + 'js';
+    }
+  </script>
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/skins/dark.css">
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,700,700i|Lora:400,400i,700,700i">
+  <link rel="alternate" type="application/atom+xml" title="LINternUX" href="/atom.xml">
+<!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+</head>
+
+  <body class="layout--post  yum-revisited-part-1">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#primary-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+  <div class="navigation-wrapper">
+    <a href="#menu-toggle" id="menu-toggle">Menu</a>
+    <nav id="primary-nav" class="site-nav animated drop">
+      <ul><li><a href="/">Home</a></li><li><a href="/posts/">Posts</a></li><li><a href="/categories/">Categories</a></li><li><a href="/tags/">Tags</a></li><li><a href="/search/">Search</a></li></ul>
+    </nav>
+  </div><!-- /.navigation-wrapper -->
+
+
+    <header class="masthead">
+  <div class="wrap">
+    
+      <a href="/" class="site-logo" rel="home" title="LINternUX">
+        <img src="/assets/img/logo/logo_linternux_200x200.jpg" class="site-logo-img animated fadeInDown" alt="LINternUX">
+      </a>
+    
+    
+    
+      
+        <div class="site-title animated fadeIn"><a href="/">LINternUX</a></div>
+      
+      <p class="site-description animated fadeIn" itemprop="description">Tips & Tricks for SysAdmin</p>
+    
+  </div>
+</header><!-- /.masthead -->
+
+
+    <main id="main" class="main-content" aria-label="Content">
+  <article class="h-entry">
+    
+
+    <div class="page-wrapper">
+      <header class="page-header">
+        
+        
+          <h1 id="page-title" class="page-title p-name">Yum Revisited (Part 1)
+</h1>
+        
+      </header>
+
+      <div class="page-sidebar">
+        <div class="page-author h-card p-author"><div class="author-info">
+    <time class="page-date dt-published" datetime="2009-09-04T07:01:27-04:00"><a class="u-url" href="">September 4, 2009</a>
+</time>
+
+  </div>
+</div>
+
+        
+  <h3 class="page-taxonomies-title">Categories</h3>
+  
+  <ul class="page-taxonomies"><li class="page-taxonomy"><a class="p-category" href="/categories/#admin" title="Pages filed under Admin">Admin</a></li>
+  </ul>
+
+
+        
+  <h3 class="page-taxonomies-title">Tags</h3>
+  
+  <ul class="page-taxonomies"><li class="page-taxonomy"><a href="/tags/#admin" title="Pages tagged Admin" rel="tag">Admin</a></li><li class="page-taxonomy"><a href="/tags/#rpm" title="Pages tagged rpm" rel="tag">rpm</a></li><li class="page-taxonomy"><a href="/tags/#yum" title="Pages tagged yum" rel="tag">yum</a></li>
+  </ul>
+
+
+      </div> 
+
+      <div class="page-content">
+        <div class="e-content">
+            <script>var pfHeaderImgUrl = '';var pfHeaderTagline = '';var pfdisableClickToDel = 0;var pfHideImages = 0;var pfImageDisplayStyle = 'right';var pfDisablePDF = 0;var pfDisableEmail = 1;var pfDisablePrint = 0;var pfCustomCSS = '';var pfBtVersion='2';(function(){var js,pf;pf=document.createElement('script');pf.type='text/javascript';pf.src='//cdn.printfriendly.com/printfriendly.js';document.getElementsByTagName('head')[0].appendChild(pf)})();</script><a href="https://www.printfriendly.com" style="color:#6D9F00;text-decoration:none;" class="printfriendly" onclick="window.print();return false;" title="Printer Friendly and PDF"><img style="border:none;-webkit-box-shadow:none;box-shadow:none;" src="//cdn.printfriendly.com/buttons/printfriendly-pdf-button-nobg.png" alt="Print Friendly and PDF"/></a>
+            
+          <p><a href="http://192.168.1.88/wp-content/uploads/2009/07/Yum.png"><img loading="lazy" class="alignleft size-full wp-image-680" title="Yum" src="http://192.168.1.88/wp-content/uploads/2009/07/Yum.png" alt="Yum" width="185" height="70" /></a>This is a first of a series of two articles dedicated to the “yum” program. In this first article, we will mainly look at the configuration files. In the next article, we will look at some advance usage, that will help us in administrating our servers.  As always, will build our article, in a way that we can come back to it and use it as a reference if we need some information about “yum”. We will concentrate on the command line version of “yum”, but I would like mention that there is a graphical version called “yumex” that I would recommend. It is not the fastest one, but it is simple to use and it work.  Visit the  <a href="http://www.yum-extender.org/blog/" title="yumex home page">“yumex” home page</a>, you can aloso <a href="http://linternux.com/download/yumex/yumex-2.0.5-3.el5.noarch.rpm" title="Download yumex rpm">download the RedHat/Centos 5 rpm</a> from here.</p>
+
+<h3 id="main-configuration-file-etcyumconf">Main configuration file (/etc/yum.conf)</h3>
+
+<p>We can say that “yum” configuration break in two parts, the main configuration file yum.conf  located in the /etc directory and the /etc/yum.repos.d directory that contains separated files for each repository that “yum” can connect to, for updating/installing our system. Below is a modified version of the yum.conf file that include comment for every option line, so we could use it as a reference. I think all options, along  with the comments included are self explanatory .</p>
+
+<pre># The Main section must exist for yum to do anything
+<strong><span style="color: #0000ff;">[main]</span></strong>
+
+# Directory where packages are downloaded
+<span style="color: #0000ff;"><strong>cachedir=/var/cache/yum</strong></span>
+
+# 0=Remove packages &amp; headers after they are install/update
+# 1=Keep downloaded packages after update
+<span style="color: #0000ff;"><strong>keepcache=0</strong></span>
+
+# Debug Level. Valid numbers are 0-10, default is 2
+<strong><span style="color: #0000ff;">debuglevel=2</span></strong>
+
+# Where yum log file is located
+<span style="color: #0000ff;"><strong>logfile=/var/log/yum.log</strong></span>
+
+# Distribution Package Name (Fedora=fedora-release, RedHat/Centos=redhat-release)
+<span style="color: #0000ff;"><strong>distroverpkg=redhat-release</strong></span>
+
+# 1=Complaint when package aleady install is installed, 0=not tolerant
+# For example, if you request to install foo, bar and baz and baz is installed;
+# yum won't error out complaining that baz is already installedt
+<span style="color: #0000ff;"><strong>tolerant=1</strong></span>
+
+# 1=Only update the architectures of packages that is installed, 0=Override Check
+<span style="color: #0000ff;"><strong>exactarch=1</strong></span>
+
+# Let yum determine if package is obsolete during update (1=Activate 0=Deactivate)
+<span style="color: #0000ff;"><strong>obsoletes=1</strong></span>
+
+# Confirms that all packages are cryptographically verified
+<span style="color: #0000ff;"><strong>gpgcheck=1</strong></span>
+
+# 1=Enabling yum plugins, 0=Disable yum plugins
+# Once plugins are enabled in yum.conf, you may install yum plugins and use them.
+<span style="color: #0000ff;"><strong>plugins=1</strong></span>
+
+# Determine when repositories metedata expire after it is received.
+# Note: yum-RHN-plugin doesn't honor this.
+<span style="color: #0000ff;"><strong>metadata_expire=1h</strong></span>
+
+# Some package (like kernel) can only be install and not updated
+# So here we would keep 5 versions of the kernel.
+# When the sixth one is installed, the oldest one will get deleted.
+<span style="color: #0000ff;"><strong>installonly_limit = 5
+</strong></span>
+# List of packages to exclude from updates or installs.
+# Uncomment below if you want to autoupdate also the kernel rpms
+# Reboot is necessary to use the new kernel, once installed.
+#<span style="color: #0000ff;"><strong> exclude=kernel*</strong></span>
+
+# PUT YOUR REPOS HERE OR IN separate files named file.repo
+# in /etc/yum.repos.d
+#</pre>
+
+<h3><!--more--></h3>
+
+<h3 id="yum-repository-directory-etcyumreposd">Yum repository directory (/etc/yum.repos.d)</h3>
+
+<p>In the “/etc/yum.repos.d”  directory, we will find one file for each repository we want to use to download or install packages. In a simple RedHat installation we will have one file, name “rhel-debuginfo.repo”. You can find the content and description of this file below. RedHat standard repository seems to be hidden or hard coded somewhere (check /etc/yum directory). Centos on the other side, have explicitly place 2 files in this directory (CentOS-Base.repo and CentOS-Media.repo), one for installing and updating our system from internet and the other one from CD/DVD.</p>
+
+<pre><strong># Section title - Can have multiple sections in the file
+</strong><span style="color: #0000ff;">[rhel-debuginfo]</span>
+
+<strong># Friendly name for the repository</strong>
+<span style="color: #0000ff;">name=Red Hat Enterprise Linux $releasever - $basearch - Debug</span>
+
+<strong># Full URL to the packages (Can be http:// frp:// or file://)</strong>
+<span style="color: #0000ff;">Baseurl=ftp://ftp.redhat.com/pub/redhat/linux/enterprise/$releasever/en/os/$basearch/Debuginfo/</span>
+
+<strong># Activate(1) or De-Activate(0) the repositor</strong>y
+<span style="color: #0000ff;">enable=1</span>
+
+<strong># Enable(1)/Disable(0) - Packages cryptographic check</strong>
+<span style="color: #0000ff;">gpgcheck=1 </span>
+
+<strong># GPG key </strong><span style="color: #000000;"><strong>used to verify RPM packages built and signed by Red Hat/Centos /Fedora</strong>
+<span style="color: #0000ff;">gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-releas</span>e
+</span></pre>
+
+<p>There are many additional repositories that we can subscribe for our RedHat/Centos/Fedora server. For example, there is the “<a href="https://fedoraproject.org/wiki/EPEL" title="EPEL Repository">Extra Packages for Enterprise Linux (EPEL)</a>“, you can find the <a href="https://fedoraproject.org/wiki/EPEL/FAQ#howtouse" title="Hot-to subscribe to EPEL">procedure for subscribing to it</a>, but basically you download and install the <a href="http://download.fedora.redhat.com/pub/epel/4/i386/repoview/epel-release.html" title="EPEL RHEL 4 Packages Page">RHEL4</a> and <a href="http://download.fedora.redhat.com/pub/epel/5/i386/repoview/epel-release.html" title="EPEL RHEL 5 Packages Page">RHEL5</a> rpm. There is also the <a href="https://rpmrepo.org/RPMforge" title="RPM Forge Site">RPMforge repository</a> where you will find packages for RedHat/Centos. Download the <a href="http://packages.sw.be/rpmforge-release/rpmforge-release-0.3.6-1.el5.rf.i386.rpm" title="RedHat/Centos5 32 Bits RPM">RedHat 5/Centos 5 rpm</a> or the <a href="http://packages.sw.be/rpmforge-release/rpmforge-release-0.3.6-1.el4.rf.i386.rpm" title="RedHat/Centos4 32 Bits RPM">RedHat 4/Centos 4 rpm</a> and follow the same procedure describe above for EPEL repository. There is also the <a href="http://dag.wieers.com/rpm/" title="Dag rpm site">DAG site</a> and you can <a href="http://dag.wieers.com/rpm/FAQ.php#B" title="Download Subscribing page">subscribe to the repository from this page</a>.</p>
+
+<p><strong>Example, subscribing to EPEL RedHat 5 repository ;</strong></p>
+
+<pre><span style="color: #0000ff;"><strong>GPG Repositories keys before subscribing</strong>
+</span>root@rhel5:/etc/yum.repos.d# ls -l /etc/pki/rpm-gpg/
+total 16
+-rw-r--r-- 1 root root 1512 Mar 16 21:30 RPM-GPG-KEY-beta
+-rw-r--r-- 1 root root 1504 Mar 16 21:30 RPM-GPG-KEY-CentOS-5
+
+<span style="color: #0000ff;"><strong>Yum repository directory before</strong></span>
+root@rhel5:/etc/yum.repos.d# ls -l
+total 16
+-rw-r--r-- 1 root root 2323 Mar 16 21:30 CentOS-Base.repo
+-rw-r--r-- 1 root root  626 Mar 16 21:30 CentOS-Media.repo
+root@rhel5:/etc/yum.repos.d#
+
+<span style="color: #0000ff;"><strong>Subcribing to EPEL RedHat 5 repository</strong></span>
+# rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm
+Retrieving http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm
+warning: /var/tmp/rpm-xfer.hoNaf4: Header V3 DSA signature: NOKEY, key ID 217521f6
+Preparing...                ########################################### [100%]
+ 1:epel-release           ########################################### [100%]
+
+<span style="color: #0000ff;"><strong>Yum repository directory after subscribing</strong></span>
+root@rhel5:/etc/yum.repos.d# ls -l
+total 24
+-rw-r--r-- 1 root root 2323 Mar 16 21:30 CentOS-Base.repo
+-rw-r--r-- 1 root root  626 Mar 16 21:30 CentOS-Media.repo
+-rw-r--r-- 1 root root  954 Apr 25  2008 <span style="color: #0000ff;">epel.repo</span>
+-rw-r--r-- 1 root root 1054 Apr 25  2008 <span style="color: #0000ff;">epel-testing.repo
+</span>
+<span style="color: #0000ff;"><strong>GPG Repositories keys after subscribing</strong></span>
+root@rhel5:/etc/yum.repos.d# ls -l /etc/pki/rpm-gpg/
+total 20
+-rw-r--r-- 1 root root 1512 Mar 16 21:30 RPM-GPG-KEY-beta
+-rw-r--r-- 1 root root 1504 Mar 16 21:30 RPM-GPG-KEY-CentOS-5
+-rw-r--r-- 1 root root 1698 Apr  3  2007 <span style="color: #0000ff;">RPM-GPG-KEY-EPEL
+</span>root@rhel5:/etc/yum.repos.d#</pre>
+
+<p>Always be careful when you subscribe to a new repositories, you may encounter problem on some update afterward. If you do use additional repositories, I would suggest that you activate it to download the needed packages and then deactivate it by changing the line “enable=1” to “enable=0”, in the proper file in /etc/yum.repos.d directory. If you ever need again, just activate the “enable” line.</p>
+
+<p>In the next article, we will focus on the using the “yum” command itself, see you soon.</p>
+
+        </div>
+
+        
+          <div class="page-share">
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Findex.php%2F2009%2F09%2F04%2Fyum-revisited-part-1%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--facebook btn--small"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i> <span>Share</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Yum+Revisited+%28Part+1%29%20%2Findex.php%2F2009%2F09%2F04%2Fyum-revisited-part-1%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Findex.php%2F2009%2F09%2F04%2Fyum-revisited-part-1%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=Yum+Revisited+%28Part+1%29&url=%2Findex.php%2F2009%2F09%2F04%2Fyum-revisited-part-1%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+        
+
+        
+
+        <nav class="page-pagination" role="navigation">
+  
+    <a class="page-previous" href="/index.php/2009/07/24/setting-up-ntp-server/">
+      <h4 class="page-pagination-label">Previous</h4>
+      <span class="page-pagination-title">
+        <i class="fas fa-arrow-left"></i> Setting up your own NTP server
+
+      </span>
+    </a>
+  
+
+  
+    <a class="page-next" href="/index.php/2009/09/20/yum-revisited-part-2/">
+      <h4 class="page-pagination-label">Next</h4>
+      <span class="page-pagination-title">
+        Yum Revisited (Part 2)
+ <i class="fas fa-arrow-right"></i>
+      </span>
+    </a>
+  
+</nav>
+
+      </div>
+    </div>
+  </article>
+</main>
+
+
+    <footer id="footer" class="site-footer">
+  <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+<div class="social-icons"><a class="social-icon" href="/atom.xml"><i class="fas fa-rss-square fa-2x" title="Feed"></i></a></div><div class="copyright">
+    
+      <p>&copy; 2021 LINternUX. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/mmistakes/so-simple-theme" rel="nofollow">So Simple</a>.</p>
+    
+  </div>
+</footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.0.12/js/all.js"></script>
+
+
+  </body>
+
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<!--
+    So Simple Jekyll Theme 3.2.0
+    Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+    Free for personal and commercial use under the MIT license
+    https://github.com/mmistakes/so-simple-theme/blob/master/LICENSE
+-->
+<html lang="en-US" class="no-js">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  
+
+  
+    
+    <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>sadm_daily_report.sh | LINternUX</title>
+<meta name="generator" content="Jekyll v4.2.0" />
+<meta property="og:title" content="sadm_daily_report.sh" />
+<meta name="author" content="Jacques Duplessis" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="This script produce web reports of the last 24 hrs activities and email them to the sysadmin. It run automatically early every morning from the SADMIN server crontab (/etc/cron.d/sadm_server), but you can also be run it manually when desired. It can only be run on the SADMIN server." />
+<meta property="og:description" content="This script produce web reports of the last 24 hrs activities and email them to the sysadmin. It run automatically early every morning from the SADMIN server crontab (/etc/cron.d/sadm_server), but you can also be run it manually when desired. It can only be run on the SADMIN server." />
+<meta property="og:site_name" content="LINternUX" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2008-02-11T04:28:10-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="sadm_daily_report.sh" />
+<meta name="twitter:site" content="@linternux" />
+<meta name="twitter:creator" content="@linternux" />
+<script type="application/ld+json">
+{"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/assets/img/logo/logo_linternux_200x200.jpg"},"name":"Jacques Duplessis"},"url":"/sadm_scripts/linux/sadm-daily-report/","author":{"@type":"Person","name":"Jacques Duplessis"},"headline":"sadm_daily_report.sh","dateModified":"2008-02-11T04:28:10-05:00","datePublished":"2008-02-11T04:28:10-05:00","description":"This script produce web reports of the last 24 hrs activities and email them to the sysadmin. It run automatically early every morning from the SADMIN server crontab (/etc/cron.d/sadm_server), but you can also be run it manually when desired. It can only be run on the SADMIN server.","mainEntityOfPage":{"@type":"WebPage","@id":"/sadm_scripts/linux/sadm-daily-report/"},"@type":"BlogPosting","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+  
+
+  <script>
+    /* Cut the mustard */
+    if ( 'querySelector' in document && 'addEventListener' in window ) {
+      document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + 'js';
+    }
+  </script>
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/skins/dark.css">
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,700,700i|Lora:400,400i,700,700i">
+  <link rel="alternate" type="application/atom+xml" title="LINternUX" href="/atom.xml">
+<!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+</head>
+
+  <body class="layout--post  sadm-daily-report-sh">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#primary-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+  <div class="navigation-wrapper">
+    <a href="#menu-toggle" id="menu-toggle">Menu</a>
+    <nav id="primary-nav" class="site-nav animated drop">
+      <ul><li><a href="/">Home</a></li><li><a href="/posts/">Posts</a></li><li><a href="/categories/">Categories</a></li><li><a href="/tags/">Tags</a></li><li><a href="/search/">Search</a></li></ul>
+    </nav>
+  </div><!-- /.navigation-wrapper -->
+
+
+    <header class="masthead">
+  <div class="wrap">
+    
+      <a href="/" class="site-logo" rel="home" title="LINternUX">
+        <img src="/assets/img/logo/logo_linternux_200x200.jpg" class="site-logo-img animated fadeInDown" alt="LINternUX">
+      </a>
+    
+    
+    
+      
+        <div class="site-title animated fadeIn"><a href="/">LINternUX</a></div>
+      
+      <p class="site-description animated fadeIn" itemprop="description">Tips & Tricks for SysAdmin</p>
+    
+  </div>
+</header><!-- /.masthead -->
+
+
+    <main id="main" class="main-content" aria-label="Content">
+  <article class="h-entry">
+    
+
+    <div class="page-wrapper">
+      <header class="page-header">
+        
+        
+          <h1 id="page-title" class="page-title p-name">sadm_daily_report.sh
+</h1>
+        
+      </header>
+
+      <div class="page-sidebar">
+        <div class="page-author h-card p-author"><img src="/assets/img/Jack_Email.png" class="author-avatar u-photo" alt="Jacques Duplessis"><div class="author-info"><div class="author-name">
+        <em>by</em> <span class="p-name">Jacques Duplessis</span>
+      </div><ul class="author-links"><li class="author-link">
+            <a class="u-url" rel="me" href=""><i class="fas fa-link fa-lg" title=""></i></a>
+          </li></ul>
+    <time class="page-date dt-published" datetime="2008-02-11T04:28:10-05:00"><a class="u-url" href="">February 11, 2008</a>
+</time>
+
+  </div>
+</div>
+
+        
+  <h3 class="page-taxonomies-title">Categories</h3>
+  
+  <ul class="page-taxonomies"><li class="page-taxonomy"><a class="p-category" href="/categories/#linux" title="Pages filed under linux">linux</a></li><li class="page-taxonomy"><a class="p-category" href="/categories/#sadm-scripts" title="Pages filed under sadm_scripts">sadm_scripts</a></li>
+  </ul>
+
+
+        
+  <h3 class="page-taxonomies-title">Tags</h3>
+  
+  <ul class="page-taxonomies"><li class="page-taxonomy"><a href="/tags/#manpage" title="Pages tagged manpage" rel="tag">manpage</a></li><li class="page-taxonomy"><a href="/tags/#script" title="Pages tagged script" rel="tag">script</a></li>
+  </ul>
+
+
+      </div> 
+
+      <div class="page-content">
+        <div class="e-content">
+            <script>var pfHeaderImgUrl = '';var pfHeaderTagline = '';var pfdisableClickToDel = 0;var pfHideImages = 0;var pfImageDisplayStyle = 'right';var pfDisablePDF = 0;var pfDisableEmail = 1;var pfDisablePrint = 0;var pfCustomCSS = '';var pfBtVersion='2';(function(){var js,pf;pf=document.createElement('script');pf.type='text/javascript';pf.src='//cdn.printfriendly.com/printfriendly.js';document.getElementsByTagName('head')[0].appendChild(pf)})();</script><a href="https://www.printfriendly.com" style="color:#6D9F00;text-decoration:none;" class="printfriendly" onclick="window.print();return false;" title="Printer Friendly and PDF"><img style="border:none;-webkit-box-shadow:none;box-shadow:none;" src="//cdn.printfriendly.com/buttons/printfriendly-pdf-button-nobg.png" alt="Print Friendly and PDF"/></a>
+            
+          <p>This script produce web reports of the last 24 hrs activities and email them to the sysadmin. It run automatically early every morning from the SADMIN server crontab (/etc/cron.d/sadm_server), but you can also be run it manually when desired. It can only be run on the SADMIN server.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo</span> <span class="nv">$SADMIN</span>/bin/sadm_daily_report.sh <span class="o">[</span><span class="nt">-v</span><span class="o">]</span> <span class="o">[</span><span class="nt">-h</span><span class="o">]</span> <span class="o">[</span><span class="nt">-b</span><span class="o">]</span> <span class="o">[</span><span class="nt">-r</span><span class="o">]</span> <span class="o">[</span><span class="nt">-s</span><span class="o">]</span> <span class="o">[</span><span class="nt">-d</span> 0-9]  </code></pre></figure>
+
+<h2 id="description">DESCRIPTION</h2>
+<p>The script produce three reports, each of them is sent to the email(s) defined by the field ‘<em>SADM_MAIL_ADDR</em>’ defined in the SADMIN configuration file ($SADMIN/cfg/sadmin.cfg). It can only be run on the SADMIN server (Not on a SADMIN client). The reports are also accessible via the web interface.</p>
+
+<p>If the package ‘<a href="https://wkhtmltopdf.org/">wkhtmltopdf</a>’ is present on the SADMIN server (It should have been installed by the setup process), a PDF version of each report is also attached to the email.</p>
+
+<p>If one of the three report is not desired, you can use the ‘-r’, ‘-b’ or the ‘-s’ command line switch to disable the desired report (email). Note that only the actives systems will appear on these reports.</p>
+
+<h3 id="the-scripts-report">The scripts report:</h3>
+<p><img src="/assets/img/man/sadm_daily_report/sadm_daily_report_script.png" alt="Daily Script Report Example" /></p>
+<ul>
+  <li>The running scripts are listed first, then the scripts that terminated with an error and finally all the scripts grouped by system. So it give you view of the statistics of each script (start time, end time, elapse time,…) of each systems sorted and grouped by name. When something look different than the normal, like the alert group used is different than the default group or the last execution date of a script is more than thirty days, it will be shown with a yellow background.</li>
+  <li>You can also view the log of each script just by clicking on the script name.</li>
+  <li>The same report is also accessible in the heading of any of the “Scripts Status” web pages.</li>
+</ul>
+
+<h3 id="the-daily-backup-report">The Daily backup report:</h3>
+<p><img src="/assets/img/man/sadm_daily_report/sadm_daily_report_backup.png" alt="Daily Backup Report Example" /></p>
+<ul>
+  <li>This report present the last execution statistics of all the daily backup script (sadm_backup.sh) for each systems. Since the daily backup should have been taken during the night, they should all have the same execution date. If this is not the case, then the execution date cell will have a yellow background, to advise you that there may be a problem with the backup on that system.</li>
+  <li>The daily backup report is also accessible in the heading of the “Daily Backup Status” web page.</li>
+  <li>If you want to change the backup schedule of a particular system, just click on the “Schedule Activated” cell of the desired system.</li>
+  <li>If you want to see the log of the backup, click on the “Status” cell of the desired system.</li>
+</ul>
+
+<h3 id="the-rear-system-image-backup">The <a href="https://relax-and-recover.org/">Rear</a> system image backup:</h3>
+<p><img src="/assets/img/man/sadm_daily_report/sadm_daily_report_rear.png" alt="Daily ReaR Image Backup Report Example" /></p>
+<ul>
+  <li>The <a href="https://relax-and-recover.org/">ReaR</a> report, show you the last ReaR backup execution result of each systems.</li>
+  <li>If a backup last execution date is older than 7 days, the date cell of that backup will have a yellow background. If the current backup size and the  previous backup differ than more than 50% they will have a yellow background as well. This may tell you that your backup have greater than expected and you may want to take a look at it.</li>
+  <li>If you want to change the backup schedule of a particular system just click on the “Schedule Activated” cell of the desired system.</li>
+  <li>The ReaR daily report is also accessible in the heading of the “ReaR Backup Schedule Status” web page.</li>
+  <li>If you want to see the log of the backup, just click on the “Status” cell of the desired system.<br />
+<br /></li>
+  <li><strong>Excluding Servers or/and Scripts from the reports:</strong>
+    <ul>
+      <li>At the beginning of the script you will find a section defining two variables named “<strong>SCRIPTS</strong>” and “<strong>SERVERS</strong>”. You can used them to exclude some scripts from the “Daily Scripts Report” by specifying them in the “SCRIPTS” variable.</li>
+      <li>To exclude server(s) from ALL the reports, you can specify them in the “SERVERS” variable. Server name used MUST not include the domain name.</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Exclude template scripts and demo scripts.</span>
+<span class="nv">SCRIPTS</span><span class="o">=</span><span class="s2">"sadm_template sadmlib_std_demo"</span>
+    
+<span class="c"># Exclude System Startup/Shutdown Script for Daily scripts report</span>
+<span class="nv">SCRIPTS</span><span class="o">=</span><span class="s2">"</span><span class="nv">$SCRIPTS</span><span class="s2"> sadm_startup sadm_shutdown"</span>
+
+<span class="c"># Server excluded from ALL Daily Report (Backup, Rear and Scripts)</span>
+<span class="nv">SERVERS</span><span class="o">=</span><span class="s2">"server1 server2"</span>
+</code></pre></div></div>
+
+<h2 id="execution-example">EXECUTION EXAMPLE</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># sadm_daily_report.sh</span>
+
+Sun Jan 17 14:39:39 EST 2021 - sadm_daily_report.sh V1.20 - SADM Lib. V3.64
+Server Name: robin.batcave.com - Type: LINUX
+CENTOS 7.9.2009 Kernel 3.10.0-1160.11.1.el7.x86_64
+<span class="o">==================================================</span>
+
+Creating the Daily Backup Report
+<span class="o">[</span> OK <span class="o">]</span> Mount batnas.batcave.com:/volume1/backup_linux /mnt/daily_report
+<span class="o">[</span> OK <span class="o">]</span> Create Backup Web Page.
+<span class="o">[</span> OK <span class="o">]</span> Unmount directory /mnt/daily_report
+<span class="o">[</span> OK <span class="o">]</span> Daily Backup Report sent to batman@batcave.com
+End of Daily Backup Report ...
+
+Creating the ReaR Backup Report
+<span class="o">[</span> OK <span class="o">]</span> Mount batnas.batcave.com:/volume1/backup_rear /mnt/daily_report
+<span class="o">[</span> OK <span class="o">]</span> Unmount directory /mnt/daily_report
+<span class="o">[</span> OK <span class="o">]</span> ReaR Backup Report sent to batman@batcave.com
+End of the ReaR Backup Report ...
+
+Creating the Daily Script Report
+<span class="o">[</span> OK <span class="o">]</span> Create Script Web Page.
+<span class="o">[</span> OK <span class="o">]</span> No script actually running.
+<span class="o">[</span> OK <span class="o">]</span> No script terminated with error
+<span class="o">[</span> OK <span class="o">]</span> Scripts grouped by server page generated
+<span class="o">[</span> OK <span class="o">]</span> Script report sent to batman@batcave.com
+End of the Script Report ...
+
+<span class="o">==================================================</span>
+Script <span class="nb">exit </span>code is 0 <span class="o">(</span>Success<span class="o">)</span> and execution <span class="nb">time </span>is 00:00:27
+History <span class="o">(</span>/sadmin/dat/rch/robin_sadm_daily_report.rch<span class="o">)</span> trim to 35 lines <span class="o">(</span><span class="nv">$SADM_MAX_RCLINE</span><span class="o">=</span>35<span class="o">)</span><span class="nb">.</span>
+Script will send an alert only when it terminate with error <span class="o">(</span><span class="nv">$SADM_ALERT_TYPE</span><span class="o">=</span>1<span class="o">)</span><span class="nb">.</span>
+Script succeeded, no alert will be send to <span class="s1">'default'</span> alert group.
+New log <span class="o">(</span>/sadmin/log/robin_sadm_daily_report.log<span class="o">)</span> created <span class="o">(</span><span class="nv">$SADM_LOG_APPEND</span><span class="o">=</span><span class="s1">'N'</span><span class="o">)</span><span class="nb">.</span>
+End of sadm_daily_report.sh - Sun Jan 17 14:40:02 EST 2021
+<span class="o">==========================================================================</span>
+</code></pre></div></div>
+
+<h2 id="options">OPTIONS</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Options</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><strong>-d</strong></td>
+      <td style="text-align: left">Set Debug level from 0 to 9 (Default is 0)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>-h</strong></td>
+      <td style="text-align: left">Display this help and exit.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>-v</strong></td>
+      <td style="text-align: left">Output version information and exit.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>-r</strong></td>
+      <td style="text-align: left">Don’t produce the ReaR backup report</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>-b</strong></td>
+      <td style="text-align: left">Don’t produce the Daily backup report</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>-s</strong></td>
+      <td style="text-align: left">Don’t produce the Scripts report</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="requirements">REQUIREMENTS</h2>
+<ul>
+  <li>Environment variable ‘SADMIN’ need to be defined, it specify the root directory of the SADMIN tools (normally /opt/sadmin).
+    <ul>
+      <li>It should be already done, the setup script have updated the /etc/profile.d/sadmin.sh and then /etc/environment files.</li>
+    </ul>
+  </li>
+  <li>The <a href="/doc/man/file_sadmin_cfg.php">SADMIN main configuration file</a>, is needed and it’s loaded in memory at the beginning of every scripts.
+    <ul>
+      <li>This file should already exist and contains your SADMIN configuration and preference setting.</li>
+    </ul>
+  </li>
+  <li>SADMIN Tools shell library, “$SADMIN/lib/sadmlib.sh”.</li>
+</ul>
+
+<h2 id="exit-status">EXIT STATUS</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Exit Code</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">0</td>
+      <td style="text-align: left">An exit status of zero indicates success.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: left">Failure is indicated by a nonzero value, typically ‘1’.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="author">AUTHOR</h2>
+<p><a href="jacques.duplessis@sadmin.ca.">Jacques Duplessis</a><br />
+Any suggestions or bug report can be submitted at the <a href="www.sadmin.ca/support.php">support page</a></p>
+
+<h2 id="copyright">COPYRIGHT</h2>
+<p>Copyright © 2021 Free Software Foundation, Inc. License GPLv3+: <a href="http://gnu.org/licenses/gpl.html">GNU GPL version 3 or later</a><br />
+This is free software, you are free to change and redistribute it. <br />
+There is NO WARRANTY to the extent permitted by law.</p>
+
+<h2 id="see-also">SEE ALSO</h2>
+<p>The Daily Backup Script - <a href="http://sadmin/www/doc/man/sadm_backup.html">sadm_backup.sh</a></p>
+
+
+        </div>
+
+        
+          <div class="page-share">
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2Fsadm_scripts%2Flinux%2Fsadm-daily-report%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--facebook btn--small"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i> <span>Share</span></a>
+  <a href="https://twitter.com/intent/tweet?text=sadm_daily_report.sh%20%2Fsadm_scripts%2Flinux%2Fsadm-daily-report%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--twitter btn--small"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i> <span>Tweet</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2Fsadm_scripts%2Flinux%2Fsadm-daily-report%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--linkedin btn--small"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> <span>LinkedIn</span></a>
+  <a href="https://reddit.com/submit?title=sadm_daily_report.sh&url=%2Fsadm_scripts%2Flinux%2Fsadm-daily-report%2F" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" class="btn btn--reddit btn--small"><i class="fab fa-fw fa-reddit" aria-hidden="true"></i> <span>Reddit</span></a>
+</div>
+
+        
+
+        
+
+        <nav class="page-pagination" role="navigation">
+  
+
+  
+    <a class="page-next" href="/index.php/2009/04/08/epoch-time-date-calculation/">
+      <h4 class="page-pagination-label">Next</h4>
+      <span class="page-pagination-title">
+        Epoch time date calculation
+ <i class="fas fa-arrow-right"></i>
+      </span>
+    </a>
+  
+</nav>
+
+      </div>
+    </div>
+  </article>
+</main>
+
+
+    <footer id="footer" class="site-footer">
+  <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+<div class="social-icons"><a class="social-icon" href="/atom.xml"><i class="fas fa-rss-square fa-2x" title="Feed"></i></a></div><div class="copyright">
+    
+      <p>&copy; 2021 LINternUX. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/mmistakes/so-simple-theme" rel="nofollow">So Simple</a>.</p>
+    
+  </div>
+</footer>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.0.12/js/all.js"></script>
+
+
+  </body>
+
+</html>
