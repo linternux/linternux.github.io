@@ -1,0 +1,45 @@
+# Ruby Gem
+*.gem
+.bundle
+Gemfile.lock
+**/vendor/bundle
+
+# Jekyll generated files
+.jekyll-cache
+.jekyll-metadata
+.sass-cache
+_asset_bundler_cache
+_site
+_site/*
+
+# Private Dir
+private
+
+# Ignore these files extensions
+*.obj
+*.pdb
+*.bak
+*.log
+*.cache
+*.org
+*.tmp
+*.old
+
+
+# Ignore Python Related files andEnsure that package util-linux is installed on client & server.
+# Ignore MacOS related custom attributes of its containing folder
+.DS_Store
+.DS_Store?
+._.DS_Store
+
+# Ignore Windows Related files.
+[Tt]humbs.db
+
+# Ignore Linux related files
+.bash_history
+.bash_profile
+.bashrc
+.viminfo
+.mysql_history
+.Trash-*/
+.vscode/
