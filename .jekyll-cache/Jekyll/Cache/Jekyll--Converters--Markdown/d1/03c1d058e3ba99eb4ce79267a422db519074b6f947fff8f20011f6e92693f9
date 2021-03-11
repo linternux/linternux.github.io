@@ -1,0 +1,31 @@
+I"�<p>When I decided to move to Linux on my desktop, I tried to reproduce the same functionality that I was having under windows. One of the program I was using under Windows was <a href="http://fineprint.com/pdf/">PDF-Factory</a> , it actually create a PDF printer. When ever I wanted to produced a PDF, I only had to print to that PDF printer. After some research, I found “cups-pdf”, this utility allow me to have the same functionality under Linux. In this article, I installed the product under RHEL5, but installing it on other version of Linux is very similar.</p>
+
+<p>Once downloaded, installing cups-pdf is quite simple. Just type following command :</p>
+
+<pre><span style="color: #000080;"># </span><span style="color: #0000ff;"><strong><span style="color: #000080;">rpm -ivh cups-pdf-2.4.6-1.el5.i386.rpm</span>
+</strong></span>warning: cups-pdf-2.4.6-1.el5.i386.rpm: Header V3 DSA signature: NOKEY, key ID 217521f6
+Preparing...                ########################################### [100%]
+1:cups-pdf               ########################################### [100%]
+#</pre>
+
+<p>Next, we need to customize “cups-pdf” to our needs. To do that, we edit the configuration “/etc/cups/cups-pdf.conf”. By default every PDF you print will end up on your desktop. I choose to create a directory called “pdf” in my home directory and change cups-pdf configuration accordingly.</p>
+
+<pre># <span style="color: #000080;"><strong>vi /etc/cups/cups-pdf.conf</strong></span>
+#Out ${HOME}/Desktop
+<strong><span style="color: #000080;">Out ${HOME}/pdf</span></strong></pre>
+
+<p>By default file are created with a umask of 0077, so only I can read it. I change it to 0022 so that everybody can read it.</p>
+
+<pre>#UserUMask 0077
+<strong><span style="color: #000080;">UserUMask 0002</span></strong></pre>
+
+<p>These are the only fields, I usually change before start using “cups-pdf”.</p>
+
+<p>If you have any problem using “cups-pdf”, remove the comment on the “Log” and “Logtype” line to activate the logging. The configuration file is well documented, take a look at it and customize cups-pdf to it full extend.</p>
+
+<p>You can download the version 2.4.6 for <a href="http://linternux.com/download/cups/cups-pdf-2.4.6-2.el4.i386.rpm" title="Red Hat Enterprise Line 4 Package">RHEL4</a> and <a href="http://linternux.com/download/cups/cups-pdf-2.4.6-1.el5.i386.rpm" title="Red Hat Enterprise Line 5 Package">RHEL5</a> or 2.5.0 for <a href="http://linternux.com/download/cups/cups-pdf-2.5.0-1.fc10.i386.rpm" title="Package for Fedora 10 ">Fedora 10</a> and <a href="http://linternux.com/download/cups/cups-pdf-2.5.0-2.fc11.i586.rpm" title="Package for Fedora 11">Fedora 11</a>.</p>
+
+<p>To download packages for other version of linux visit the <a href="http://www.cups-pdf.de/download.shtml" title="cups download page of home site.">download page</a> of <a href="http://www.cups-pdf.de/welcome.shtml">cups-pdf home page</a>.</p>
+
+<p>Happy printing !</p>
+:ET

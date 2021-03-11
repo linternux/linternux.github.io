@@ -1,0 +1,118 @@
+I"K)<p>As a system administrator, I have a variety of performance tools that I use to identify problem related to system performance. In this article, I have tried to demonstrate the usage of the “vmstat” command and also explain the meaning of each column that it produce. I inserted some tips regarding the interpretation of theses columns, I wanted to make this article a reference for me and hopefully for you too.  So the next time you use the command ” vmstat”,  you can come back at this article and analyze the output of your problematic system.</p>
+
+<p>First let’s look at different way we can invoke the “vmstat” command.  To monitor the virtual memory activity on your system,  it is preferable to use “vmstat” with a delay. A delay is a number of seconds between updates. If you don’t supply a delay “vmstat” reports the average values since the last reboot and quit.  With the delay, you can also specify a count, which indicate how many updates you want to see before “vmstat” quits. If you don’t specify a count, the count defaults is infinity and you will have to press CTRL-C to stop “vmstat”.  In our example, we asked  “vmstat” to run with four updates with a delay of five seconds between update.</p>
+
+<p style="text-align: center;">
+  <figure style="width: 634px" class="wp-caption alignnone"><img loading="lazy" title="vmstat figure 1" src="http://linternux.com/images/vmstat_figure_1.png" alt="vmstat figure 1" width="634" height="205" /><figcaption class="wp-caption-text">vmstat figure 1</figcaption></figure> 
+  
+  <p>
+    <span style="color: #0000ff;"><strong>procs section</strong></span><br /> The procs section indicate the number of <strong><em>running processes (r) and blocked (b) processes</em></strong> at the time of the reporting. The scheduler determines when processes are run. Each process is assigned a priority and a slot in the process table. Processes must be present in memory before they are run. If a process is scheduled to run but a memory page for part of that process is not in real memory, that process is blocked and placed in the run queue. Processes ready to run are placed in the run queue, &#8220;vmstat&#8221; reports on processes that are in the run queue and those that are blocked.
+  </p>
+  
+  <ul>
+    <li>
+      <strong>(r)</strong> &#8211; Represent the number of runnable processes in the run queue. The value should be a sigle-digit on a healthy server, but can occasionally get higher. From my experience when it reach number greater than 20 on some big and busy system you should have a look on the system and see what process is taking most of the cpu (use the top command).
+    </li>
+    <li>
+      <strong>(b)</strong> &#8211; This value represent the number of processes scheduled to be executed but blocked, waiting for the virtual memory to page the part of that process which is on disk into real memory. This number should also be a single digit on a healthy system.
+    </li>
+  </ul>
+  
+  <p>
+    <!--more-->
+  </p>
+  
+  <p>
+    <span style="color: #0000ff;"><strong>memory section</strong></span><br /> The memory section report the amount of <em><strong>memory swapped out (swpd), free memory (free), buffer cache for i/o data structure (buff) and cache memory for file read<br /> from disk (cache) in kilobytes</strong></em>.
+  </p>
+  
+  <p>
+    Swapping, strictly speaking, refers to writing portions of memory (4K page) to disk.  A page fault occurs when the virtual memory manager attempts to access a memory page that is not in memory.  Real memory that is not used is place in the free list. The virtual memory manager is responsible for maintaining the free list.
+  </p>
+  
+  <ul>
+    <li>
+      <strong>(swpd)</strong> &#8211; Represent the amount of virtual memory used (Kb). In our example we are using 1.48Gb (1176140/1024=1148Mb) of our swap space.
+    </li>
+    <li>
+      <strong>(free)</strong> &#8211;  This represent the amount of real memory that is not used at the moment. In our example,  we have 943Mb (966,124/1024=943Mb) of unused memory.
+    </li>
+    <li>
+      <strong>(buff)</strong> &#8211; The “buffers” entry indicate how much of the memory in use is currently being used for disk buffering. In our example, we have 76MB (78444/1024=76Mb) of memory allocated for disks buffering.
+    </li>
+    <li>
+      <strong>(cache)</strong> &#8211;  When extra physical memory is not in use, the kernel attempts to put it to work as a disk buffer cache. The disk buffer stores recently accessed disk data in memory; if the same data is needed again it can be quickly retrieved from the cache, improving performance. The buffer grows and shrinks dynamically to use the memory available, although priority is given to using the memory for paging. Thus, all the memory you have is put to good use.  In our example above we have 2.1Gb (2211108/1024=2159Mb) used for disks caching.
+    </li>
+  </ul>
+  
+  <p>
+    <span style="color: #0000ff;"><strong>swap section</strong></span><br /> The &#8220;swap&#8221; section indicate the amount of <em><strong>memory swapped in (si) from disk and swapped out (so)</strong></em> to disk, in kilobytes per second.  All processes use memory, but all processes doesn&#8217;t need all of it memory at all time,  Linux take advantage of this fact. The kernel frees up some physical memory by writing some or all of a process memory to disk until it is needed again. When pages are written to disk, the event is called a page-out, when pages returned to physical memory, this event is called a page-in.  Using swap space is not inherently bad, but intense paging <span class="emphasis"><em>activity</em></span> can become problematic. When the kernel reach a point where it&#8217;s actually spending more time managing activity than running the applications, you will see a system performance degradation, this is when adding more memory to the system have to be considered.
+  </p>
+  
+  <ul>
+    <li>
+      <strong>(si)</strong> &#8211;  Amount of memory swapped in from disk (/s).  Swap-in/Page-in are common, normal and may not cause concern. Example, when an application first starts up, its executable image and data are page-in, this a normal process.
+    </li>
+    <li>
+      <strong>(so)</strong> &#8211; Amount of memory swapped in from disk (/s).  Swapping-out/Paging-out however, could be a sign of trouble. When the kernel detects that memory is running low, it attempts to free up memory by paging out. This may happens for a short period of time, but if see that it is becoming constants, then this may indicate that you are short on memory on the system. This is also causing a performance decrease on the server, because the system is spending a lot of it time writing (page-out) and reading (page-in) memory pages to disk.  The time that the kernel is doing the disk I/O  needed to perform page-out/page-in is not given to the user process. This is an important column to look at.
+    </li>
+  </ul>
+  
+  <p>
+    <span style="color: #0000ff;"><strong>io section</strong></span><br /> Return the <em><strong>number of blocks read in (bi) from the devices and blocks written out (bo)</strong></em> to the devices in kilobytes per second. Pay particular attention to these two fields when running i/o intensive applications. The statistics shown here, are mostly disk I/O, but it can be any block devices on the systems (Optical disk, Tapes).
+  </p>
+  
+  <ul>
+    <li>
+      <strong>(bi)</strong> &#8211;  Blocks received from a block device (blocks/s).
+    </li>
+    <li>
+      <strong>(bo)</strong> &#8211;  Blocks sent to a block device (blocks/s).
+    </li>
+  </ul>
+  
+  <p>
+    <span style="color: #0000ff;"><strong>system section</strong></span><br /> Report the number of <strong><em>interrupts (in) and context switches (cs) per second</em></strong>.
+  </p>
+  
+  <ul>
+    <li>
+      <strong>(in)</strong> &#8211; The number of interrupts per second, including the clock.
+    </li>
+    <li>
+      <strong>(cs)</strong> &#8211; The number of context switches per second. Cpu time is given to each process in time slices. When a process has used up its time slice, it must relinquish the cpu to another process. The cpu must save the working environment for the next process to be executed. This is known as context switch.
+    </li>
+  </ul>
+  
+  <p>
+    <span style="color: #0000ff;"><strong>cpu section</strong></span><br /> Report the percentage of total <strong><em>CPU time in terms of user (us), system (sy), true idleness (id), and waiting for i/o completion (wa)</em></strong>. Perhaps the most common metric is CPU utilization. If “wa” is large, examine the i/o subsystem – you may conclude, for example, that more i/o controller and disks are needed to reduce the i/o wait time, you may want to split the I/O on multiple disks. If swapping is occurring a lot, then you may want to add memory to reduce that i/o wait percentage. If the idle time (id) is consistently 0 and the system time (sy) is double the user time (us), the system is facing a shortage of cpu resource.
+  </p>
+  
+  <ul>
+    <li>
+      <strong>(us)</strong> &#8211; Percent of time the cpu is operating in user mode. When is user mode, a process executes in its application code and does not require kernel resources.
+    </li>
+    <li>
+      <strong>(sy)</strong> &#8211; Percent of the time the cpu is operating in kernel mode.. When is system mode, the process is making calls for accessing the kernel.
+    </li>
+    <li>
+      <strong>(id)</strong> &#8211; Percent of time the cpu is idle not processes available for execution and no pending i/o.
+    </li>
+    <li>
+      <strong>(wa)</strong> &#8211; Percent of time the cpu is idle with no processes available for execution but with pending i/o requests.
+    </li>
+  </ul>
+  
+  <p>
+    <strong><span style="color: #0000ff;">Conclusion</span></strong>
+  </p>
+  
+  <p>
+    It isn&#8217;t necessarily bad for system to use some of its swap page, but if you realize that your system performance is decreasing, running low on memory and that there is a lot of paging going on, adding more memory can be a solution. With the column &#8220;si&#8221; and &#8220;so&#8221; you can even have an idea on how much memory is needed to reduce or eliminate the paging.
+  </p>
+  
+  <p>
+    I hope that you appreciated this article and that we will come back to the site.  I have many more interresting article in mind, so s<a href="http://linternux.com/feed/">ubscribe to my RSS feed</a> and hope to see you come back soon :-).
+  </p>
+</p>
+:ET

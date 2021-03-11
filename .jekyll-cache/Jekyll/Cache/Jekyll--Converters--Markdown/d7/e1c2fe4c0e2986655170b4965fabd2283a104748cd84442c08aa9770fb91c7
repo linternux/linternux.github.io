@@ -1,0 +1,181 @@
+I" /<p>This script produce web reports of the last 24 hrs activities and email them to the sysadmin. It run automatically early every morning from the SADMIN server crontab (/etc/cron.d/sadm_server), but you can also be run it manually when desired. It can only be run on the SADMIN server.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nv">$ </span><span class="nb">sudo</span> <span class="nv">$SADMIN</span>/bin/sadm_daily_report.sh <span class="o">[</span><span class="nt">-v</span><span class="o">]</span> <span class="o">[</span><span class="nt">-h</span><span class="o">]</span> <span class="o">[</span><span class="nt">-b</span><span class="o">]</span> <span class="o">[</span><span class="nt">-r</span><span class="o">]</span> <span class="o">[</span><span class="nt">-s</span><span class="o">]</span> <span class="o">[</span><span class="nt">-d</span> 0-9]  </code></pre></figure>
+
+<h2 id="description">DESCRIPTION</h2>
+<p>The script produce three reports, each of them is sent to the email(s) defined by the field ‘<em>SADM_MAIL_ADDR</em>’ defined in the SADMIN configuration file ($SADMIN/cfg/sadmin.cfg). It can only be run on the SADMIN server (Not on a SADMIN client). The reports are also accessible via the web interface.</p>
+
+<p>If the package ‘<a href="https://wkhtmltopdf.org/">wkhtmltopdf</a>’ is present on the SADMIN server (It should have been installed by the setup process), a PDF version of each report is also attached to the email.</p>
+
+<p>If one of the three report is not desired, you can use the ‘-r’, ‘-b’ or the ‘-s’ command line switch to disable the desired report (email). Note that only the actives systems will appear on these reports.</p>
+
+<h3 id="the-scripts-report">The scripts report:</h3>
+<p><img src="/assets/img/man/sadm_daily_report/sadm_daily_report_script.png" alt="Daily Script Report Example" /></p>
+<ul>
+  <li>The running scripts are listed first, then the scripts that terminated with an error and finally all the scripts grouped by system. So it give you view of the statistics of each script (start time, end time, elapse time,…) of each systems sorted and grouped by name. When something look different than the normal, like the alert group used is different than the default group or the last execution date of a script is more than thirty days, it will be shown with a yellow background.</li>
+  <li>You can also view the log of each script just by clicking on the script name.</li>
+  <li>The same report is also accessible in the heading of any of the “Scripts Status” web pages.</li>
+</ul>
+
+<h3 id="the-daily-backup-report">The Daily backup report:</h3>
+<p><img src="/assets/img/man/sadm_daily_report/sadm_daily_report_backup.png" alt="Daily Backup Report Example" /></p>
+<ul>
+  <li>This report present the last execution statistics of all the daily backup script (sadm_backup.sh) for each systems. Since the daily backup should have been taken during the night, they should all have the same execution date. If this is not the case, then the execution date cell will have a yellow background, to advise you that there may be a problem with the backup on that system.</li>
+  <li>The daily backup report is also accessible in the heading of the “Daily Backup Status” web page.</li>
+  <li>If you want to change the backup schedule of a particular system, just click on the “Schedule Activated” cell of the desired system.</li>
+  <li>If you want to see the log of the backup, click on the “Status” cell of the desired system.</li>
+</ul>
+
+<h3 id="the-rear-system-image-backup">The <a href="https://relax-and-recover.org/">Rear</a> system image backup:</h3>
+<p><img src="/assets/img/man/sadm_daily_report/sadm_daily_report_rear.png" alt="Daily ReaR Image Backup Report Example" /></p>
+<ul>
+  <li>The <a href="https://relax-and-recover.org/">ReaR</a> report, show you the last ReaR backup execution result of each systems.</li>
+  <li>If a backup last execution date is older than 7 days, the date cell of that backup will have a yellow background. If the current backup size and the  previous backup differ than more than 50% they will have a yellow background as well. This may tell you that your backup have greater than expected and you may want to take a look at it.</li>
+  <li>If you want to change the backup schedule of a particular system just click on the “Schedule Activated” cell of the desired system.</li>
+  <li>The ReaR daily report is also accessible in the heading of the “ReaR Backup Schedule Status” web page.</li>
+  <li>If you want to see the log of the backup, just click on the “Status” cell of the desired system.<br />
+<br /></li>
+  <li><strong>Excluding Servers or/and Scripts from the reports:</strong>
+    <ul>
+      <li>At the beginning of the script you will find a section defining two variables named “<strong>SCRIPTS</strong>” and “<strong>SERVERS</strong>”. You can used them to exclude some scripts from the “Daily Scripts Report” by specifying them in the “SCRIPTS” variable.</li>
+      <li>To exclude server(s) from ALL the reports, you can specify them in the “SERVERS” variable. Server name used MUST not include the domain name.</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Exclude template scripts and demo scripts.</span>
+<span class="nv">SCRIPTS</span><span class="o">=</span><span class="s2">"sadm_template sadmlib_std_demo"</span>
+    
+<span class="c"># Exclude System Startup/Shutdown Script for Daily scripts report</span>
+<span class="nv">SCRIPTS</span><span class="o">=</span><span class="s2">"</span><span class="nv">$SCRIPTS</span><span class="s2"> sadm_startup sadm_shutdown"</span>
+
+<span class="c"># Server excluded from ALL Daily Report (Backup, Rear and Scripts)</span>
+<span class="nv">SERVERS</span><span class="o">=</span><span class="s2">"server1 server2"</span>
+</code></pre></div></div>
+
+<h2 id="execution-example">EXECUTION EXAMPLE</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># sadm_daily_report.sh</span>
+
+Sun Jan 17 14:39:39 EST 2021 - sadm_daily_report.sh V1.20 - SADM Lib. V3.64
+Server Name: robin.batcave.com - Type: LINUX
+CENTOS 7.9.2009 Kernel 3.10.0-1160.11.1.el7.x86_64
+<span class="o">==================================================</span>
+
+Creating the Daily Backup Report
+<span class="o">[</span> OK <span class="o">]</span> Mount batnas.batcave.com:/volume1/backup_linux /mnt/daily_report
+<span class="o">[</span> OK <span class="o">]</span> Create Backup Web Page.
+<span class="o">[</span> OK <span class="o">]</span> Unmount directory /mnt/daily_report
+<span class="o">[</span> OK <span class="o">]</span> Daily Backup Report sent to batman@batcave.com
+End of Daily Backup Report ...
+
+Creating the ReaR Backup Report
+<span class="o">[</span> OK <span class="o">]</span> Mount batnas.batcave.com:/volume1/backup_rear /mnt/daily_report
+<span class="o">[</span> OK <span class="o">]</span> Unmount directory /mnt/daily_report
+<span class="o">[</span> OK <span class="o">]</span> ReaR Backup Report sent to batman@batcave.com
+End of the ReaR Backup Report ...
+
+Creating the Daily Script Report
+<span class="o">[</span> OK <span class="o">]</span> Create Script Web Page.
+<span class="o">[</span> OK <span class="o">]</span> No script actually running.
+<span class="o">[</span> OK <span class="o">]</span> No script terminated with error
+<span class="o">[</span> OK <span class="o">]</span> Scripts grouped by server page generated
+<span class="o">[</span> OK <span class="o">]</span> Script report sent to batman@batcave.com
+End of the Script Report ...
+
+<span class="o">==================================================</span>
+Script <span class="nb">exit </span>code is 0 <span class="o">(</span>Success<span class="o">)</span> and execution <span class="nb">time </span>is 00:00:27
+History <span class="o">(</span>/sadmin/dat/rch/robin_sadm_daily_report.rch<span class="o">)</span> trim to 35 lines <span class="o">(</span><span class="nv">$SADM_MAX_RCLINE</span><span class="o">=</span>35<span class="o">)</span><span class="nb">.</span>
+Script will send an alert only when it terminate with error <span class="o">(</span><span class="nv">$SADM_ALERT_TYPE</span><span class="o">=</span>1<span class="o">)</span><span class="nb">.</span>
+Script succeeded, no alert will be send to <span class="s1">'default'</span> alert group.
+New log <span class="o">(</span>/sadmin/log/robin_sadm_daily_report.log<span class="o">)</span> created <span class="o">(</span><span class="nv">$SADM_LOG_APPEND</span><span class="o">=</span><span class="s1">'N'</span><span class="o">)</span><span class="nb">.</span>
+End of sadm_daily_report.sh - Sun Jan 17 14:40:02 EST 2021
+<span class="o">==========================================================================</span>
+</code></pre></div></div>
+
+<h2 id="options">OPTIONS</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Options</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><strong>-d</strong></td>
+      <td style="text-align: left">Set Debug level from 0 to 9 (Default is 0)</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>-h</strong></td>
+      <td style="text-align: left">Display this help and exit.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>-v</strong></td>
+      <td style="text-align: left">Output version information and exit.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>-r</strong></td>
+      <td style="text-align: left">Don’t produce the ReaR backup report</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>-b</strong></td>
+      <td style="text-align: left">Don’t produce the Daily backup report</td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><strong>-s</strong></td>
+      <td style="text-align: left">Don’t produce the Scripts report</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="requirements">REQUIREMENTS</h2>
+<ul>
+  <li>Environment variable ‘SADMIN’ need to be defined, it specify the root directory of the SADMIN tools (normally /opt/sadmin).
+    <ul>
+      <li>It should be already done, the setup script have updated the /etc/profile.d/sadmin.sh and then /etc/environment files.</li>
+    </ul>
+  </li>
+  <li>The <a href="/doc/man/file_sadmin_cfg.php">SADMIN main configuration file</a>, is needed and it’s loaded in memory at the beginning of every scripts.
+    <ul>
+      <li>This file should already exist and contains your SADMIN configuration and preference setting.</li>
+    </ul>
+  </li>
+  <li>SADMIN Tools shell library, “$SADMIN/lib/sadmlib.sh”.</li>
+</ul>
+
+<h2 id="exit-status">EXIT STATUS</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Exit Code</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">0</td>
+      <td style="text-align: left">An exit status of zero indicates success.</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1</td>
+      <td style="text-align: left">Failure is indicated by a nonzero value, typically ‘1’.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="author">AUTHOR</h2>
+<p><a href="jacques.duplessis@sadmin.ca.">Jacques Duplessis</a><br />
+Any suggestions or bug report can be submitted at the <a href="www.sadmin.ca/support.php">support page</a></p>
+
+<h2 id="copyright">COPYRIGHT</h2>
+<p>Copyright © 2021 Free Software Foundation, Inc. License GPLv3+: <a href="http://gnu.org/licenses/gpl.html">GNU GPL version 3 or later</a><br />
+This is free software, you are free to change and redistribute it. <br />
+There is NO WARRANTY to the extent permitted by law.</p>
+
+<h2 id="see-also">SEE ALSO</h2>
+<p>The Daily Backup Script - <a href="http://sadmin/www/doc/man/sadm_backup.html">sadm_backup.sh</a></p>
+
+:ET

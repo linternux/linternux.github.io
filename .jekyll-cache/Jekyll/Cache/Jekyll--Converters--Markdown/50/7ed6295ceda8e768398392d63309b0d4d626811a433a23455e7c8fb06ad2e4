@@ -1,0 +1,306 @@
+I"/<p>You’re doing a script and you need to know what was the date 35 days ago or what will the date be in 21 days. This is where  the “date” command can help you doing that kind of calculation. In this little article we will present some examples to help us making some data calculation. I would like to point out, that all of these date calculation take in consideration the leap year. <br />
+<br />
+<img src="/assets/img/sadm_calendar.jpg" class="align-left" alt="" />
+Image by <a href="https://pixabay.com/users/amber_avalona-1512238/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2290045">Amber Avalona</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2290045">Pixabay</a></p>
+
+<p>Revision 1.1 - 2 March 2021 - <a href="/assets/pdf/making-date-calculation.pdf">Download a pdf version</a></p>
+
+<h2 id="current-date-and-time">Current date and time</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Command</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">date</td>
+      <td style="text-align: left">Get/Show current date &amp; time</td>
+      <td style="text-align: left">Sun 28 Feb 2021 17:05:41 EST</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date “+%C%y.%m.%d %H:%M:%S”</td>
+      <td style="text-align: left">Current Date/Time YYYY.MM.DD HH:MM:SS</td>
+      <td style="text-align: left">2021.02.28 21:09:17</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date “+%C%y.%m.%d %T”</td>
+      <td style="text-align: left">Current Date/Time YYYY.MM.DD HH:MM:SS</td>
+      <td style="text-align: left">2021.02.28 21:09:17</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date ‘+%C%y.%m.%d’</td>
+      <td style="text-align: left">Current Date/Time Format YYYY.MM.DD</td>
+      <td style="text-align: left">2021.02.28</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date “+%j”</td>
+      <td style="text-align: left">Day of year (001..366)</td>
+      <td style="text-align: left">059</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date +%q</td>
+      <td style="text-align: left">Quarter of year (1..4)</td>
+      <td style="text-align: left">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date +%u</td>
+      <td style="text-align: left">Day of week (1..7); 1 is Monday</td>
+      <td style="text-align: left">7</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date +%w</td>
+      <td style="text-align: left">Day of week (0..6); 0 is Sunday</td>
+      <td style="text-align: left">0</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date +%U</td>
+      <td style="text-align: left">week number of year (00..53)</td>
+      <td style="text-align: left">09</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date +%d</td>
+      <td style="text-align: left">Day of month (e.g., 01)</td>
+      <td style="text-align: left">28</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date +%m</td>
+      <td style="text-align: left">Month number (01..12)</td>
+      <td style="text-align: left">02</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date +%y</td>
+      <td style="text-align: left">Last two digits of year (00..99)</td>
+      <td style="text-align: left">21</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date +%Y</td>
+      <td style="text-align: left">Current Year with century</td>
+      <td style="text-align: left">2021</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date +%H</td>
+      <td style="text-align: left">Current Hour (00..23)</td>
+      <td style="text-align: left">21</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date +%M</td>
+      <td style="text-align: left">Current Minute (00..59)</td>
+      <td style="text-align: left">09</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date +%S</td>
+      <td style="text-align: left">Current second (00..60)</td>
+      <td style="text-align: left">41</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /></p>
+<h2 id="epoch-time">Epoch time</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Command</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">date</td>
+      <td style="text-align: left">Get current date &amp; time</td>
+      <td style="text-align: left">Tue 02 Mar 2021 10:42:09 AM EST</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date +%s</td>
+      <td style="text-align: left">Get current epoch time</td>
+      <td style="text-align: left">1614699732</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date -d @1614699732 “+%Y/%m/%d %T”</td>
+      <td style="text-align: left">Convert Epoch Time to a Date format</td>
+      <td style="text-align: left">2021/03/02 10:42:12</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date –date=’03/02/2021 10:42:12’ +%s</td>
+      <td style="text-align: left">Convert a Date to an Epoch Time</td>
+      <td style="text-align: left">1614699732</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /></p>
+<h2 id="date-in-the-future">Date in the future</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Command</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">date –date=”35 days”</td>
+      <td style="text-align: left">Date/Time in 35 days</td>
+      <td style="text-align: left">Sun Apr  4 18:12:51 EDT 2021</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date –date=”1 month”</td>
+      <td style="text-align: left">Date/Time in one month</td>
+      <td style="text-align: left">Sun Mar 28 18:58:26 EDT 2021</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date –date=”this friday”</td>
+      <td style="text-align: left">Date/Time Next Friday</td>
+      <td style="text-align: left">Fri Mar  5 00:00:00 EST 2021</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date –date=”next day”</td>
+      <td style="text-align: left">Date/Time Tomorrow</td>
+      <td style="text-align: left">Mon Mar  1 18:01:42 EST 2021</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date –date=”tomorrow”</td>
+      <td style="text-align: left">Date/Time Tomorrow</td>
+      <td style="text-align: left">Mon Mar  1 18:01:42 EST 2021</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date –date=’fortnight’</td>
+      <td style="text-align: left">Date/Time 15 days ahead</td>
+      <td style="text-align: left">Sun Mar 14 21:30:30 EDT 2021</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date –date=’5 fortnight’</td>
+      <td style="text-align: left">Date/Time 5 times 15 days ahead</td>
+      <td style="text-align: left">Sun May  9 21:38:33 EDT 2021</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date –date=’2 hour’</td>
+      <td style="text-align: left">Date/Time 2 hours from now</td>
+      <td style="text-align: left">Sun Feb 28 22:43:30 EST 2021</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date –date=’20 minute’</td>
+      <td style="text-align: left">Date/Time 20 minutes from now</td>
+      <td style="text-align: left">Sun Feb 28 21:04:49 EST 2021</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date -dmonday +%Y/%m/%d</td>
+      <td style="text-align: left">Date of next Monday</td>
+      <td style="text-align: left">2021/03/01</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date -d’monday-fortnight ago’ +%Y%m%d</td>
+      <td style="text-align: left">Last Monday - 2 weeks from now</td>
+      <td style="text-align: left">20210215</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date –date “next month - $(date +%d) day”</td>
+      <td style="text-align: left">Last Day of Month</td>
+      <td style="text-align: left">Wed 31 Mar 2021 10:30:21 AM EDT</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date -dnext-monday +”%Y/%m/%d”</td>
+      <td style="text-align: left">Date/Time of next Monday</td>
+      <td style="text-align: left">2021/03/01</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date -d’monday+fortnight’ +”%Y/%m/%d”</td>
+      <td style="text-align: left">Next Monday + 2 weeks from now</td>
+      <td style="text-align: left">2021/02/15</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date -d’52+monday’ +”%Y%m%d”</td>
+      <td style="text-align: left">Date of 52th Monday from now</td>
+      <td style="text-align: left">20220221</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date -d’monday+14 days’ +”%Y%m%d”</td>
+      <td style="text-align: left">Date of next Monday + 14 Days</td>
+      <td style="text-align: left">20210315</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /></p>
+<h2 id="date-in-the-past">Date in the past</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Command</th>
+      <th style="text-align: left">Description</th>
+      <th style="text-align: left">Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">date –date=’20 minutes ago’</td>
+      <td style="text-align: left">Date/Time 20 minutes ago</td>
+      <td style="text-align: left">Sun Feb 28 20:25:25 EST 2021</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date –date=’2 hours ago’</td>
+      <td style="text-align: left">Date/Time 2 hours ago</td>
+      <td style="text-align: left">Sun Feb 28 18:44:20 EST 2021</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date –date=’10 days ago’</td>
+      <td style="text-align: left">Date/Time 10 days ago</td>
+      <td style="text-align: left">Thu Feb 18 20:51:01 EST 2021</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date –date=’10 weeks ago’</td>
+      <td style="text-align: left">Date/Time 10 weeks ago</td>
+      <td style="text-align: left">Sun Dec 20 20:51:28 EST 2020</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date –date=’10 months ago’</td>
+      <td style="text-align: left">Date/Time 10 months</td>
+      <td style="text-align: left">Tue Apr 28 21:52:27 EDT 2020</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date –date=’10 year ago’</td>
+      <td style="text-align: left">Date/Time 10 years ago</td>
+      <td style="text-align: left">Mon Feb 28 20:52:54 EST 2011</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date –date=”yesterday” +”%Y/%m/%d %T”</td>
+      <td style="text-align: left">Yesterday Date</td>
+      <td style="text-align: left">2021/02/27 20:49:45</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date –date=’yesterday’</td>
+      <td style="text-align: left">Yesterday Date/Time</td>
+      <td style="text-align: left">Sat Feb 27 20:49:49 EST 2021</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date –date=’fortnight ago’</td>
+      <td style="text-align: left">Date/Time 15 days ago</td>
+      <td style="text-align: left">Sun Feb 14 20:40:06 EST 2021</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date -dlast-monday</td>
+      <td style="text-align: left">Date/Time of Last Monday</td>
+      <td style="text-align: left">Mon Feb 22 00:00:00 EST 2021</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date -dlast-monday +”%Y/%m/%d”</td>
+      <td style="text-align: left">Date Last Monday</td>
+      <td style="text-align: left">2021/02/22</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">date -d’monday-14 days’ +”%Y/%m/%d %T”</td>
+      <td style="text-align: left">Two Mondays ago</td>
+      <td style="text-align: left">20210215</td>
+    </tr>
+  </tbody>
+</table>
+:ET

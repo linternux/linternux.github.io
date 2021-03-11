@@ -30,7 +30,7 @@
 <meta name="twitter:site" content="@linternux" />
 <meta name="twitter:creator" content="@linternux" />
 <script type="application/ld+json">
-{"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/assets/img/logo/logo_linternux_200x200.jpg"},"name":"Jacques Duplessis"},"url":"/","author":{"@type":"Person","name":"Jacques Duplessis"},"name":"LINternUX","headline":"LINternUX","description":"Tips &amp; Tricks for SysAdmin","@type":"WebSite","@context":"https://schema.org"}</script>
+{"@type":"WebSite","description":"Tips &amp; Tricks for SysAdmin","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/assets/img/logo/logo_linternux_200x200.jpg"},"name":"Jacques Duplessis"},"headline":"LINternUX","url":"/","author":{"@type":"Person","name":"Jacques Duplessis"},"name":"LINternUX","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -113,6 +113,71 @@
   <header class="entry-header">
     <h3 class="entry-title p-name">
       
+        <a href="/network/ssh-and-scp-without-password/" rel="bookmark">Using SSH without entering password
+</a>
+      
+    </h3>
+    
+  </header>
+  
+    <div class="entry-excerpt p-summary">
+      
+        <p><img src="assets/img/sadm_ssh.jpg" class="align-left" alt="" /><br />
+Image by <a href="https://pixabay.com/photos/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=731198">Free-Photos</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=731198">Pixabay</a>
+<br /></p>
+<p>
+In this article, we will demonstrate how to configure SSH in such a way that it will allow you to log from one server to another, without having to enter a password. When administrating a lot of Unix servers, there are some situation when you need to run a script from one server to another without entering a password. 
+</p>
+<p>For example, let’s say that you need to take a cold backup of a Oracle database, but before starting it, you need to stop the application running on another server. In your Oracle backup script, you could “ssh” to application server and run a script that would stop the application before starting the backup.  But to do that with a script, you need a way to log on the application server without having to enter a password.</p>
+
+      
+    </div>
+  
+  
+    <footer class="entry-meta">
+      
+      <time class="entry-date dt-published" datetime="2021-03-04T08:19:00-05:00">March 4, 2021
+  </time>
+    </footer>
+  
+</article>
+
+
+<article class="entry h-entry">
+  <header class="entry-header">
+    <h3 class="entry-title p-name">
+      
+        <a href="/general/linux-administration-books-for-free/" rel="bookmark">Linux Administration Books for Free
+</a>
+      
+    </h3>
+    
+  </header>
+  
+    <div class="entry-excerpt p-summary">
+      
+        <p>A short post to list some free books for Linux users and administrators, take a look you might find one that you would like to have.<br />
+<br />
+<img src="/assets/img/sadm_books.jpg" class="align-left" alt="" />
+Image by <a href="https://pixabay.com/users/blende12-201217/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1659717">Gerhard G.</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1659717">Pixabay</a></p>
+
+      
+    </div>
+  
+  
+    <footer class="entry-meta">
+      
+      <time class="entry-date dt-published" datetime="2021-03-02T14:40:52-05:00">March 2, 2021
+  </time>
+    </footer>
+  
+</article>
+
+
+<article class="entry h-entry">
+  <header class="entry-header">
+    <h3 class="entry-title p-name">
+      
         <a href="/general/linux-administration-book-for-free/" rel="bookmark">Linux Administration Book for Free
 </a>
       
@@ -150,7 +215,10 @@
   
     <div class="entry-excerpt p-summary">
       
-        <p>You’re doing a script and you need to know what was the date 35 days ago or what will the date be in 21 days. This is where  the “date” command can help you doing that kind of calculation. In this little article we will present some examples to help us making some data calculation. I would like to point out, that all of these date calculation take in consideration the leap year.</p>
+        <p>You’re doing a script and you need to know what was the date 35 days ago or what will the date be in 21 days. This is where  the “date” command can help you doing that kind of calculation. In this little article we will present some examples to help us making some data calculation. I would like to point out, that all of these date calculation take in consideration the leap year. <br />
+<br />
+<img src="/assets/img/sadm_calendar.jpg" class="align-left" alt="" />
+Image by <a href="https://pixabay.com/users/amber_avalona-1512238/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2290045">Amber Avalona</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2290045">Pixabay</a></p>
 
       
     </div>
@@ -178,7 +246,10 @@
   
     <div class="entry-excerpt p-summary">
       
-        <p>User is calling and say that he forgot is password. So you need to change his password and for security reason you want to force him to change it upon his first login. The command “chage -d 0” (change aging) will force user to change his password upon first login.</p>
+        <p>User is calling and say that he forgot is password. So you need to change his password and for security reason you want to force him to change it upon his first login. The command “chage -d 0” (change aging) will force user to change his password upon first login.<br />
+<br />
+<img src="/assets/img/sadm_password.jpg" class="align-left" alt="" /><br />
+Image by <a href="https://pixabay.com/users/absolutvision-6158753/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2781614">Gino Crescoli</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2781614">Pixabay</a></p>
 
       
     </div>
@@ -191,202 +262,60 @@
     </footer>
   
 </article>
+<!-- Pagination links -->
 
-
-<article class="entry h-entry">
-  <header class="entry-header">
-    <h3 class="entry-title p-name">
-      
-        <a href="/index.php/2009/11/07/ssh-without-password/" rel="bookmark">Using SSH and SCP without entering password
-</a>
-      
-    </h3>
+<nav class="pagination">
+  
+  <ul>
     
-  </header>
-  
-    <div class="entry-excerpt p-summary">
-      
-        <p>When administrating a lot of Unix servers, there are some situation when you need to run a script from one server to another without entering a password. For example, let’s say that you need to take a cold backup of a Oracle database, but before starting it, you need to stop the application running on another server. In your Oracle backup script, you could “ssh” to application server and run a script that would stop the application before starting the backup.  But to do that with a script, you need a way to log on the application server without having to enter a password.</p>
-
-      
-    </div>
-  
-  
-    <footer class="entry-meta">
-      
-      <time class="entry-date dt-published" datetime="2009-11-07T03:58:59-05:00">November 7, 2009
-  </time>
-    </footer>
-  
-</article>
-
-
-<article class="entry h-entry">
-  <header class="entry-header">
-    <h3 class="entry-title p-name">
-      
-        <a href="/index.php/2009/10/04/secure-shell-filesystem/" rel="bookmark">Secure Shell Filesystem
-</a>
-      
-    </h3>
     
-  </header>
-  
-    <div class="entry-excerpt p-summary">
-      
-        <p><a href="http://192.168.1.88/wp-content/uploads/2009/10/sshfs.png"><img loading="lazy" class="alignleft size-full wp-image-974" title="sshfs" src="http://192.168.1.88/wp-content/uploads/2009/10/sshfs.png" alt="sshfs" width="115" height="115" /></a>In this article, we are looking at SSHFS, the Secure Shell Filesystem. We can use it to mount a remote filesystem using the SSH Protocol.  So the information flowing between the two systems is completely encrypted. SSHFS is a client based application, so beside the SSH server, there is nothing to installed on the remote server to use it.  FUSE is a linux kernel module that allow non-privilege user to mount their own filesystem without the help of any kernel code. One of the interesting feature of SSHFS is that you can securely mount a filesystem over the internet, this is impossible with Samba and not very secure with NFS. If you like more information on SSHFS, you can visit the  <a href="http://fuse.sourceforge.net/sshfs.html" title="Secure Shell Filesystem Home Page">SSHFS homepage</a> and the <a href="http://en.wikipedia.org/wiki/SSHFS" title="Secure Shell Filesystem Wiki ">Wiki</a> of the SSHFS package. There is also a <a href="http://www.youtube.com/watch?v=E5BDkadiaZo" title="YouTube Video about SSHFS">YouTube video</a> that show how to use SSHFS on a Fedora system. For those interested in a windows version of sshfs, there is a free version available at the <a href="http://dokan-dev.net/en/">Dokan site</a>, you need to install the Dokan Library first, then install SSHFS. I have done some simple test with it and I didn’t had any problem.</p>
-
-      
-    </div>
-  
-  
-    <footer class="entry-meta">
-      
-      <time class="entry-date dt-published" datetime="2009-10-04T07:11:18-04:00">October 4, 2009
-  </time>
-    </footer>
-  
-</article>
-
-
-<article class="entry h-entry">
-  <header class="entry-header">
-    <h3 class="entry-title p-name">
-      
-        <a href="/index.php/2009/09/20/yum-revisited-part-2/" rel="bookmark">Yum Revisited (Part 2)
-</a>
-      
-    </h3>
+    <li><a href="#" class="disabled"><span aria-hidden="true">Previous</span></a></li>
     
-  </header>
-  
-    <div class="entry-excerpt p-summary">
-      
-        <p><a href="http://192.168.1.88/wp-content/uploads/2009/09/timthumb.png"><img loading="lazy" class="alignleft size-full wp-image-779" title="YUM - Yellowdog Updater Modified" src="http://192.168.1.88/wp-content/uploads/2009/09/timthumb.png" alt="YUM - Yellowdog Updater Modified" width="96" height="96" /></a> Here is the second article dedicated to the “yum” command. We will demonstrate some useful option of the command and how-to recover in some problematic situation. Keeping your system up to date is important, knowing how to do it and how to correct some issue related to rpm are also important. So let’s see if everyone can find something new about the “yum” command and see if we can apply it in our daily system admin job. You can also consult the <a href="http://yum.baseurl.org/" title="YUM Website">“yum” website</a> or the <a href="http://en.wikipedia.org/wiki/Yellowdog_Updater,_Modified" title="YUM Wiki">“yum” wiki</a> to obtain more information. As always, I will try to make this article as useful as it can be, so we  can all come back to it and use it as a reference to the “yum” command.</p>
 
-      
-    </div>
-  
-  
-    <footer class="entry-meta">
-      
-      <time class="entry-date dt-published" datetime="2009-09-20T03:40:11-04:00">September 20, 2009
-  </time>
-    </footer>
-  
-</article>
-
-
-<article class="entry h-entry">
-  <header class="entry-header">
-    <h3 class="entry-title p-name">
-      
-        <a href="/index.php/2009/09/04/yum-revisited-part-1/" rel="bookmark">Yum Revisited (Part 1)
-</a>
-      
-    </h3>
     
-  </header>
-  
-    <div class="entry-excerpt p-summary">
-      
-        <p><a href="http://192.168.1.88/wp-content/uploads/2009/07/Yum.png"><img loading="lazy" class="alignleft size-full wp-image-680" title="Yum" src="http://192.168.1.88/wp-content/uploads/2009/07/Yum.png" alt="Yum" width="185" height="70" /></a>This is a first of a series of two articles dedicated to the “yum” program. In this first article, we will mainly look at the configuration files. In the next article, we will look at some advance usage, that will help us in administrating our servers.  As always, will build our article, in a way that we can come back to it and use it as a reference if we need some information about “yum”. We will concentrate on the command line version of “yum”, but I would like mention that there is a graphical version called “yumex” that I would recommend. It is not the fastest one, but it is simple to use and it work.  Visit the  <a href="http://www.yum-extender.org/blog/" title="yumex home page">“yumex” home page</a>, you can aloso <a href="http://linternux.com/download/yumex/yumex-2.0.5-3.el5.noarch.rpm" title="Download yumex rpm">download the RedHat/Centos 5 rpm</a> from here.</p>
-
-      
-    </div>
-  
-  
-    <footer class="entry-meta">
-      
-      <time class="entry-date dt-published" datetime="2009-09-04T07:01:27-04:00">September 4, 2009
-  </time>
-    </footer>
-  
-</article>
-
-
-<article class="entry h-entry">
-  <header class="entry-header">
-    <h3 class="entry-title p-name">
-      
-        <a href="/index.php/2009/07/24/setting-up-ntp-server/" rel="bookmark">Setting up your own NTP server
-</a>
-      
-    </h3>
     
-  </header>
-  
-    <div class="entry-excerpt p-summary">
-      
-        <p>As a system administrator, we must ensure that time synchronization is working at all time. Time synchronization have been proven to be helpful when we try to trace a chain of events that occurs on multiple servers or when trying to synchronize time sensitive-transactions. In this article, we will setup one NTP (Network Time Protocol) server running on RedHat/Centos 5, but it could be applied to the major Linux distribution.  As always, I have tried to make the article to be used a reference source, so that we can come back when ever you will play with the NTP tools.</p>
-
-      
-    </div>
-  
-  
-    <footer class="entry-meta">
-      
-      <time class="entry-date dt-published" datetime="2009-07-24T09:38:43-04:00">July 24, 2009
-  </time>
-    </footer>
-  
-</article>
-
-
-<article class="entry h-entry">
-  <header class="entry-header">
-    <h3 class="entry-title p-name">
-      
-        <a href="/index.php/2009/07/05/view-change-nic-setting/" rel="bookmark">Viewing and changing netword card setting
-</a>
-      
-    </h3>
+      <li><a href="#" class="disabled current">1</a></li>
     
-  </header>
-  
-    <div class="entry-excerpt p-summary">
-      
-        <h3 id="checking-our-network-card-current-setting"><strong><span style="color: #0000ff;">Checking our network card current setting</span></strong></h3>
 
-      
-    </div>
-  
-  
-    <footer class="entry-meta">
-      
-      <time class="entry-date dt-published" datetime="2009-07-05T07:52:57-04:00">July 5, 2009
-  </time>
-    </footer>
-  
-</article>
-
-
-<article class="entry h-entry">
-  <header class="entry-header">
-    <h3 class="entry-title p-name">
-      
-        <a href="/index.php/2009/06/23/adding-san-disk/" rel="bookmark">Adding SAN disk without rebooting
-</a>
-      
-    </h3>
     
-  </header>
-  
-    <div class="entry-excerpt p-summary">
-      
-        <p>The production system is running, the database filesystem is almost full. We need more disk space on the server. The server is attached to the San so we can add disk without bringing down the server. In this article, we will demonstrate what is needed to make the new San disk available to the server without disturbing the running application. Although that theses commands have been tested and used on production environment,  I suggest that you build your confidence first, by trying them on a development system.</p>
+    
 
+    
+    
+    
+
+    
       
-    </div>
-  
-  
-    <footer class="entry-meta">
+        
+        
+        
+        <li><a href="/page2/">2</a></li>
       
-      <time class="entry-date dt-published" datetime="2009-06-23T10:00:15-04:00">June 23, 2009
-  </time>
-    </footer>
-  
-</article>
+    
+      
+        
+        
+        
+        <li><a href="/page3/">3</a></li>
+      
+    
+
+    
+    
+      <li><a href="#" class="disabled">&hellip;</a></li>
+    
+
+    
+      <li><a href="/page6/">6</a></li>
+    
+
+    
+    
+      <li><a href="/page2/">Next</a></li>
+    
+  </ul>
+</nav>
+
 </div>
 
 

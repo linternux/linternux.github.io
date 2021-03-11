@@ -1,9 +1,506 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/atom.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-03-02T21:09:17-05:00</updated><id>/atom.xml</id><title type="html">LINternUX</title><subtitle>Tips &amp; Tricks for SysAdmin</subtitle><author><name>Jacques Duplessis</name><email>linternux@gmail.com</email></author><entry><title type="html">Linux Administration Book for Free</title><link href="/general/linux-administration-book-for-free/" rel="alternate" type="text/html" title="Linux Administration Book for Free" /><published>2021-03-02T14:40:52-05:00</published><updated>2021-03-02T14:40:52-05:00</updated><id>/general/linux-administration-book-for-free</id><content type="html" xml:base="/general/linux-administration-book-for-free/">&lt;p&gt;A short post to advise you that you can download for free the “&lt;a href=&quot;http://www.linuxinsight.com/files/fta-m2-admin_gnulinux-v1.pdf&quot; title=&quot;Download PDF&quot;&gt;GNU/Linux Advanced Administration&lt;/a&gt;” book in PDF forrmat this &lt;a href=&quot;http://www.linuxinsight.com/gnu-linux-advanced-administration.html&quot;&gt;page&lt;/a&gt;, or &lt;a href=&quot;http://linternux.com/download/pdf/fta-m2-admin_gnulinux-v1.pdf&quot; title=&quot;Download from this site&quot;&gt;from this site&lt;/a&gt;.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="/atom.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-03-09T11:38:29-05:00</updated><id>/atom.xml</id><title type="html">LINternUX</title><subtitle>Tips &amp; Tricks for SysAdmin</subtitle><author><name>Jacques Duplessis</name><email>linternux@gmail.com</email></author><entry><title type="html">Using SSH without entering password</title><link href="/network/ssh-and-scp-without-password/" rel="alternate" type="text/html" title="Using SSH without entering password" /><published>2021-03-04T08:19:00-05:00</published><updated>2021-03-04T08:19:00-05:00</updated><id>/network/ssh-and-scp-without-password</id><content type="html" xml:base="/network/ssh-and-scp-without-password/">&lt;p&gt;&lt;img src=&quot;assets/img/sadm_ssh.jpg&quot; class=&quot;align-left&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+Image by &lt;a href=&quot;https://pixabay.com/photos/?utm_source=link-attribution&amp;amp;utm_medium=referral&amp;amp;utm_campaign=image&amp;amp;utm_content=731198&quot;&gt;Free-Photos&lt;/a&gt; from &lt;a href=&quot;https://pixabay.com/?utm_source=link-attribution&amp;amp;utm_medium=referral&amp;amp;utm_campaign=image&amp;amp;utm_content=731198&quot;&gt;Pixabay&lt;/a&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;
+In this article, we will demonstrate how to configure SSH in such a way that it will allow you to log from one server to another, without having to enter a password. When administrating a lot of Unix servers, there are some situation when you need to run a script from one server to another without entering a password. 
+&lt;/p&gt;
+&lt;p&gt;For example, let’s say that you need to take a cold backup of a Oracle database, but before starting it, you need to stop the application running on another server. In your Oracle backup script, you could “ssh” to application server and run a script that would stop the application before starting the backup.  But to do that with a script, you need a way to log on the application server without having to enter a password.&lt;/p&gt;
+
+&lt;p&gt;Some environment are using the &lt;a href=&quot;http://www.openssh.com/&quot; title=&quot;OpenSSH Home page&quot;&gt;OpenSSH&lt;/a&gt; version on their Linux servers and the commercial &lt;a href=&quot;https://www.ssh.com/products/tectia-ssh/&quot;&gt;Tectia SSH&lt;/a&gt; on the &lt;a href=&quot;https://www.ibm.com/it-infrastructure/power/os/aix&quot; title=&quot;AIX Home Page at IBM&quot;&gt;AIX&lt;/a&gt; servers. OpenSSH and Tectia SSH don’t have the same keys format and depending on the version you are running,  making an automated connection between these two version can become tricky. In our examples, we will demonstrate the setup require, so that user “robert” is able to log from server1 to server2 without having to enter a password in a mixed environment of OpenSSH and Tectia SSH.&lt;/p&gt;
+
+&lt;h4 id=&quot;openssh-server-configuration-etcsshsshd_config&quot;&gt;OpenSSH server configuration (/etc/ssh/sshd_config)&lt;/h4&gt;
+
+&lt;p&gt;If you are using OpenSSH and you have secure your ssh environnent, chance are that you disable direct “root” access to your server with the line “PermitRootLogin no” in your ssh daemon configuration file. If you change that line with “PermitRootLogin without-password”, then direct login to “root” would still be refuse.  But, if you have configure your server to accept public key identification (PubkeyAuthentication yes) and that the proper setup is done, you should be able to log on the server with no password.  Below is the Openssh configuration file that I use for all the examples below.**&lt;br /&gt;
+**&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span class=&quot;err&quot;&gt;Port                    &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;22&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;Protocol                &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;SyslogFacility          &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;AUTH&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;SyslogFacility          &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;AUTHPRIV&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;LoginGraceTime          &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;120&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;PermitRootLogin         &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;without-password&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;PubkeyAuthentication   &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;yes&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;HostbasedAuthentication&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;no&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;PasswordAuthentication &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;yes&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;RhostsRSAAuthentication&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;no&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;IgnoreRhosts            &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;yes&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;StrictModes             &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;yes&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;UsePrivilegeSeparation &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;yes&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;AllowTcpForwarding      &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;no&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;11&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;Forwarding           &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;yes&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;Subsystem&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;sftp          &lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;err&quot;&gt;/usr/libexec/openssh/sftp-server&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;   &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;The OpenSSH version used for all the examples below is ;&lt;/p&gt;
+
+&lt;pre&gt;# ssh -V
+OpenSSH_4.3p2, OpenSSL 0.9.8e-fips-rhel5 01 Jul 2008&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;span style=&quot;font-size: medium;&quot;&gt;&lt;strong&gt; &lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;font-size: medium;&quot;&gt;&lt;strong&gt; &lt;/strong&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;tectia-ssh-server-configuration-etcssh2ssh-server-configxml&quot;&gt;Tectia SSH server configuration (/etc/ssh2/ssh-server-config.xml)&lt;/h4&gt;
+
+&lt;p&gt;The only action needed to permit public key authentication for users is to list ‘publickey’ as an allowed authentication method in the &lt;em&gt;ssh-server-config.xml&lt;/em&gt; file:&lt;/p&gt;
+
+&lt;pre&gt;&amp;lt;authentication-methods&amp;gt;
+  &amp;lt;authentication action=&quot;allow&quot;&amp;gt;
+    &amp;lt;auth-publickey /&amp;gt;
+    ...
+  &amp;lt;/authentication&amp;gt;
+&amp;lt;/authentication-methods&amp;gt;&lt;/pre&gt;
+
+&lt;p&gt;Other authentication methods can also be allowed. Place the least interactive method first.&lt;/p&gt;
+
+&lt;p&gt;For all the Tectia SSH examples below we used the following version ;&lt;/p&gt;
+
+&lt;pre&gt;# sshg3 -V
+sshg3.bin: SSH Tectia Client 6.1.3 on powerpc-ibm-aix5.1.0.0
+Build: 59
+Product: SSH Tectia Client&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;-&quot;&gt;** &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;/span&gt;**&lt;/h2&gt;
+
+&lt;h2 id=&quot;--1&quot;&gt;** &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;/span&gt;**&lt;/h2&gt;
+
+&lt;h2 id=&quot;automating-ssh-connection-from-openssh-to-openssh&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;Automating SSH connection from OpenSSH to OpenSSH&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://192.168.1.88/wp-content/uploads/2009/11/openssh_2_openssh1.png&quot;&gt;&lt;img loading=&quot;lazy&quot; class=&quot;size-medium wp-image-1134 alignnone&quot; title=&quot;openssh_2_openssh&quot; src=&quot;http://192.168.1.88/wp-content/uploads/2009/11/openssh_2_openssh1-300x212.PNG&quot; alt=&quot;openssh_2_openssh&quot; width=&quot;300&quot; height=&quot;212&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;!--more--&gt;
+&lt;p&gt;This example demonstrate how to setup public key authentication so that user “robert” can log from server1 (OpenSSH) to server2 (OpenSSH), without having to enter a password.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1) Generate the private and public key for user “robert” on server1.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server1:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh-keygen&lt;/span&gt;
+&lt;/strong&gt;Generating public/private rsa key pair.
+Enter file in which to save the key (/home/robert/.ssh/id_rsa):
+Created directory &apos;/home/robert/.ssh&apos;.
+Enter passphrase (empty for no passphrase): &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;&amp;lt;CR&amp;gt;&lt;/strong&gt;&lt;/span&gt;
+Enter same passphrase again: &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;CR&amp;gt;&lt;/span&gt;&lt;/strong&gt;
+Your identification has been saved in /home/robert/.ssh/id_rsa.
+Your public key has been saved in /home/robert/.ssh/id_rsa.pub.
+The key fingerprint is:
+6f:17:ac:ac:b6:9c:13:90:57:aa:ee:1c:b1:e0:93:e2
+&lt;a href=&quot;mailto:robert@server1robert@server1:~$&quot;&gt;robert@server1
+
+robert@server1:~$&lt;/a&gt; &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cd .ssh&lt;/span&gt;&lt;/strong&gt;
+robert@server1:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ls -l&lt;/span&gt;&lt;/strong&gt;
+total 3
+-rw------- 1 robert robert 1675 Nov 22 08:19 &lt;span style=&quot;color: #0000ff;&quot;&gt;id_rsa&lt;/span&gt;
+-rw-r--r-- 1 robert robert  404 Nov 22 08:19 &lt;span style=&quot;color: #0000ff;&quot;&gt;id_rsa.pub&lt;/span&gt;
+robert@server1:~/.ssh$&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;2) Copy the public key file to a more descriptive name.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server1:~/.ssh$&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt; cp id_rsa.pub server1_rsa.pub&lt;/span&gt;&lt;/strong&gt;
+robert@server1:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ls -l&lt;/span&gt;&lt;/strong&gt;
+total 4
+-rw------- 1 robert robert 1675 Nov 22 08:19 id_rsa
+-rw-r--r-- 1 robert robert  404 Nov 22 08:19 id_rsa.pub
+-rw-r--r-- 1 robert robert  404 Nov 22 08:24 &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;server1_rsa.pub&lt;/span&gt;&lt;/strong&gt;
+robert@server1:~/.ssh$&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;3) Create the .ssh directory on the remote server and copy the public key from server1 onto server2.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server2:~$&lt;strong&gt; &lt;span style=&quot;color: #0000ff;&quot;&gt;pwd&lt;/span&gt;&lt;/strong&gt;
+&lt;strong&gt;/home/robert&lt;/strong&gt;
+robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;mkdir .ssh&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;chmod 700 .ssh&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cd .ssh&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;scp robert@server1:/home/robert/.ssh/server1_rsa.pub .&lt;/span&gt;&lt;/strong&gt;
+The authenticity of host &apos;server1 (192.168.1.101)&apos; can&apos;t be established.
+RSA key fingerprint is b4:8d:56:71:c9:7e:97:ba:79:87:95:0d:8a:29:fc:9a.
+Are you sure you want to continue connecting (yes/no)? &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;yes&lt;/span&gt;&lt;/strong&gt;
+Warning: Permanently added &apos;server1,192.168.1.101&apos; (RSA) to the list of known hosts.
+robert@server1&apos;s password: &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;*********&lt;/strong&gt;&lt;/span&gt;
+server1_rsa.pub                                    100%  404     0.4KB/s   00:00&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;4) Add “robert” public key from server1 to the authorized_keys file on server2&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server2:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ls -l&lt;/span&gt;&lt;/strong&gt;
+total 2
+-rw-r--r-- 1 robert robert 401 Nov 22 08:29 known_hosts
+-rw-r--r-- 1 robert robert 404 Nov 22 08:31 &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;server1_rsa.pub&lt;/strong&gt;&lt;/span&gt;
+robert@server2:~/.ssh$
+robert@server2:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cat server1_rsa.pub &amp;gt;&amp;gt; authorized_keys&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;chmod 644 authorized_keys&lt;/span&gt;&lt;/strong&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;5) Test our automated ssh connection from server1 to server2&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The first time you will need to accept connection. After that first connection, there will be no confirmation needed.&lt;/p&gt;
+
+&lt;pre&gt;robert@server1:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh server2&lt;/span&gt;&lt;/strong&gt;
+The authenticity of host &apos;server2 (192.168.1.133)&apos; can&apos;t be established.
+RSA key fingerprint is 28:cc:97:fb:ec:79:94:7f:bf:ef:82:bd:d2:c4:41:d2.
+Are you sure you want to continue connecting (yes/no)? &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;yes&lt;/span&gt;&lt;/strong&gt;
+Warning: Permanently added &apos;server2,192.168.1.133&apos; (RSA) to the list of known hosts.
+robert@server2:~$
+
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;robert@server1&lt;/strong&gt;&lt;/span&gt;:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh server2&lt;/span&gt;&lt;/strong&gt;
+Last login: Sun Nov 22 08:36:41 2009 from server1.maison.ca
+&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;robert@server2&lt;/span&gt;&lt;/strong&gt;:~$&lt;/pre&gt;
+
+&lt;h2 id=&quot;--2&quot;&gt;** &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;/span&gt;**&lt;/h2&gt;
+
+&lt;h2 id=&quot;--3&quot;&gt;** &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;/span&gt;**&lt;/h2&gt;
+
+&lt;h2 id=&quot;automating-ssh-connection-from-openssh-to-tectia-ssh&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;Automating SSH connection from OpenSSH to Tectia SSH&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://192.168.1.88/wp-content/uploads/2009/11/openssh2ssh2.png&quot;&gt;&lt;img loading=&quot;lazy&quot; class=&quot;alignnone size-medium wp-image-1137&quot; title=&quot;openssh2ssh2&quot; src=&quot;http://192.168.1.88/wp-content/uploads/2009/11/openssh2ssh2-300x229.PNG&quot; alt=&quot;openssh2ssh2&quot; width=&quot;300&quot; height=&quot;229&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This example demonstrate how to setup public key authentication so that user “robert” can log from server1 (OpenSSH) to server2 (Tectia SSH), without having to enter a password.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;1) Generate “robert” private and public keys on the local server (server1).&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server1:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh-keygen&lt;/span&gt;&lt;/strong&gt;
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/robert/.ssh/id_rsa):
+Created directory &apos;/home/robert/.ssh&apos;.
+Enter passphrase (empty for no passphrase): &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;CR&amp;gt;&lt;/span&gt;&lt;/strong&gt;
+Enter same passphrase again: &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;CR&amp;gt;&lt;/span&gt;&lt;/strong&gt;
+Your identification has been saved in /home/robert/.ssh/id_rsa.
+Your public key has been saved in /home/robert/.ssh/id_rsa.pub.
+The key fingerprint is:
+6f:17:ac:ac:b6:9c:13:90:57:aa:ee:1c:b1:e0:93:e2
+&lt;a href=&quot;mailto:robert@server1robert@server1:~$&quot;&gt;robert@server1:~$&lt;/a&gt;
+
+&lt;a href=&quot;mailto:robert@server1:~$&quot;&gt;robert@server1:~$&lt;/a&gt; &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cd .ssh&lt;/span&gt;&lt;/strong&gt;
+robert@server1:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ls -l&lt;/span&gt;&lt;/strong&gt;
+total 3
+-rw------- 1 robert robert 1675 Nov 22 08:19 &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;id_rsa&lt;/strong&gt;&lt;/span&gt;
+-rw-r--r-- 1 robert robert  404 Nov 22 08:19 &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;id_rsa.pub&lt;/strong&gt;&lt;/span&gt;
+robert@server1:~/.ssh$&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;2) Copy the public key to a more descriptive name and convert to Tectia SSH format&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server1:~/.ssh$&quot;&gt;robert@server1:~/.ssh$&lt;/a&gt; &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cp id_rsa.pub server1_rsa.pub&lt;/span&gt;&lt;/strong&gt;
+robert@server1:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh-keygen -e -f server1_rsa.pub &amp;gt; server1_ssh2.pub&lt;/span&gt;&lt;/strong&gt;
+robert@server1:~/.ssh$ ls -l
+total 6
+-rw------- 1 robert robert 1675 Nov 22 08:19 id_rsa
+-rw-r--r-- 1 robert robert  404 Nov 22 08:19 id_rsa.pub
+-rw-r--r-- 1 robert robert  401 Nov 22 08:36 known_hosts
+-rw-r--r-- 1 robert robert  404 Nov 22 08:24 server1_rsa.pub
+-rw-rw-r-- 1 robert robert  514 Nov 22 10:15 &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;server1_ssh2.pub&lt;/span&gt;&lt;/strong&gt;
+robert@server1:~/.ssh$&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;3) From the remote server (server2) get “robert” Tectia SSH public key from server1.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server2:~/$&quot;&gt;&lt;span style=&quot;color: #000000;&quot;&gt;robert@server2:~/$&lt;/span&gt;&lt;/a&gt; &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ls -al&lt;/span&gt;&lt;/strong&gt;
+total 4
+drwxr-xr-x   2 robert   staff           512 Nov 22 08:59 .
+drwxr-xr-x   7 bin      bin             512 Nov 22 08:58 ..
+-rwxr-----   1 robert   staff           254 Nov 22 08:58 .profile
+-rw-------   1 robert   staff           110 Nov 22 10:08 .sh_history
+
+robert@server2:~/$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;mkdir .ssh2&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~/$ &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;chmod 700 .ssh2&lt;/strong&gt;&lt;/span&gt;
+robert@server2:~/$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cd .ssh2&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~/$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;scpg3 robert@server1:/home/robert/.ssh/server1_ssh2.pub .&lt;/span&gt;&lt;/strong&gt; (replace scpg3 by scp if using V4)
+robert@server1 password: &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;********&lt;/strong&gt;&lt;/span&gt;
+server1_rsa_ssh2.pub                        |   514B |   3.7kiB/s | TOC: 00:00:00 | 100%
+robert@server2:~/$&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;4) Add “robert” public key on server1 to the authorization file on server2.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server2:~/$&quot;&gt;robert@server2:~/$&lt;/a&gt; &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;echo &quot;Key server1_ssh2.pub&quot; &amp;gt;&amp;gt; ~/.ssh2/authorization&lt;/strong&gt;&lt;/span&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;5) Test our automated ssh connection from server1 to server2&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server1:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh robert@server2&lt;/span&gt;&lt;/strong&gt;
+The authenticity of host &apos;server2 (192.168.1.130)&apos; can&apos;t be established.
+RSA key fingerprint is cb:98:02:be:4c:0d:80:8e:bc:20:cf:45:03:fc:70:54.
+Are you sure you want to continue connecting (yes/no)? &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;yes&lt;/strong&gt;&lt;/span&gt;
+Warning: Permanently added &apos;server2,192.168.1.130&apos; (RSA) to the list of known hosts.
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;robert@server2&lt;/strong&gt;&lt;/span&gt;:~/.ssh$ 
+
+robert@server1:~/.ssh$ &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;ssh robert@server2 date&lt;/strong&gt;&lt;/span&gt;
+Sun Nov 22 10:16:06 EST 2009
+robert@server1:~/.ssh$&lt;/pre&gt;
+
+&lt;h2 id=&quot;--4&quot;&gt;** &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;/span&gt;**&lt;/h2&gt;
+
+&lt;h2 id=&quot;--5&quot;&gt;** &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;/span&gt;**&lt;/h2&gt;
+
+&lt;h2 id=&quot;automating-ssh-connection-from-tectia-ssh-to-openssh&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;Automating SSH connection from Tectia SSH to OpenSSH&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://192.168.1.88/wp-content/uploads/2009/11/ssh2_2_openssh.png&quot;&gt;&lt;img loading=&quot;lazy&quot; class=&quot;alignnone size-medium wp-image-1139&quot; title=&quot;ssh2_2_openssh&quot; src=&quot;http://192.168.1.88/wp-content/uploads/2009/11/ssh2_2_openssh-300x223.PNG&quot; alt=&quot;ssh2_2_openssh&quot; width=&quot;300&quot; height=&quot;223&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This example demonstrate how to setup public key authentication so that user “robert” can log from server1 (Tectia SSH) to server2 (OpenSSH), without having to enter a password.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;1) Generate  Tectia SSH private and public keys for user “robert” on server1.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;$&lt;/a&gt; &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;ssh-keygen-g3&lt;/strong&gt;&lt;/span&gt; (use ssh-key if using V4)
+Generating 2048-bit dsa key pair
+153 oOOo.oOo.oOo
+Key generated.
+2048-bit dsa, robert@server1, Sun Nov 22 2009 19:21:21 -0500
+Passphrase :&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt; &amp;lt;CR&amp;gt;&lt;/span&gt;&lt;/strong&gt;
+Again      :&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt; &amp;lt;CR&amp;gt;&lt;/strong&gt;&lt;/span&gt;
+Key is stored with NULL passphrase.
+(You can ignore the following warning if you are generating hostkeys.)
+This is not recommended. Don&apos;t do this unless you know what you&apos;re doing.
+If file system protections fail (someone can access the keyfile),
+or if the super-user is malicious, your key can be used without the deciphering effort.
+Private key saved to /home/robert/.ssh2/id_dsa_2048_a
+Public key saved to /home/robert/.ssh2/id_dsa_2048_a.pub
+&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;$
+&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;1a) Identify the private key name in the identification file (&lt;em&gt;Not needed for version 5 and above&lt;/em&gt;)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server1:~/ $ &lt;strong&gt;echo &quot;IdKey id_dsa_2048_a&lt;/strong&gt;&lt;strong&gt;&quot; &amp;gt;&amp;gt; identification&lt;/strong&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;2) Copy the public key to a more descriptive name.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;$&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt; pwd&lt;/span&gt;&lt;/strong&gt;
+/home/robert
+&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cd .ssh2&lt;/span&gt;&lt;/strong&gt;
+&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;$ &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;ls -l&lt;/strong&gt;&lt;/span&gt;
+total 11
+-rw-------   1 robert   staff          1389 Nov 22 19:25 id_dsa_2048_a
+-rw-r--r--   1 robert   staff          1257 Nov 22 19:25 &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;id_dsa_2048_a.pub&lt;/span&gt;&lt;/strong&gt;
+&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cp id_dsa_2048_a.pub server1_ssh2.pub&lt;/span&gt;&lt;/strong&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;3) From the remote server (server2) get “robert” Tectia SSH public key from server1.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;pwd&lt;/span&gt;&lt;/strong&gt;
+/home/robert
+robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;mkdir .ssh&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;chmod 700 .ssh&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cd .ssh&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;scp robert@server1:/home/robert/.ssh2/server1_ssh2.pub .&lt;/span&gt;&lt;/strong&gt;
+The authenticity of host &apos;server1&apos; (192.168.1.130)&apos; can&apos;t be established.
+RSA key fingerprint is cb:98:02:be:4c:0d:80:8e:bc:20:cf:45:03:fc:70:54.
+Are you sure you want to continue connecting (yes/no)? &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;yes&lt;/span&gt;&lt;/strong&gt;
+Warning: Permanently added &apos;server1,192.168.1.130&apos; (RSA) to the list of known hosts.
+Password Authentication:
+robert&apos;s password: &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;********&lt;/span&gt;&lt;/strong&gt;
+
+server1_ssh2.pub                                            100% 1257     1.2KB/s   00:00&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;4) Convert Tectia SSH key to OpenSSH format &amp;amp; add it to the authorization file.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server2:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh-keygen -i -f server1_ssh2.pub &amp;gt; server1_ssh.pub&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cat server1_ssh.pub &amp;gt;&amp;gt; authorized_keys&lt;/span&gt;&lt;/strong&gt;
+robert@server2:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;chmod 644 authorized_keys&lt;/span&gt;&lt;/strong&gt;
+&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt; &lt;/strong&gt;&lt;/span&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;5) Test “robert” automated ssh connection from server1 to server2&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/$&lt;/a&gt; &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;sshg3 robert@server2&lt;/span&gt;&lt;/strong&gt;
+Please select how you want to proceed.
+cancel) Cancel the connection.
+once) Proceed with the connection but do not save the key.
+save) Proceed with the connection and save the key for future use.
+Please select one (cancel, once, save): &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;save&lt;/span&gt;&lt;/strong&gt;
+Authentication successful.
+Last login: Sun Nov 22 08:38:03 2009 from server1.maison.ca
+robert@server2:~$
+
+&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;sshg3 robert@server1 date&lt;/span&gt;&lt;/strong&gt;
+Authentication successful.
+Sun Nov 22 19:56:04 EST 2009
+&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;$&lt;/pre&gt;
+
+&lt;h2 id=&quot;--6&quot;&gt;** &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;/span&gt;**&lt;/h2&gt;
+
+&lt;h2 id=&quot;--7&quot;&gt;** &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;/span&gt;**&lt;/h2&gt;
+
+&lt;h2 id=&quot;automating-ssh-connection-from-tectia-ssh-to-tectia-ssh&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;Automating SSH connection from Tectia SSH to Tectia SSH&lt;/span&gt;&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://192.168.1.88/wp-content/uploads/2009/11/ssh2_2_ssh2.png&quot;&gt;&lt;img loading=&quot;lazy&quot; class=&quot;alignnone size-medium wp-image-1140&quot; title=&quot;ssh2_2_ssh2&quot; src=&quot;http://192.168.1.88/wp-content/uploads/2009/11/ssh2_2_ssh2-300x216.PNG&quot; alt=&quot;ssh2_2_ssh2&quot; width=&quot;300&quot; height=&quot;216&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;This example demonstrate the step needed so that user “robert” can log from server1 (Tectia SSH) to server2 who is also running Tectia SSH, without having to enter a password.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;1) Generate “robert” Tectia SSH private and public keys on server1.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;$&lt;/a&gt; &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh-keygen-g3&lt;/span&gt;&lt;/strong&gt; (ssh-keygen for version 4)
+Generating 2048-bit dsa key pair
+153 oOOo.oOo.oOo
+Key generated.
+2048-bit dsa, &lt;a href=&quot;mailto:robert@server1&quot;&gt;robert@server1&lt;/a&gt;, Sun Nov 22 2009 19:21:21 -0500
+Passphrase : &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;CR&amp;gt;&lt;/span&gt;&lt;/strong&gt;
+Again      : &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;CR&amp;gt;&lt;/span&gt;&lt;/strong&gt;
+Key is stored with NULL passphrase.
+(You can ignore the following warning if you are generating hostkeys.)
+This is not recommended. Don&apos;t do this unless you know what you&apos;re doing.
+If file system protections fail (someone can access the keyfile),
+or if the super-user is malicious, your key can be used without the deciphering effort.
+Private key saved to /home/robert/.ssh2/id_dsa_2048_a
+Public key saved to /home/robert/.ssh2/id_dsa_2048_a.pub
+&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;$&lt;/a&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;2) Copy the public key to a more descriptive name.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;robert@server1:~$ &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;pwd&lt;/strong&gt;&lt;/span&gt;
+/home/robert
+robert@server1:~ $ c&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;d .ssh2&lt;/span&gt;&lt;/strong&gt;
+robert@server1:~ $ &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;ls -l&lt;/strong&gt;
+&lt;/span&gt;total 11
+-rw-------   1 robert   staff          1389 Nov 22 19:25 id_dsa_2048_a
+-rw-r--r--   1 robert   staff          1257 Nov 22 19:25 &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;id_dsa_2048_a.pub&lt;/span&gt;&lt;/strong&gt;
+robert@server1:~ $
+robert@server1:~ $ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cp id_dsa_2048_a.pub server1_ssh2.pub&lt;/span&gt;&lt;/strong&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;3) Identify the private key name in the identification file (&lt;em&gt;&lt;span style=&quot;color: #800000;&quot;&gt;Not needed for version 5 and above&lt;/span&gt;&lt;/em&gt;)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;robert@server1:~/ $ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;echo &quot;IdKey id_dsa_2048_a&lt;/span&gt;&lt;/strong&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&quot; &amp;gt;&amp;gt; identification&lt;/span&gt;&lt;/strong&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;4) Get “robert” Tectia SSH public key from server1 onto server2.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server2:~/&quot;&gt;robert@server2:~/&lt;/a&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;$&lt;/a&gt; &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;scpg3 &lt;/span&gt;&lt;/strong&gt;&lt;a href=&quot;mailto:robert@server1:/home/robert/.ssh2/server1_ssh2.pub&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;robert@server1:/home/robert/.ssh2/server1_ssh2.pub&lt;/span&gt;&lt;/strong&gt;&lt;/a&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt; .&lt;/span&gt;&lt;/strong&gt; (use scp in V4)
+robert@server1s password: &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;********&lt;/span&gt;&lt;/strong&gt;
+server1_ssh2.pub                                   |   514B |   3.7kiB/s | TOC: 00:00:00 | 100%
+&lt;a href=&quot;mailto:robert@server2:~/&quot;&gt;robert@server2:~/&lt;/a&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;$&lt;/a&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;5) Add “robert” public key from  server1 to the authorization file on server2.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server2:~/$&quot;&gt;robert@server2:~/$&lt;/a&gt; &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;echo &quot;Key server1_ssh2.pub&quot; &amp;gt;&amp;gt; ~/.ssh2/authorization&lt;/strong&gt;&lt;/span&gt;&lt;/pre&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;6) Test our automated ssh connection from server1 to server2&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;$&lt;/a&gt; &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;sshg3 &lt;/span&gt;&lt;/strong&gt;&lt;a href=&quot;mailto:robert@server2&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;robert@server2&lt;/span&gt;&lt;/strong&gt;&lt;/a&gt;
+Please select how you want to proceed.
+cancel) Cancel the connection.
+once) Proceed with the connection but do not save the key.
+save) Proceed with the connection and save the key for future use.
+Please select one (cancel, once, save): &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;save&lt;/span&gt;&lt;/strong&gt;
+Authentication successful.
+Last login: Sun Nov 22 08:38:03 2009 from server1.maison.ca
+&lt;a href=&quot;mailto:robert@server2:~$&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;robert@server2:~$&lt;/span&gt;&lt;/strong&gt;&lt;/a&gt;
+
+&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;$&lt;/a&gt; &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;sshg3 robert@server1 date&lt;/span&gt;&lt;/strong&gt;
+Authentication successful.
+Sun Nov 22 19:56:04 EST 2009
+&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;robert@server1:~/&lt;/a&gt;&lt;a href=&quot;mailto:robert@server1:~/$&quot;&gt;$&lt;/a&gt;&lt;/pre&gt;
+
+&lt;p&gt;Hope this article will be usefull for many of us and I hope that you will come back to it when ever you need it.&lt;/p&gt;
+
+&lt;p&gt;See you soon.&lt;/p&gt;</content><author><name>Jacques Duplessis</name><email>linternux@gmail.com</email></author><category term="Network" /><category term="ssh" /><category term="scp" /><category term="sftp" /><summary type="html">Image by Free-Photos from Pixabay In this article, we will demonstrate how to configure SSH in such a way that it will allow you to log from one server to another, without having to enter a password. When administrating a lot of Unix servers, there are some situation when you need to run a script from one server to another without entering a password. For example, let’s say that you need to take a cold backup of a Oracle database, but before starting it, you need to stop the application running on another server. In your Oracle backup script, you could “ssh” to application server and run a script that would stop the application before starting the backup.  But to do that with a script, you need a way to log on the application server without having to enter a password.</summary></entry><entry><title type="html">Linux Administration Book for Free</title><link href="/general/linux-administration-book-for-free/" rel="alternate" type="text/html" title="Linux Administration Book for Free" /><published>2021-03-02T14:40:52-05:00</published><updated>2021-03-02T14:40:52-05:00</updated><id>/general/linux-administration-book-for-free</id><content type="html" xml:base="/general/linux-administration-book-for-free/">&lt;p&gt;A short post to advise you that you can download for free the “&lt;a href=&quot;http://www.linuxinsight.com/files/fta-m2-admin_gnulinux-v1.pdf&quot; title=&quot;Download PDF&quot;&gt;GNU/Linux Advanced Administration&lt;/a&gt;” book in PDF forrmat this &lt;a href=&quot;http://www.linuxinsight.com/gnu-linux-advanced-administration.html&quot;&gt;page&lt;/a&gt;, or &lt;a href=&quot;http://linternux.com/download/pdf/fta-m2-admin_gnulinux-v1.pdf&quot; title=&quot;Download from this site&quot;&gt;from this site&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://linuxcommand.org/tlcl.php&quot;&gt;The Linux Command Line&lt;/a&gt;
 &lt;a href=&quot;https://git-scm.com/book/en/v2&quot;&gt;Pro Git&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;See you soon !&lt;/p&gt;</content><author><name>Jacques Duplessis</name><email>linternux@gmail.com</email></author><category term="general" /><category term="sysadmin" /><summary type="html">A short post to advise you that you can download for free the “GNU/Linux Advanced Administration” book in PDF forrmat this page, or from this site.</summary></entry><entry><title type="html">Making Date Calculation</title><link href="/scripting/making-date-calculation/" rel="alternate" type="text/html" title="Making Date Calculation" /><published>2021-02-28T05:03:03-05:00</published><updated>2021-02-28T05:03:03-05:00</updated><id>/scripting/making-date-calculation</id><content type="html" xml:base="/scripting/making-date-calculation/">&lt;p&gt;You’re doing a script and you need to know what was the date 35 days ago or what will the date be in 21 days. This is where  the “date” command can help you doing that kind of calculation. In this little article we will present some examples to help us making some data calculation. I would like to point out, that all of these date calculation take in consideration the leap year.&lt;/p&gt;
+&lt;p&gt;See you soon !&lt;/p&gt;</content><author><name>Jacques Duplessis</name><email>linternux@gmail.com</email></author><category term="general" /><category term="sysadmin" /><summary type="html">A short post to advise you that you can download for free the “GNU/Linux Advanced Administration” book in PDF forrmat this page, or from this site.</summary></entry><entry><title type="html">Linux Administration Books for Free</title><link href="/general/linux-administration-books-for-free/" rel="alternate" type="text/html" title="Linux Administration Books for Free" /><published>2021-03-02T14:40:52-05:00</published><updated>2021-03-02T14:40:52-05:00</updated><id>/general/linux-administration-books-for-free</id><content type="html" xml:base="/general/linux-administration-books-for-free/">&lt;p&gt;A short post to list some free books for Linux users and administrators, take a look you might find one that you would like to have.&lt;br /&gt;
+&lt;br /&gt;
+&lt;img src=&quot;/assets/img/sadm_books.jpg&quot; class=&quot;align-left&quot; alt=&quot;&quot; /&gt;
+Image by &lt;a href=&quot;https://pixabay.com/users/blende12-201217/?utm_source=link-attribution&amp;amp;utm_medium=referral&amp;amp;utm_campaign=image&amp;amp;utm_content=1659717&quot;&gt;Gerhard G.&lt;/a&gt; from &lt;a href=&quot;https://pixabay.com/?utm_source=link-attribution&amp;amp;utm_medium=referral&amp;amp;utm_campaign=image&amp;amp;utm_content=1659717&quot;&gt;Pixabay&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Revision 1.1 - 2 March 2021 -&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;The Linux Command Line&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Have a brief look at the book from this &lt;a href=&quot;http://linuxcommand.org/tlcl.php&quot;&gt;page&lt;/a&gt; and &lt;a href=&quot;https://sourceforge.net/projects/linuxcommand/files/TLCL/19.01/TLCL-19.01.pdf/download&quot;&gt;download the book&lt;/a&gt;.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;The &lt;strong&gt;Pro Git book&lt;/strong&gt;, written by Scott Chacon and Ben Straub and published by Apress, is available &lt;a href=&quot;https://git-scm.com/book/en/v2&quot;&gt;here&lt;/a&gt; and &lt;a href=&quot;https://github.com/progit/progit2/releases/download/2.1.295/progit.pdf&quot;&gt;download the book&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;The Debian Administrator’s Handbook&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Written by two Debian developers — Raphaël Hertzog and Roland Mas — the Debian Administrator’s Handbook&lt;/li&gt;
+      &lt;li&gt;Take a look at the home &lt;a href=&quot;https://debian-handbook.info/&quot;&gt;page&lt;/a&gt; and &lt;a href=&quot;http://debian-handbook.info/download/stable/debian-handbook.pdf&quot;&gt;download the book&lt;/a&gt;.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;br /&gt;
+See you soon !
+&lt;br /&gt;&lt;/p&gt;</content><author><name>Jacques Duplessis</name><email>linternux@gmail.com</email></author><category term="general" /><category term="sysadmin" /><summary type="html">A short post to list some free books for Linux users and administrators, take a look you might find one that you would like to have. Image by Gerhard G. from Pixabay</summary></entry><entry><title type="html">Making Date Calculation</title><link href="/scripting/making-date-calculation/" rel="alternate" type="text/html" title="Making Date Calculation" /><published>2021-02-28T05:03:03-05:00</published><updated>2021-02-28T05:03:03-05:00</updated><id>/scripting/making-date-calculation</id><content type="html" xml:base="/scripting/making-date-calculation/">&lt;p&gt;You’re doing a script and you need to know what was the date 35 days ago or what will the date be in 21 days. This is where  the “date” command can help you doing that kind of calculation. In this little article we will present some examples to help us making some data calculation. I would like to point out, that all of these date calculation take in consideration the leap year. &lt;br /&gt;
+&lt;br /&gt;
+&lt;img src=&quot;/assets/img/sadm_calendar.jpg&quot; class=&quot;align-left&quot; alt=&quot;&quot; /&gt;
+Image by &lt;a href=&quot;https://pixabay.com/users/amber_avalona-1512238/?utm_source=link-attribution&amp;amp;utm_medium=referral&amp;amp;utm_campaign=image&amp;amp;utm_content=2290045&quot;&gt;Amber Avalona&lt;/a&gt; from &lt;a href=&quot;https://pixabay.com/?utm_source=link-attribution&amp;amp;utm_medium=referral&amp;amp;utm_campaign=image&amp;amp;utm_content=2290045&quot;&gt;Pixabay&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Revision 1.1 - 2 March 2021 - &lt;a href=&quot;/assets/pdf/making-date-calculation.pdf&quot;&gt;Download a pdf version&lt;/a&gt;&lt;/p&gt;
 
@@ -304,7 +801,10 @@
       &lt;td style=&quot;text-align: left&quot;&gt;20210215&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
-&lt;/table&gt;</content><author><name>Jacques Duplessis</name><email>linternux@gmail.com</email></author><category term="Scripting" /><category term="Date" /><summary type="html">You’re doing a script and you need to know what was the date 35 days ago or what will the date be in 21 days. This is where  the “date” command can help you doing that kind of calculation. In this little article we will present some examples to help us making some data calculation. I would like to point out, that all of these date calculation take in consideration the leap year.</summary></entry><entry><title type="html">Force user to change password</title><link href="/useradministration/password/force-user-to-change-password-at-next-login/" rel="alternate" type="text/html" title="Force user to change password" /><published>2021-02-09T04:28:10-05:00</published><updated>2021-02-09T04:28:10-05:00</updated><id>/useradministration/password/force-user-to-change-password-at-next-login</id><content type="html" xml:base="/useradministration/password/force-user-to-change-password-at-next-login/">&lt;p&gt;User is calling and say that he forgot is password. So you need to change his password and for security reason you want to force him to change it upon his first login. The command “chage -d 0” (change aging) will force user to change his password upon first login.&lt;/p&gt;
+&lt;/table&gt;</content><author><name>Jacques Duplessis</name><email>linternux@gmail.com</email></author><category term="Scripting" /><category term="Date" /><summary type="html">You’re doing a script and you need to know what was the date 35 days ago or what will the date be in 21 days. This is where  the “date” command can help you doing that kind of calculation. In this little article we will present some examples to help us making some data calculation. I would like to point out, that all of these date calculation take in consideration the leap year. Image by Amber Avalona from Pixabay</summary></entry><entry><title type="html">Force user to change password</title><link href="/useradministration/password/force-user-to-change-password-at-next-login/" rel="alternate" type="text/html" title="Force user to change password" /><published>2021-02-09T04:28:10-05:00</published><updated>2021-02-09T04:28:10-05:00</updated><id>/useradministration/password/force-user-to-change-password-at-next-login</id><content type="html" xml:base="/useradministration/password/force-user-to-change-password-at-next-login/">&lt;p&gt;User is calling and say that he forgot is password. So you need to change his password and for security reason you want to force him to change it upon his first login. The command “chage -d 0” (change aging) will force user to change his password upon first login.&lt;br /&gt;
+&lt;br /&gt;
+&lt;img src=&quot;/assets/img/sadm_password.jpg&quot; class=&quot;align-left&quot; alt=&quot;&quot; /&gt;&lt;br /&gt;
+Image by &lt;a href=&quot;https://pixabay.com/users/absolutvision-6158753/?utm_source=link-attribution&amp;amp;utm_medium=referral&amp;amp;utm_campaign=image&amp;amp;utm_content=2781614&quot;&gt;Gino Crescoli&lt;/a&gt; from &lt;a href=&quot;https://pixabay.com/?utm_source=link-attribution&amp;amp;utm_medium=referral&amp;amp;utm_campaign=image&amp;amp;utm_content=2781614&quot;&gt;Pixabay&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Change his password&lt;/p&gt;
 
@@ -312,7 +812,7 @@
 
 &lt;p&gt;Set expiration date to 0&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# chage -d 0&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content><author><name>Jacques Duplessis</name><email>linternux@gmail.com</email></author><category term="useradministration" /><category term="password" /><category term="usersadministration" /><category term="password" /><summary type="html">User is calling and say that he forgot is password. So you need to change his password and for security reason you want to force him to change it upon his first login. The command “chage -d 0” (change aging) will force user to change his password upon first login.</summary></entry><entry><title type="html">Using SSH and SCP without entering password</title><link href="/index.php/2009/11/07/ssh-without-password/" rel="alternate" type="text/html" title="Using SSH and SCP without entering password" /><published>2009-11-07T03:58:59-05:00</published><updated>2009-11-07T03:58:59-05:00</updated><id>/index.php/2009/11/07/ssh-without-password</id><content type="html" xml:base="/index.php/2009/11/07/ssh-without-password/">&lt;p&gt;When administrating a lot of Unix servers, there are some situation when you need to run a script from one server to another without entering a password. For example, let’s say that you need to take a cold backup of a Oracle database, but before starting it, you need to stop the application running on another server. In your Oracle backup script, you could “ssh” to application server and run a script that would stop the application before starting the backup.  But to do that with a script, you need a way to log on the application server without having to enter a password.&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# chage -d 0&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;</content><author><name>Jacques Duplessis</name><email>linternux@gmail.com</email></author><category term="useradministration" /><category term="password" /><category term="usersadministration" /><category term="password" /><summary type="html">User is calling and say that he forgot is password. So you need to change his password and for security reason you want to force him to change it upon his first login. The command “chage -d 0” (change aging) will force user to change his password upon first login. Image by Gino Crescoli from Pixabay</summary></entry><entry><title type="html">Using SSH and SCP without entering password</title><link href="/index.php/2009/11/07/ssh-without-password/" rel="alternate" type="text/html" title="Using SSH and SCP without entering password" /><published>2009-11-07T03:58:59-05:00</published><updated>2009-11-07T03:58:59-05:00</updated><id>/index.php/2009/11/07/ssh-without-password</id><content type="html" xml:base="/index.php/2009/11/07/ssh-without-password/">&lt;p&gt;When administrating a lot of Unix servers, there are some situation when you need to run a script from one server to another without entering a password. For example, let’s say that you need to take a cold backup of a Oracle database, but before starting it, you need to stop the application running on another server. In your Oracle backup script, you could “ssh” to application server and run a script that would stop the application before starting the backup.  But to do that with a script, you need a way to log on the application server without having to enter a password.&lt;/p&gt;
 
 &lt;p&gt;In this article, we will demonstrate how to configure SSH in such a way that it will allow you to log from one server to another, without having to enter a password.  Some environment are using the &lt;a href=&quot;http://www.openssh.com/&quot; title=&quot;OpenSSH Home page&quot;&gt;OpenSSH&lt;/a&gt; version on their Linux servers and the commercial &lt;a href=&quot;http://www.ssh.com/&quot; title=&quot;Tectia SSH Home Page&quot;&gt;Tectia SSH&lt;/a&gt; on the &lt;a href=&quot;http://www-03.ibm.com/systems/power/software/aix/index.html&quot; title=&quot;AIX Home Page at IBM&quot;&gt;AIX&lt;/a&gt; servers. OpenSSH and Tectia SSH don’t have the same keys format and depending on the version you are running,  making an automated connection between these two version can become tricky. In our examples, we will demonstrate the setup require, so that user “robert” is able to log from server1 to server2 without having to enter a password in a mixed environment of OpenSSH and Tectia SSH.&lt;/p&gt;
 
@@ -393,7 +893,7 @@ Product: SSH Tectia Client&lt;/pre&gt;
 &lt;pre&gt;robert@server1:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh-keygen&lt;/span&gt;
 &lt;/strong&gt;Generating public/private rsa key pair.
 Enter file in which to save the key (/home/robert/.ssh/id_rsa):
-Created directory '/home/robert/.ssh'.
+Created directory &apos;/home/robert/.ssh&apos;.
 Enter passphrase (empty for no passphrase): &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;&amp;lt;CR&amp;gt;&lt;/strong&gt;&lt;/span&gt;
 Enter same passphrase again: &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;CR&amp;gt;&lt;/span&gt;&lt;/strong&gt;
 Your identification has been saved in /home/robert/.ssh/id_rsa.
@@ -435,11 +935,11 @@ robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;mk
 robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;chmod 700 .ssh&lt;/span&gt;&lt;/strong&gt;
 robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cd .ssh&lt;/span&gt;&lt;/strong&gt;
 robert@server2:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;scp robert@server1:/home/robert/.ssh/server1_rsa.pub .&lt;/span&gt;&lt;/strong&gt;
-The authenticity of host 'server1 (192.168.1.101)' can't be established.
+The authenticity of host &apos;server1 (192.168.1.101)&apos; can&apos;t be established.
 RSA key fingerprint is b4:8d:56:71:c9:7e:97:ba:79:87:95:0d:8a:29:fc:9a.
 Are you sure you want to continue connecting (yes/no)? &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;yes&lt;/span&gt;&lt;/strong&gt;
-Warning: Permanently added 'server1,192.168.1.101' (RSA) to the list of known hosts.
-robert@server1's password: &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;*********&lt;/strong&gt;&lt;/span&gt;
+Warning: Permanently added &apos;server1,192.168.1.101&apos; (RSA) to the list of known hosts.
+robert@server1&apos;s password: &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;*********&lt;/strong&gt;&lt;/span&gt;
 server1_rsa.pub                                    100%  404     0.4KB/s   00:00&lt;/pre&gt;
 
 &lt;hr /&gt;
@@ -465,10 +965,10 @@ robert@server2:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&
 &lt;p&gt;The first time you will need to accept connection. After that first connection, there will be no confirmation needed.&lt;/p&gt;
 
 &lt;pre&gt;robert@server1:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh server2&lt;/span&gt;&lt;/strong&gt;
-The authenticity of host 'server2 (192.168.1.133)' can't be established.
+The authenticity of host &apos;server2 (192.168.1.133)&apos; can&apos;t be established.
 RSA key fingerprint is 28:cc:97:fb:ec:79:94:7f:bf:ef:82:bd:d2:c4:41:d2.
 Are you sure you want to continue connecting (yes/no)? &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;yes&lt;/span&gt;&lt;/strong&gt;
-Warning: Permanently added 'server2,192.168.1.133' (RSA) to the list of known hosts.
+Warning: Permanently added &apos;server2,192.168.1.133&apos; (RSA) to the list of known hosts.
 robert@server2:~$
 
 &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;robert@server1&lt;/strong&gt;&lt;/span&gt;:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh server2&lt;/span&gt;&lt;/strong&gt;
@@ -494,7 +994,7 @@ Last login: Sun Nov 22 08:36:41 2009 from server1.maison.ca
 &lt;pre&gt;robert@server1:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh-keygen&lt;/span&gt;&lt;/strong&gt;
 Generating public/private rsa key pair.
 Enter file in which to save the key (/home/robert/.ssh/id_rsa):
-Created directory '/home/robert/.ssh'.
+Created directory &apos;/home/robert/.ssh&apos;.
 Enter passphrase (empty for no passphrase): &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;CR&amp;gt;&lt;/span&gt;&lt;/strong&gt;
 Enter same passphrase again: &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;CR&amp;gt;&lt;/span&gt;&lt;/strong&gt;
 Your identification has been saved in /home/robert/.ssh/id_rsa.
@@ -567,10 +1067,10 @@ robert@server2:~/$&lt;/pre&gt;
 &lt;p&gt;&lt;strong&gt;5) Test our automated ssh connection from server1 to server2&lt;/strong&gt;&lt;/p&gt;
 
 &lt;pre&gt;robert@server1:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ssh robert@server2&lt;/span&gt;&lt;/strong&gt;
-The authenticity of host 'server2 (192.168.1.130)' can't be established.
+The authenticity of host &apos;server2 (192.168.1.130)&apos; can&apos;t be established.
 RSA key fingerprint is cb:98:02:be:4c:0d:80:8e:bc:20:cf:45:03:fc:70:54.
 Are you sure you want to continue connecting (yes/no)? &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;yes&lt;/strong&gt;&lt;/span&gt;
-Warning: Permanently added 'server2,192.168.1.130' (RSA) to the list of known hosts.
+Warning: Permanently added &apos;server2,192.168.1.130&apos; (RSA) to the list of known hosts.
 &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;robert@server2&lt;/strong&gt;&lt;/span&gt;:~/.ssh$ 
 
 robert@server1:~/.ssh$ &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;ssh robert@server2 date&lt;/strong&gt;&lt;/span&gt;
@@ -604,7 +1104,7 @@ Passphrase :&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt; &amp;lt
 Again      :&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt; &amp;lt;CR&amp;gt;&lt;/strong&gt;&lt;/span&gt;
 Key is stored with NULL passphrase.
 (You can ignore the following warning if you are generating hostkeys.)
-This is not recommended. Don't do this unless you know what you're doing.
+This is not recommended. Don&apos;t do this unless you know what you&apos;re doing.
 If file system protections fail (someone can access the keyfile),
 or if the super-user is malicious, your key can be used without the deciphering effort.
 Private key saved to /home/robert/.ssh2/id_dsa_2048_a
@@ -643,12 +1143,12 @@ robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;mk
 robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;chmod 700 .ssh&lt;/span&gt;&lt;/strong&gt;
 robert@server2:~$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;cd .ssh&lt;/span&gt;&lt;/strong&gt;
 robert@server2:~/.ssh$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;scp robert@server1:/home/robert/.ssh2/server1_ssh2.pub .&lt;/span&gt;&lt;/strong&gt;
-The authenticity of host 'server1' (192.168.1.130)' can't be established.
+The authenticity of host &apos;server1&apos; (192.168.1.130)&apos; can&apos;t be established.
 RSA key fingerprint is cb:98:02:be:4c:0d:80:8e:bc:20:cf:45:03:fc:70:54.
 Are you sure you want to continue connecting (yes/no)? &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;yes&lt;/span&gt;&lt;/strong&gt;
-Warning: Permanently added 'server1,192.168.1.130' (RSA) to the list of known hosts.
+Warning: Permanently added &apos;server1,192.168.1.130&apos; (RSA) to the list of known hosts.
 Password Authentication:
-robert's password: &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;********&lt;/span&gt;&lt;/strong&gt;
+robert&apos;s password: &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;********&lt;/span&gt;&lt;/strong&gt;
 
 server1_ssh2.pub                                            100% 1257     1.2KB/s   00:00&lt;/pre&gt;
 
@@ -703,7 +1203,7 @@ Passphrase : &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt
 Again      : &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&amp;lt;CR&amp;gt;&lt;/span&gt;&lt;/strong&gt;
 Key is stored with NULL passphrase.
 (You can ignore the following warning if you are generating hostkeys.)
-This is not recommended. Don't do this unless you know what you're doing.
+This is not recommended. Don&apos;t do this unless you know what you&apos;re doing.
 If file system protections fail (someone can access the keyfile),
 or if the super-user is malicious, your key can be used without the deciphering effort.
 Private key saved to /home/robert/.ssh2/id_dsa_2048_a
@@ -888,7 +1388,7 @@ Preparing...             ########################################### [100%]
 [jacques@local ~]$ &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;mkdir remdir&lt;/strong&gt;&lt;/span&gt;
 
 [jacques@local ~]$ &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;sshfs jacques@remote_host:/home/jacques /home/jacques/workdir&lt;/strong&gt;&lt;/span&gt;
-jacques@remote_host's password: xxxxxxxxxx
+jacques@remote_host&apos;s password: xxxxxxxxxx
 
 [jacques@local ~]$ &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;df -h /home/jacques/remdir&lt;/span&gt;&lt;/strong&gt;
 Filesystem                                 Size  Used Avail Use%  Mounted on&lt;strong&gt;
@@ -1277,7 +1777,7 @@ Complete!
 
 # 1=Complaint when package aleady install is installed, 0=not tolerant
 # For example, if you request to install foo, bar and baz and baz is installed;
-# yum won't error out complaining that baz is already installedt
+# yum won&apos;t error out complaining that baz is already installedt
 &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;tolerant=1&lt;/strong&gt;&lt;/span&gt;
 
 # 1=Only update the architectures of packages that is installed, 0=Override Check
@@ -1294,7 +1794,7 @@ Complete!
 &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;plugins=1&lt;/strong&gt;&lt;/span&gt;
 
 # Determine when repositories metedata expire after it is received.
-# Note: yum-RHN-plugin doesn't honor this.
+# Note: yum-RHN-plugin doesn&apos;t honor this.
 &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;metadata_expire=1h&lt;/strong&gt;&lt;/span&gt;
 
 # Some package (like kernel) can only be install and not updated
@@ -1424,15 +1924,15 @@ Packager    : Red Hat, Inc. &amp;lt;http://bugzilla.redhat.com/bugzilla&amp;g
 URL         : http://www.ntp.org
 Summary     : Synchronizes system time using the Network Time Protocol (NTP).
 Description :
-The Network Time Protocol (NTP) is used to synchronize a computer's
+The Network Time Protocol (NTP) is used to synchronize a computer&apos;s
 time with another reference time source. The ntp package contains
-utilities and daemons that will synchronize your computer's time to
+utilities and daemons that will synchronize your computer&apos;s time to
 Coordinated Universal Time (UTC) via the NTP protocol and NTP servers.
 The ntp package includes ntpdate (a program for retrieving the date
 and time from remote machines via a network) and ntpd (a daemon which
 continuously adjusts system time).
 
-Install the ntp package if you need tools for keeping your system's
+Install the ntp package if you need tools for keeping your system&apos;s
 time synchronized via the NTP protocol.
 root@gumby:#&lt;/pre&gt;
 
@@ -1592,271 +2092,4 @@ The “&lt;strong&gt;st&lt;/strong&gt;” column indicate the stratum number of 
 
 &lt;p&gt;We have now a working NTP server running on our Linux server.&lt;/p&gt;
 
-&lt;p&gt;Hope that this article have been of interest for you and hope to see you soon.&lt;/p&gt;</content><author><name>jacques</name></author><category term="Network" /><category term="Network" /><category term="NTP" /><summary type="html">As a system administrator, we must ensure that time synchronization is working at all time. Time synchronization have been proven to be helpful when we try to trace a chain of events that occurs on multiple servers or when trying to synchronize time sensitive-transactions. In this article, we will setup one NTP (Network Time Protocol) server running on RedHat/Centos 5, but it could be applied to the major Linux distribution.  As always, I have tried to make the article to be used a reference source, so that we can come back when ever you will play with the NTP tools.</summary></entry><entry><title type="html">Viewing and changing netword card setting</title><link href="/index.php/2009/07/05/view-change-nic-setting/" rel="alternate" type="text/html" title="Viewing and changing netword card setting" /><published>2009-07-05T07:52:57-04:00</published><updated>2009-07-05T07:52:57-04:00</updated><id>/index.php/2009/07/05/view-change-nic-setting</id><content type="html" xml:base="/index.php/2009/07/05/view-change-nic-setting/">&lt;h3 id=&quot;checking-our-network-card-current-setting&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;Checking our network card current setting&lt;/span&gt;&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;There are two commands that we can use to check our current network card setting. The first command is “mii-tool”, it  has been around almost since the beginning of Linux and will be depreciated in the future version of Linux. If we don’t specify any parameter to the “mii-tool” command, we will get one line of information per network card. It will display the current speed of the network card, the duplex mode it’s using and if you have a link or not.  If we don’t have a link up (no link) and it is suppose to be, I suggest to verify that your cable is connected to the server and that the port on the network switch is activate.  If this is the case, you may want to try another network cable and see if the link come up.&lt;/p&gt;
-
-&lt;pre&gt;# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;mii-tool&lt;/span&gt;&lt;/strong&gt;
-eth0: &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;100 Mbit, full duplex, link ok&lt;/span&gt;&lt;/strong&gt;
-eth1: 100 Mbit, full duplex, no link
-#&lt;/pre&gt;
-
-&lt;p&gt;If we add the verbose parameter (-v), we will get some additional information about each network card.&lt;/p&gt;
-
-&lt;pre&gt;# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;mii-tool -v&lt;/span&gt;&lt;/strong&gt;
-&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;eth0&lt;/strong&gt;&lt;/span&gt;: 100 Mbit, full duplex, link ok
- product info: vendor 00:aa:00, model 50 rev 0
-&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt; basic mode:   100 Mbit, full duplex
- basic status: link ok&lt;/span&gt;
-&lt;/strong&gt; capabilities: 100baseTx-FD 100baseTx-HD 10baseT-FD 10baseT-HD
- advertising:  100baseTx-FD 100baseTx-HD 10baseT-FD 10baseT-HD flow-control
-&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;eth1:&lt;/span&gt;&lt;/strong&gt; 100 Mbit, full duplex, no link
- product info: vendor 00:10:18, model 23 rev 6
-&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt; basic mode:   100 Mbit, full duplex
- basic status: no link&lt;/strong&gt;&lt;/span&gt;
- capabilities: 100baseTx-FD 100baseTx-HD 10baseT-FD 10baseT-HD
- advertising:  100baseTx-FD 100baseTx-HD 10baseT-FD 10baseT-HD flow-control
-#&lt;/pre&gt;
-
-&lt;p&gt;I would suggest using the “ethtool” command instead of the depreciated “mii-tool”. The “mii-tool” may not work with some of the newer network card and  may be excluded from future version of RedHat/Centos/Fedora. With the “ethtool” command,  we need to specify the name of the interface that we want to see the current state. In all of our example, we will use the interface “eth0”.&lt;/p&gt;
-
-&lt;pre&gt;# &lt;strong&gt;&lt;span style=&quot;color: #000000;&quot;&gt;e&lt;span style=&quot;color: #0000ff;&quot;&gt;thtool eth0&lt;/span&gt;&lt;/span&gt;&lt;/strong&gt;
-Settings for eth0:
- Supported ports: [ TP MII ]
- Supported link modes:   10baseT/Half 10baseT/Full
- 100baseT/Half 100baseT/Full
- Supports auto-negotiation: Yes
- Advertised link modes:  10baseT/Half 10baseT/Full
- 100baseT/Half 100baseT/Full
-&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt; Advertised auto-negotiation: No
- Speed: 100Mb/s
- Duplex: Full&lt;/span&gt;&lt;/strong&gt;
- Port: MII
- PHYAD: 1
- Transceiver: internal
- &lt;span style=&quot;color: #993300;&quot;&gt;&lt;strong&gt;Auto-negotiation: off&lt;/strong&gt;&lt;/span&gt;
- Supports Wake-on: g
- Wake-on: g
- Current message level: 0x00000007 (7)
-&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt; Link detected: yes&lt;/span&gt;&lt;/strong&gt;
-#&lt;/pre&gt;
-
-&lt;h3 id=&quot;display-driver-information&quot;&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;!--more--&gt;Display driver information&lt;/span&gt;&lt;/h3&gt;
-
-&lt;p&gt;If we want to see some driver information about our network card, use the “-i” parameter next to the “ethtool” command.&lt;/p&gt;
-
-&lt;p&gt;In this example, we can see that the driver we are using for this card is “e100″.  Effectively, if we use the “lsmod” (list module) we found out the the “e100″ is actually loaded.&lt;/p&gt;
-
-&lt;pre&gt;# &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;ethtool -i eth0&lt;/strong&gt;
-&lt;/span&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;driver: e100
-version: 3.5.10-k2-NAPI&lt;/span&gt;&lt;/strong&gt;
-firmware-version: N/A
-bus-info: 0000:05:08.0
-#
-#&lt;strong&gt; &lt;span style=&quot;color: #0000ff;&quot;&gt;lsmod | grep e100&lt;/span&gt;&lt;/strong&gt;
-&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;e100                   &lt;/strong&gt;&lt;/span&gt;36809  0
-mii                     9409  2 3c59x,&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;e100&lt;/span&gt;&lt;/strong&gt;
-#&lt;/pre&gt;
-
-&lt;h3 id=&quot;display-statistics-information&quot;&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;Display statistics information&lt;/span&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;span style=&quot;color: #000000;&quot;&gt;With the “-S” parameter,  we can display statistics about our network card. &lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;span style=&quot;color: #000000;&quot;&gt;This information could be valuable if you are experimenting some problem with that interface. It will confirm your doubt or it will indicate that you should check somewhere else to identify the problem.&lt;/span&gt;&lt;br /&gt; &lt;/span&gt;&lt;/p&gt;
-
-&lt;pre&gt;# &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;ethtool -S eth0&lt;/strong&gt;&lt;/span&gt;
-NIC statistics:
- rx_packets: 12684
- tx_packets: 7638
- rx_bytes: 14990414
- tx_bytes: 621100
- rx_errors: 8
- tx_errors: 0
- rx_dropped: 0
- tx_dropped: 0
- multicast: 0
- collisions: 0
- rx_length_errors: 7
- rx_over_errors: 0
- rx_crc_errors: 1
- rx_frame_errors: 0
- rx_fifo_errors: 0
- rx_missed_errors: 0
- tx_aborted_errors: 0
- tx_carrier_errors: 0
- tx_fifo_errors: 0
- tx_heartbeat_errors: 0
- tx_window_errors: 0
- tx_deferred: 0
- tx_single_collisions: 0
- tx_multi_collisions: 0
- tx_flow_control_pause: 0
- rx_flow_control_pause: 0
- rx_flow_control_unsupported: 0
- tx_tco_packets: 0
- rx_tco_packets: 0
-#&lt;/pre&gt;
-
-&lt;h3 id=&quot;network-adapter-self-test&quot;&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;Network adapter self test&lt;/span&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;span style=&quot;color: #000000;&quot;&gt;You can also run a self test on the network card.  Beside the interface name you can specify two types of tests:  &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;offline&lt;/strong&gt; &lt;/span&gt;(default) means to perform full set of tests possibly causing normal operation interruption during the tests, &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;online&lt;/strong&gt; &lt;/span&gt;means to perform limited set of tests do not interrupting normal adapter operation.&lt;/span&gt; &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;/span&gt;&lt;/p&gt;
-
-&lt;pre&gt;# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ethtool -t eth0 online&lt;/span&gt;&lt;/strong&gt;
-The test result is PASS
-The test extra info:
-Link test     (on/offline)       0
-Eeprom test   (on/offline)       0
-Self test        (offline)       0
-Mac loopback     (offline)       0
-Phy loopback     (offline)       0
-
-# &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;ethtool -t eth0 offline&lt;/strong&gt;&lt;/span&gt;
-The test result is PASS
-The test extra info:
-Link test     (on/offline)       0
-Eeprom test   (on/offline)       0
-Self test        (offline)       0
-Mac loopback     (offline)       0
-Phy loopback     (offline)       0
-#&lt;/pre&gt;
-
-&lt;h3 id=&quot;changing-network-card-setting-interactively&quot;&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;Changing network card setting interactively&lt;/span&gt;&lt;/h3&gt;
-
-&lt;p&gt;Below we change the network card setting from the command line. I strongly recommend doing these changes on the console,  if not you may loose your network connection with the your server.&lt;br /&gt;
-In this example we will set the interface “eth0” speed to 10Mb/s and the duplex mode to half. After doing the change we use again the “ethtool” command to verify that our change have took place.&lt;/p&gt;
-
-&lt;pre&gt;# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ethtool -s eth0 speed 10 duplex half&lt;/span&gt;&lt;/strong&gt;
-# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ethtool eth0&lt;/span&gt;&lt;/strong&gt;
-Settings for eth0:
-Supported ports: [ TP MII ]
-Supported link modes:   10baseT/Half 10baseT/Full
-100baseT/Half 100baseT/Full
-Supports auto-negotiation: Yes
-Advertised link modes:  10baseT/Half 10baseT/Full
-100baseT/Half 100baseT/Full
-&lt;span style=&quot;color: #000000;&quot;&gt;Advertised auto-negotiation: No&lt;/span&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;
-Speed: 10Mb/s
-Duplex: Half&lt;/span&gt;&lt;/strong&gt;
-Port: MII
-PHYAD: 1
-Transceiver: internal
-&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;Auto-negotiation: off&lt;/strong&gt;&lt;/span&gt;
-Supports Wake-on: g
-Wake-on: g
-Current message level: 0x00000007 (7)
-Link detected: yes
-#&lt;/pre&gt;
-
-&lt;p&gt;We will now set back our network card speed back to 100Mb/s, the duplex mode to “Full” and activate the speed autonegociate.&lt;/p&gt;
-
-&lt;p&gt;Again we verify that our change have took place by issuing the “ethtool -s eth0” command.&lt;/p&gt;
-
-&lt;pre&gt;# &lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt;ethtool -s eth0 speed 100 duplex full autoneg on&lt;/strong&gt;
-&lt;/span&gt;# &lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;ethtool eth0&lt;/span&gt;&lt;/strong&gt;
-Settings for eth0:
- Supported ports: [ TP MII ]
- Supported link modes:   10baseT/Half 10baseT/Full
- 100baseT/Half 100baseT/Full
- Supports auto-negotiation: Yes
- Advertised link modes:  100baseT/Full
- Advertised auto-negotiation: Yes
-&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt; Speed: 100Mb/s
- Duplex: Full&lt;/strong&gt;&lt;/span&gt;
- Port: MII
- PHYAD: 1
- Transceiver: internal
-&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;strong&gt; Auto-negotiation: on&lt;/strong&gt;&lt;/span&gt;
- Supports Wake-on: g
- Wake-on: g
- Current message level: 0x00000007 (7)
- Link detected: yes
-#&lt;/pre&gt;
-
-&lt;h3 id=&quot;setting-speed-and-duplex-at-boot-time&quot;&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;Setting speed and duplex at boot time&lt;/span&gt;&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;If we want to set the network card setting permanently, so they are preserve even after rebooting the the server, we need to open the file:&lt;/p&gt;
-
-&lt;pre&gt;# vi /etc/sysconfig/network-scripts/ifcfg-eth0&lt;/pre&gt;
-
-&lt;p&gt;Append following line:&lt;/p&gt;
-
-&lt;pre&gt;ETHTOOL_OPTS=&quot;speed 100 duplex full autoneg off&quot;&lt;/pre&gt;
-
-&lt;p&gt;If you want that change to become effective now, you will need to restart the network service. Be aware that people and/or processes running on the system may be affected by this restart.&lt;/p&gt;
-
-&lt;pre&gt;# service network restart&lt;/pre&gt;
-
-&lt;p&gt;Hoping this article will be prove to be useful and see you soon.&lt;/p&gt;</content><author><name>jacques</name></author><category term="Network" /><category term="ethtool" /><category term="Network" /><summary type="html">Checking our network card current setting</summary></entry><entry><title type="html">Adding SAN disk without rebooting</title><link href="/index.php/2009/06/23/adding-san-disk/" rel="alternate" type="text/html" title="Adding SAN disk without rebooting" /><published>2009-06-23T10:00:15-04:00</published><updated>2009-06-23T10:00:15-04:00</updated><id>/index.php/2009/06/23/adding-san-disk</id><content type="html" xml:base="/index.php/2009/06/23/adding-san-disk/">&lt;p&gt;The production system is running, the database filesystem is almost full. We need more disk space on the server. The server is attached to the San so we can add disk without bringing down the server. In this article, we will demonstrate what is needed to make the new San disk available to the server without disturbing the running application. Although that theses commands have been tested and used on production environment,  I suggest that you build your confidence first, by trying them on a development system.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;On Red Hat / Centos 5&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;In our example, we have presently one disk accessible via one fiber HBA on our server. We can use to “lsscsi” command to list our scsi device. If you do not have the command ‘lsscsi’ command installed, you can install it by issuing the following command “yum install lsscsi”.&lt;/p&gt;
-
-&lt;p&gt;Our server can see one disk at the moment ;&lt;/p&gt;
-
-&lt;pre&gt;#  lsscsi
-[0:0:0:0]    disk    HITACHI  OPEN-V           5009   /dev/sda&lt;/pre&gt;
-
-&lt;p&gt;Let rescan our SCSI bus. Since we have only one fiber card in our server, we will scan only the first HBA (host0). If you have two fiber card, you may need to issue the “partprobe” command for the disk to be seen on the second interface.&lt;/p&gt;
-
-&lt;pre&gt;# echo &quot;1&quot; &amp;gt; /sys/class/fc_host/host0/issue_lip&lt;/pre&gt;
-
-&lt;p&gt;We now see the new SAN disk that was newly allocated to the system.&lt;/p&gt;
-
-&lt;pre&gt;# lsscsi
-[0:0:0:0]    disk    HITACHI  OPEN-V           5009   /dev/sda
-[0:0:0:1]    disk    HITACHI  OPEN-V           5009   /dev/sdb&lt;/pre&gt;
-
-&lt;p&gt;For other kind of SCSI attached storage, we should rescan the bus with this command :&lt;/p&gt;
-
-&lt;pre&gt;# echo &quot;- - -&quot; &amp;gt; /sys/class/scsi_host/host0/scan   (First hba)
-# echo &quot;- - -&quot; &amp;gt; /sys/class/scsi_host/host1/scan   (Second hba, if present)&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;span style=&quot;color: #0000ff;&quot;&gt;&lt;!--more--&gt;On Red Hat / Centos 3 and 4&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;The current situation is that we have one disk (lun 2), that is seen by the two fiber cards on our server.&lt;/p&gt;
-
-&lt;pre&gt;# cd /proc/scsi/sg
-# cat device_hdr devices
-host    chan    id      lun     type    opens   qdepth  busy    online
-0       0       0       2       0       1       64      0       1
-1       0       0       2       0       1       64      0       1
-#&lt;/pre&gt;
-
-&lt;p&gt;These commands trigger the driver to initiate lun discovery process&lt;/p&gt;
-
-&lt;pre&gt;# echo &quot;scsi-qlascan&quot; &amp;gt; /proc/scsi/qla2300/0    # For Qlogic Fiber card 0
-# echo &quot;scsi-qlascan&quot; &amp;gt; /proc/scsi/qla2300/1    # For Qlogic Fiber card 1&lt;/pre&gt;
-
-&lt;p&gt;Lets force the scsi mid layer to do its own scan and build the device table entry for the new device:&lt;br /&gt;
-We are adding the LUN 04&lt;/p&gt;
-
-&lt;pre&gt;# echo &quot;scsi add-single-device 00 00 00 04&quot; &amp;gt; /proc/scsi/scsi
-# echo &quot;scsi add-single-device 01 00 00 04&quot; &amp;gt; /proc/scsi/scsi&lt;/pre&gt;
-
-&lt;p&gt;Let see if the new LUN was Assigned (Visible) by Linux&lt;/p&gt;
-
-&lt;pre&gt;# cd /proc/scsi/sg
-# cat device_hdr devices
-host    chan    id      lun     type    opens   qdepth  busy    online
-0       0       0       2       0       1       64      0       1
-&lt;strong&gt;0       0       0       4       0       0       64      0       1&lt;/strong&gt;
-1       0       0       2       0       1       64      0       1
-&lt;strong&gt;1       0       0       4       0       0       64      0       1&lt;/strong&gt;
-#&lt;/pre&gt;
-
-&lt;p&gt;In the command “echo “scsi add-single-device HH CC TT LL ” &amp;gt;/proc/scsi/scsi”&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;The path name should have the following format HHCCTTLL :&lt;br /&gt;
-HH=Adapter number (HBA#)    CC=Channel ID    TT=SCSI ID   LL=LUN ID OF DEVICE&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;**&lt;/em&gt;&lt;figure id=&quot;attachment_512&quot; aria-describedby=&quot;caption-attachment-512&quot; style=&quot;width: 300px&quot; class=&quot;wp-caption alignleft&quot;&gt;&lt;/figure&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;**&lt;img loading=&quot;lazy&quot; class=&quot;size-medium wp-image-512&quot; title=&quot;scli&quot; src=&quot;http://192.168.1.88/wp-content/uploads/2009/06/scli-300x290.png&quot; alt=&quot;Qlogic Command Line Interface&quot; width=&quot;300&quot; height=&quot;290&quot; /&gt;&lt;/strong&gt;**&amp;lt;figcaption id=&quot;caption-attachment-512&quot; class=&quot;wp-caption-text&quot;&amp;gt;Qlogic Command Line Interface&amp;lt;/figcaption&amp;gt;&amp;lt;/figure&amp;gt;&lt;/p&gt;
-
-&lt;p&gt;Qlogic have a command line tool called “scli” that really simplify the operation of adding SAN disk on Redhat/Centos/Fedora. It can also be used to obtain Fiber card information and setting.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;file:///C:/DOCUME~1/JADUPL~1.SLA/LOCALS~1/Temp/moz-screenshot.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Download it for &lt;a href=&quot;http://driverdownloads.qlogic.com/QLogicDriverDownloads_UI/SearchByOs.aspx?ProductCategory=39&amp;amp;OsCategory=2&amp;amp;Os=26&amp;amp;OsCategoryName=Linux&amp;amp;ProductCategoryName=Fibre%20Channel%20HBAs&amp;amp;OSName=Linux%20Red%20Hat%20(32-bit)&quot; title=&quot;Qlogic RedHat 32 Bits Download Page&quot;&gt;Redhat 32 Bits&lt;/a&gt; or &lt;a href=&quot;http://driverdownloads.qlogic.com/QLogicDriverDownloads_UI/SearchByOs.aspx?ProductCategory=39&amp;amp;OsCategory=2&amp;amp;Os=65&amp;amp;OsCategoryName=Linux&amp;amp;ProductCategoryName=Fibre%20Channel%20HBAs&amp;amp;OSName=Linux%20Red%20Hat%20(64-bit)&quot; title=&quot;Qlogic RedHat 64 Bits Download Page&quot;&gt;RedHat 64Bits&lt;/a&gt;.&lt;br /&gt;
-Hope to see you soon !&lt;/p&gt;</content><author><name>jacques</name></author><category term="Storage" /><category term="disk" /><category term="san" /><summary type="html">The production system is running, the database filesystem is almost full. We need more disk space on the server. The server is attached to the San so we can add disk without bringing down the server. In this article, we will demonstrate what is needed to make the new San disk available to the server without disturbing the running application. Although that theses commands have been tested and used on production environment,  I suggest that you build your confidence first, by trying them on a development system.</summary></entry></feed>
+&lt;p&gt;Hope that this article have been of interest for you and hope to see you soon.&lt;/p&gt;</content><author><name>jacques</name></author><category term="Network" /><category term="Network" /><category term="NTP" /><summary type="html">As a system administrator, we must ensure that time synchronization is working at all time. Time synchronization have been proven to be helpful when we try to trace a chain of events that occurs on multiple servers or when trying to synchronize time sensitive-transactions. In this article, we will setup one NTP (Network Time Protocol) server running on RedHat/Centos 5, but it could be applied to the major Linux distribution.  As always, I have tried to make the article to be used a reference source, so that we can come back when ever you will play with the NTP tools.</summary></entry></feed>

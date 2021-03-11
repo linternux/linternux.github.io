@@ -1,0 +1,2 @@
+I"4<p>As a system administrator, I have a variety of performance tools that I use to identify problem related to system performance. In this article, I have tried to demonstrate the usage of the “vmstat” command and also explain the meaning of each column that it produce. I inserted some tips regarding the interpretation of theses columns, I wanted to make this article a reference for me and hopefully for you too.  So the next time you use the command ” vmstat”,  you can come back at this article and analyze the output of your problematic system.</p>
+:ET

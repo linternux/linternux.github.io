@@ -1,0 +1,8 @@
+I"�<p><img src="assets/img/sadm_ssh.jpg" class="align-left" alt="" /><br />
+Image by <a href="https://pixabay.com/photos/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=731198">Free-Photos</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=731198">Pixabay</a>
+<br /></p>
+<p>
+In this article, we will demonstrate how to configure SSH in such a way that it will allow you to log from one server to another, without having to enter a password. When administrating a lot of Unix servers, there are some situation when you need to run a script from one server to another without entering a password. 
+</p>
+<p>For example, let’s say that you need to take a cold backup of a Oracle database, but before starting it, you need to stop the application running on another server. In your Oracle backup script, you could “ssh” to application server and run a script that would stop the application before starting the backup.  But to do that with a script, you need a way to log on the application server without having to enter a password.</p>
+:ET

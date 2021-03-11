@@ -1,0 +1,5 @@
+I"�<p>User is calling and say that he forgot is password. So you need to change his password and for security reason you want to force him to change it upon his first login. The command “chage -d 0” (change aging) will force user to change his password upon first login.<br />
+<br />
+<img src="/assets/img/sadm_password.jpg" class="align-left" alt="" /><br />
+Image by <a href="https://pixabay.com/users/absolutvision-6158753/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2781614">Gino Crescoli</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2781614">Pixabay</a></p>
+:ET

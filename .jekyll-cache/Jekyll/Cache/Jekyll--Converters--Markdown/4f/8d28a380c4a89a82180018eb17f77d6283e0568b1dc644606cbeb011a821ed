@@ -1,0 +1,75 @@
+I"�<p>The production system is running, the database filesystem is almost full. We need more disk space on the server. The server is attached to the San so we can add disk without bringing down the server. In this article, we will demonstrate what is needed to make the new San disk available to the server without disturbing the running application. Although that theses commands have been tested and used on production environment,  I suggest that you build your confidence first, by trying them on a development system.</p>
+
+<p><strong><span style="color: #0000ff;">On Red Hat / Centos 5</span></strong></p>
+
+<p>In our example, we have presently one disk accessible via one fiber HBA on our server. We can use to “lsscsi” command to list our scsi device. If you do not have the command ‘lsscsi’ command installed, you can install it by issuing the following command “yum install lsscsi”.</p>
+
+<p>Our server can see one disk at the moment ;</p>
+
+<pre>#  lsscsi
+[0:0:0:0]    disk    HITACHI  OPEN-V           5009   /dev/sda</pre>
+
+<p>Let rescan our SCSI bus. Since we have only one fiber card in our server, we will scan only the first HBA (host0). If you have two fiber card, you may need to issue the “partprobe” command for the disk to be seen on the second interface.</p>
+
+<pre># echo "1" &gt; /sys/class/fc_host/host0/issue_lip</pre>
+
+<p>We now see the new SAN disk that was newly allocated to the system.</p>
+
+<pre># lsscsi
+[0:0:0:0]    disk    HITACHI  OPEN-V           5009   /dev/sda
+[0:0:0:1]    disk    HITACHI  OPEN-V           5009   /dev/sdb</pre>
+
+<p>For other kind of SCSI attached storage, we should rescan the bus with this command :</p>
+
+<pre># echo "- - -" &gt; /sys/class/scsi_host/host0/scan   (First hba)
+# echo "- - -" &gt; /sys/class/scsi_host/host1/scan   (Second hba, if present)</pre>
+
+<p><strong><span style="color: #0000ff;"><!--more-->On Red Hat / Centos 3 and 4</span></strong></p>
+
+<p>The current situation is that we have one disk (lun 2), that is seen by the two fiber cards on our server.</p>
+
+<pre># cd /proc/scsi/sg
+# cat device_hdr devices
+host    chan    id      lun     type    opens   qdepth  busy    online
+0       0       0       2       0       1       64      0       1
+1       0       0       2       0       1       64      0       1
+#</pre>
+
+<p>These commands trigger the driver to initiate lun discovery process</p>
+
+<pre># echo "scsi-qlascan" &gt; /proc/scsi/qla2300/0    # For Qlogic Fiber card 0
+# echo "scsi-qlascan" &gt; /proc/scsi/qla2300/1    # For Qlogic Fiber card 1</pre>
+
+<p>Lets force the scsi mid layer to do its own scan and build the device table entry for the new device:<br />
+We are adding the LUN 04</p>
+
+<pre># echo "scsi add-single-device 00 00 00 04" &gt; /proc/scsi/scsi
+# echo "scsi add-single-device 01 00 00 04" &gt; /proc/scsi/scsi</pre>
+
+<p>Let see if the new LUN was Assigned (Visible) by Linux</p>
+
+<pre># cd /proc/scsi/sg
+# cat device_hdr devices
+host    chan    id      lun     type    opens   qdepth  busy    online
+0       0       0       2       0       1       64      0       1
+<strong>0       0       0       4       0       0       64      0       1</strong>
+1       0       0       2       0       1       64      0       1
+<strong>1       0       0       4       0       0       64      0       1</strong>
+#</pre>
+
+<p>In the command “echo “scsi add-single-device HH CC TT LL ” &gt;/proc/scsi/scsi”</p>
+
+<p><strong>The path name should have the following format HHCCTTLL :<br />
+HH=Adapter number (HBA#)    CC=Channel ID    TT=SCSI ID   LL=LUN ID OF DEVICE</strong></p>
+
+<p><em>**</em><figure id="attachment_512" aria-describedby="caption-attachment-512" style="width: 300px" class="wp-caption alignleft"></figure></p>
+
+<p><strong>**<img loading="lazy" class="size-medium wp-image-512" title="scli" src="http://192.168.1.88/wp-content/uploads/2009/06/scli-300x290.png" alt="Qlogic Command Line Interface" width="300" height="290" /></strong>**&lt;figcaption id="caption-attachment-512" class="wp-caption-text"&gt;Qlogic Command Line Interface&lt;/figcaption&gt;&lt;/figure&gt;</p>
+
+<p>Qlogic have a command line tool called “scli” that really simplify the operation of adding SAN disk on Redhat/Centos/Fedora. It can also be used to obtain Fiber card information and setting.</p>
+
+<p><img src="file:///C:/DOCUME~1/JADUPL~1.SLA/LOCALS~1/Temp/moz-screenshot.jpg" alt="" /></p>
+
+<p>Download it for <a href="http://driverdownloads.qlogic.com/QLogicDriverDownloads_UI/SearchByOs.aspx?ProductCategory=39&amp;OsCategory=2&amp;Os=26&amp;OsCategoryName=Linux&amp;ProductCategoryName=Fibre%20Channel%20HBAs&amp;OSName=Linux%20Red%20Hat%20(32-bit)" title="Qlogic RedHat 32 Bits Download Page">Redhat 32 Bits</a> or <a href="http://driverdownloads.qlogic.com/QLogicDriverDownloads_UI/SearchByOs.aspx?ProductCategory=39&amp;OsCategory=2&amp;Os=65&amp;OsCategoryName=Linux&amp;ProductCategoryName=Fibre%20Channel%20HBAs&amp;OSName=Linux%20Red%20Hat%20(64-bit)" title="Qlogic RedHat 64 Bits Download Page">RedHat 64Bits</a>.<br />
+Hope to see you soon !</p>
+:ET

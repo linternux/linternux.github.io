@@ -1,0 +1,36 @@
+I"�<p>The “yum” is a powerful and useful command. We will present here some options of this command. Hopefully, you will find these tips helpful and that you learn something.</p>
+
+<p><span style="color: #0000ff;"><strong>Applying only security update</strong></span></p>
+
+<p>To be able to apply only security update on your server, we first need to install a plugin for this purpose. You can install it with this command:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum install yum-security
+</code></pre></div></div>
+
+<p>After that, we can use this plugin to update your computer to the latest security fixes :</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum update --security
+</code></pre></div></div>
+
+<p><strong><span style="color: #0000ff;">Applying all update except the kernel update</span></strong></p>
+
+<p>On some system, you may want to apply all update, except the one concerning the kernel.  To put this exception , add the following line to the file /etc/yum.conf ;</p>
+
+<pre>echo 'exclude=kernel*' &gt;&gt; /etc/yum.conf<a id="enabling_disabling_update_system" name="enabling_disabling_update_system"><strong><span style="color: #0000ff;">
+
+</span></strong></a></pre>
+
+<p><a id="enabling_disabling_update_system" name="enabling_disabling_update_system"><strong></strong></a></p>
+
+<p><a id="enabling_disabling_update_system" name="enabling_disabling_update_system"><strong><span style="color: #0000ff;">Applying all update except the kernel update</span></strong></a></p>
+
+<p>In order to enable the automatic update system run following commands:</p>
+
+<pre class="code">chkconfig --add <span class="search_hit">yum</span>-autoupdate
+service <span class="search_hit">yum</span>-autoupdate start</pre>
+
+<p>In order to disable the system run:</p>
+
+<pre class="code">service <span class="search_hit">yum</span>-autoupdate stop
+chkconfig --del <span class="search_hit">yum</span>-autoupdate</pre>
+:ET
