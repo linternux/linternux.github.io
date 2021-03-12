@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: post
 title: Force user to change password
 date: 2021-03-11 09:28:10
 date_updated: 2021-03-11 09:29:10 
@@ -28,7 +28,7 @@ Then we set expiration date to 0, so when user login with his new password, he w
 
 <br>
 So when the user log on the server, he will need to change his password before going forward.
-{% highlight bash %}
+<pre>
 $ ssh josblow@raspi1
 josblow@raspi1's password:
 You are required to change your password immediately (administrator enforced)
@@ -47,5 +47,5 @@ $ ssh josblow@raspi1
 josblow@raspi1's password:
 Linux raspi1.maison.ca 5.10.17+ #1403 Mon Feb 22 11:26:13 GMT 2021 armv6l
 josblow@raspi1:~ $
-{% endhighlight %}
+</pre>
 <br>

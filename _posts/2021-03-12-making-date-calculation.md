@@ -13,7 +13,9 @@ You&#8217;re doing a script and you need to know what was the date 35 days ago o
 <img src="/assets/img/sadm_calendar.jpg" class="align-left" alt="">
 Image by <a href="https://pixabay.com/users/amber_avalona-1512238/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2290045">Amber Avalona</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2290045">Pixabay</a>
 
-Revision 1.1 - 2 March 2021 - [Download a pdf version](/assets/pdf/making-date-calculation.pdf)   
+
+Revision 1.1   
+2 March 2021 - [Download a pdf version](/assets/pdf/making-date-calculation.pdf)   
 
 ## Current date and time
 
