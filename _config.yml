@@ -32,13 +32,14 @@ description: "Tips & Tricks for SysAdmin"
 baseurl: 
 
 # The full URL to your site	"https://your-site.com"
-url: 
+url: "https://linternux.github.io"
 
 # Path to a site-wide logo
 logo: assets/img/logo/logo_linternux_200x200.jpg    
 
 
 date_format: "%B %-d, %Y"
+#date_format: "%Y.%m.%d"
 read_time: # reading time estimates, e.g. true
 words_per_minute: # 200
 
