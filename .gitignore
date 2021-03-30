@@ -10,7 +10,7 @@ Gemfile.lock
 .sass-cache
 _asset_bundler_cache
 _site
-_site/*
+
 
 # Private Dir
 private
