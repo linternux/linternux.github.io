@@ -1,2 +1,0 @@
-I"=<p>When I decided to move to Linux on my desktop, I tried to reproduce the same functionality that I was having under windows. One of the program I was using under Windows was <a href="http://fineprint.com/pdf/">PDF-Factory</a> , it actually create a PDF printer. When ever I wanted to produced a PDF, I only had to print to that PDF printer. After some research, I found “cups-pdf”, this utility allow me to have the same functionality under Linux. In this article, I installed the product under RHEL5, but installing it on other version of Linux is very similar.</p>
-:ET

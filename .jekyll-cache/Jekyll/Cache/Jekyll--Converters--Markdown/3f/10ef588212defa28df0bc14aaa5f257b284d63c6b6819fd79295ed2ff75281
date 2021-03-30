@@ -1,8 +1,0 @@
-I"2<p>In the example below we are replacing every occurrence of mama with papa in all .html files in current path using Perl.</p>
-
-<pre>perl -pi -e "s/mama/papa/g;" *.html</pre>
-
-<p>We do the same thing here but make a copy of original file for backup.</p>
-
-<pre>perl -pi -e.bak "s/mama/papa/g;" *.html</pre>
-:ET

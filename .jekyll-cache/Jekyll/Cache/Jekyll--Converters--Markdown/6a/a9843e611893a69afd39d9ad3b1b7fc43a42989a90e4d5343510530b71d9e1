@@ -1,8 +1,0 @@
-I"a<p>You have two network cables plug in the back of a server and you want to know which one is eth0? Use the following command and the interface light will start blinking (for 10 seconds) on the chosen adapter.</p>
-
-<blockquote>
-  <p># ethtool -p eth0 10</p>
-</blockquote>
-
-<p>This command can be run without disturbing the traffic on the interface.</p>
-:ET

@@ -1,3 +1,0 @@
-I"E<p>Did you know that you can reset file permission to what they were when you installed the package. This may become helpful if somebody made a mistake and change the permission on a number of files (This never happen right?). This is where the command ;<br />
-“rpm –setperms <package>&#8221; become handy.</package></p>
-:ET

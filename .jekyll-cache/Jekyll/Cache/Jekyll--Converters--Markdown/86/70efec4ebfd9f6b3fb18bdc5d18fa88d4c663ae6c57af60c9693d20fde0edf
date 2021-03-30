@@ -1,2 +1,0 @@
-I"<p>Today, we will look at what script is run when you install a rpm. In our example we will look at the script that is run when we perform a kernel installation.  First, let’s look what kernel version is installed on our system, with the this command :</p>
-:ET

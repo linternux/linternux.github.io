@@ -1,2 +1,0 @@
-I"\<p>In the Unix/Linux world we always come across at one point with the term “epoch time”. The epoch time is actually the number of seconds elapsed since midnight of January 1, 1970. Some application record the date and time in “epoch time”. Squid proxy server, for an example will record date and time entries in its log in epoch time.</p>
-:ET

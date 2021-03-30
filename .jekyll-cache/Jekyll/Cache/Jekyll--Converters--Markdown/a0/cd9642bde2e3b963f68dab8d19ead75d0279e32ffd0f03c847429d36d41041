@@ -1,2 +1,0 @@
-I"<p>The production system is running, the database filesystem is almost full. We need more disk space on the server. The server is attached to the San so we can add disk without bringing down the server. In this article, we will demonstrate what is needed to make the new San disk available to the server without disturbing the running application. Although that theses commands have been tested and used on production environment,  I suggest that you build your confidence first, by trying them on a development system.</p>
-:ET

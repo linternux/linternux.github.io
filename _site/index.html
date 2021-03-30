@@ -23,14 +23,15 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Tips &amp; Tricks for SysAdmin" />
 <meta property="og:description" content="Tips &amp; Tricks for SysAdmin" />
+<link rel="canonical" href="http://192.168.1.12:4000/" />
+<meta property="og:url" content="http://192.168.1.12:4000/" />
 <meta property="og:site_name" content="LINternUX" />
-<link rel="next" href="/page2/" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="LINternUX" />
 <meta name="twitter:site" content="@linternux" />
 <meta name="twitter:creator" content="@linternux" />
 <script type="application/ld+json">
-{"@type":"WebSite","description":"Tips &amp; Tricks for SysAdmin","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"/assets/img/logo/logo_linternux_200x200.jpg"},"name":"Jacques Duplessis"},"headline":"LINternUX","url":"/","author":{"@type":"Person","name":"Jacques Duplessis"},"name":"LINternUX","@context":"https://schema.org"}</script>
+{"@type":"WebSite","description":"Tips &amp; Tricks for SysAdmin","headline":"LINternUX","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://192.168.1.12:4000/assets/img/logo/logo_linternux_200x200.jpg"},"name":"Jacques Duplessis"},"url":"http://192.168.1.12:4000/","author":{"@type":"Person","name":"Jacques Duplessis"},"name":"LINternUX","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 
@@ -113,7 +114,7 @@
   <header class="entry-header">
     <h3 class="entry-title p-name">
       
-        <a href="/network/ssh-and-scp-without-password/" rel="bookmark">Using SSH without entering password
+        <a href="/scripting/making-date-calculation/" rel="bookmark">Making Date Calculation
 </a>
       
     </h3>
@@ -122,13 +123,10 @@
   
     <div class="entry-excerpt p-summary">
       
-        <p><img src="assets/img/sadm_ssh.jpg" class="align-left" alt="" /><br />
-Image by <a href="https://pixabay.com/photos/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=731198">Free-Photos</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=731198">Pixabay</a>
-<br /></p>
-<p>
-In this article, we will demonstrate how to configure SSH in such a way that it will allow you to log from one server to another, without having to enter a password. When administrating a lot of Unix servers, there are some situation when you need to run a script from one server to another without entering a password. 
-</p>
-<p>For example, let’s say that you need to take a cold backup of a Oracle database, but before starting it, you need to stop the application running on another server. In your Oracle backup script, you could “ssh” to application server and run a script that would stop the application before starting the backup.  But to do that with a script, you need a way to log on the application server without having to enter a password.</p>
+        <p>You’re doing a script and you need to know what was the date 35 days ago or what will the date be in 21 days. This is where  the “date” command can help you doing that kind of calculation. In this little article we will present some examples to help us making some data calculation. I would like to point out, that all of these date calculation take in consideration the leap year. <br />
+<br />
+<img src="/assets/img/sadm_calendar.jpg" class="align-left" alt="" />
+Image by <a href="https://pixabay.com/users/amber_avalona-1512238/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2290045">Amber Avalona</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2290045">Pixabay</a></p>
 
       
     </div>
@@ -136,7 +134,44 @@ In this article, we will demonstrate how to configure SSH in such a way that it 
   
     <footer class="entry-meta">
       
-      <time class="entry-date dt-published" datetime="2021-03-04T08:19:00-05:00">March 4, 2021
+
+<span class="read-time">3 min read</span>
+
+      <time class="entry-date dt-published" datetime="2021-03-12T05:03:03-05:00">March 12, 2021
+  </time>
+    </footer>
+  
+</article>
+
+
+<article class="entry h-entry">
+  <header class="entry-header">
+    <h3 class="entry-title p-name">
+      
+        <a href="/useradministration/password/force-user-to-change-password-at-next-login/" rel="bookmark">Force user to change password
+</a>
+      
+    </h3>
+    
+  </header>
+  
+    <div class="entry-excerpt p-summary">
+      
+        <p>User is calling and say that he forgot is password. So you need to change his password and for security reason you want to force him to change it upon his first login. The command “chage -d 0” (change aging) will force user to change his password upon first login.<br />
+<br />
+<img src="/assets/img/sadm_password.jpg" class="align-left" alt="Password Image" />
+Image by <a href="https://pixabay.com/users/absolutvision-6158753/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2781614">Gino Crescoli</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2781614">Pixabay</a></p>
+
+      
+    </div>
+  
+  
+    <footer class="entry-meta">
+      
+
+<span class="read-time">~1 min read</span>
+
+      <time class="entry-date dt-published" datetime="2021-03-11T04:28:10-05:00">March 11, 2021
   </time>
     </footer>
   
@@ -167,154 +202,15 @@ Image by <a href="https://pixabay.com/users/blende12-201217/?utm_source=link-att
   
     <footer class="entry-meta">
       
+
+<span class="read-time">~1 min read</span>
+
       <time class="entry-date dt-published" datetime="2021-03-02T14:40:52-05:00">March 2, 2021
-  </time>
-    </footer>
-  
-</article>
-
-
-<article class="entry h-entry">
-  <header class="entry-header">
-    <h3 class="entry-title p-name">
-      
-        <a href="/general/linux-administration-book-for-free/" rel="bookmark">Linux Administration Book for Free
-</a>
-      
-    </h3>
-    
-  </header>
-  
-    <div class="entry-excerpt p-summary">
-      
-        <p>A short post to advise you that you can download for free the “<a href="http://www.linuxinsight.com/files/fta-m2-admin_gnulinux-v1.pdf" title="Download PDF">GNU/Linux Advanced Administration</a>” book in PDF forrmat this <a href="http://www.linuxinsight.com/gnu-linux-advanced-administration.html">page</a>, or <a href="http://linternux.com/download/pdf/fta-m2-admin_gnulinux-v1.pdf" title="Download from this site">from this site</a>.</p>
-
-      
-    </div>
-  
-  
-    <footer class="entry-meta">
-      
-      <time class="entry-date dt-published" datetime="2021-03-02T14:40:52-05:00">March 2, 2021
-  </time>
-    </footer>
-  
-</article>
-
-
-<article class="entry h-entry">
-  <header class="entry-header">
-    <h3 class="entry-title p-name">
-      
-        <a href="/scripting/making-date-calculation/" rel="bookmark">Making Date Calculation
-</a>
-      
-    </h3>
-    
-  </header>
-  
-    <div class="entry-excerpt p-summary">
-      
-        <p>You’re doing a script and you need to know what was the date 35 days ago or what will the date be in 21 days. This is where  the “date” command can help you doing that kind of calculation. In this little article we will present some examples to help us making some data calculation. I would like to point out, that all of these date calculation take in consideration the leap year. <br />
-<br />
-<img src="/assets/img/sadm_calendar.jpg" class="align-left" alt="" />
-Image by <a href="https://pixabay.com/users/amber_avalona-1512238/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2290045">Amber Avalona</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2290045">Pixabay</a></p>
-
-      
-    </div>
-  
-  
-    <footer class="entry-meta">
-      
-      <time class="entry-date dt-published" datetime="2021-02-28T05:03:03-05:00">February 28, 2021
-  </time>
-    </footer>
-  
-</article>
-
-
-<article class="entry h-entry">
-  <header class="entry-header">
-    <h3 class="entry-title p-name">
-      
-        <a href="/useradministration/password/force-user-to-change-password-at-next-login/" rel="bookmark">Force user to change password
-</a>
-      
-    </h3>
-    
-  </header>
-  
-    <div class="entry-excerpt p-summary">
-      
-        <p>User is calling and say that he forgot is password. So you need to change his password and for security reason you want to force him to change it upon his first login. The command “chage -d 0” (change aging) will force user to change his password upon first login.<br />
-<br />
-<img src="/assets/img/sadm_password.jpg" class="align-left" alt="" /><br />
-Image by <a href="https://pixabay.com/users/absolutvision-6158753/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2781614">Gino Crescoli</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2781614">Pixabay</a></p>
-
-      
-    </div>
-  
-  
-    <footer class="entry-meta">
-      
-      <time class="entry-date dt-published" datetime="2021-02-09T04:28:10-05:00">February 9, 2021
   </time>
     </footer>
   
 </article>
 <!-- Pagination links -->
-
-<nav class="pagination">
-  
-  <ul>
-    
-    
-    <li><a href="#" class="disabled"><span aria-hidden="true">Previous</span></a></li>
-    
-
-    
-    
-      <li><a href="#" class="disabled current">1</a></li>
-    
-
-    
-    
-
-    
-    
-    
-
-    
-      
-        
-        
-        
-        <li><a href="/page2/">2</a></li>
-      
-    
-      
-        
-        
-        
-        <li><a href="/page3/">3</a></li>
-      
-    
-
-    
-    
-      <li><a href="#" class="disabled">&hellip;</a></li>
-    
-
-    
-      <li><a href="/page6/">6</a></li>
-    
-
-    
-    
-      <li><a href="/page2/">Next</a></li>
-    
-  </ul>
-</nav>
 
 </div>
 
