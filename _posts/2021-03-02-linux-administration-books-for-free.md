@@ -1,7 +1,7 @@
 ---
 title: Linux Administration Books for Free
 date: 2021-03-02  19:40:52
-layout: page
+layout: post
 categories:
   - general
 tags:
@@ -16,11 +16,14 @@ Image by <a href="https://pixabay.com/users/blende12-201217/?utm_source=link-att
 Revision 1.1 - 2 March 2021 -
 
 - **The Linux Command Line**
-  - Have a brief look at the book from this [page](http://linuxcommand.org/tlcl.php) and [download the book](https://sourceforge.net/projects/linuxcommand/files/TLCL/19.01/TLCL-19.01.pdf/download).  
+  - Have a brief look at the book from this [page](http://linuxcommand.org/tlcl.php) and [download the book](https://sourceforge.net/projects/linuxcommand/files/TLCL/19.01/TLCL-19.01.pdf/download).
+<br>
 - The **Pro Git book**, written by Scott Chacon and Ben Straub and published by Apress, is available [here](https://git-scm.com/book/en/v2) and [download the book](https://github.com/progit/progit2/releases/download/2.1.295/progit.pdf).  
+<br>
 - **The Debian Administrator's Handbook**
   - Written by two Debian developers — Raphaël Hertzog and Roland Mas — the Debian Administrator's Handbook
   - Take a look at the home [page](https://debian-handbook.info/) and [download the book](http://debian-handbook.info/download/stable/debian-handbook.pdf).  
+
 
 <br><br>
 See you soon !

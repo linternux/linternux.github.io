@@ -14,7 +14,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-theme: jekyll-theme-so-simple
+#theme: jekyll-theme-so-simple
 # remote_theme: mmistakes/so-simple-theme
 
 #skin: "/assets/css/skins/default.css"
@@ -32,15 +32,16 @@ description: "Tips & Tricks for SysAdmin"
 baseurl: 
 
 # The full URL to your site	"https://your-site.com"
-url: 
+url: "https://linternux.github.io"
 
 # Path to a site-wide logo
 logo: assets/img/logo/logo_linternux_200x200.jpg    
 
 
 date_format: "%B %-d, %Y"
-read_time: # reading time estimates, e.g. true
-words_per_minute: # 200
+#date_format: "%Y.%m.%d"
+read_time: true # reading time estimates, e.g. true
+words_per_minute: 200
 
 mathjax:
   enable: # MathJax equations, e.g. true, false (default)
@@ -52,7 +53,9 @@ google_fonts:
     weights: "400,400i,700,700i"
   - name: "Lora"
     weights: "400,400i,700,700i"
-google_analytics: # Google Analytics id, e.g. "UA-NNNNNNNN-N"
+ 
+google_analytics: UA-9938210-1  # Google Analytics id, e.g. "UA-NNNNNNNN-N"
+
 disqus:
   shortname: # Disqus shortname, e.g. "my_disqus_shortname"
 twitter:
@@ -111,12 +114,15 @@ defaults:
 author:
   name: Jacques Duplessis
   picture: /assets/img/Jack_Email.png
-  email: linternux@gmail.com
+  email: linternux@gmail.com 
   twitter: linternux
   links:
-    - title:
-      url:
-      icon:
+    - title: 
+      url: 
+      icon: 
+#    - title: twitter
+#      url: "https://twitter.com/sadm_linux"
+#      icon: assets/img/logo/twitter_32x32.png
 
 # Footer Links
 footer_links:
