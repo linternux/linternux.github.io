@@ -37,7 +37,7 @@ url: "https://linternux.github.io"
 # Path to a site-wide logo
 logo: assets/img/logo/logo_linternux_200x200.jpg    
 
-
+excerpt_separator: <!--more-->
 date_format: "%B %-d, %Y"
 #date_format: "%Y.%m.%d"
 read_time: true # reading time estimates, e.g. true
@@ -72,7 +72,7 @@ feed:
   path: atom.xml
 
 # Pagination - https://jekyllrb.com/docs/pagination/
-paginate: 5
+paginate: 10
 paginate_path: /page:num/
 
 # Search
