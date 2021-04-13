@@ -113,7 +113,8 @@ defaults:
 # Site Author
 author:
   name: Jacques Duplessis
-  picture: /assets/img/Jack_Email.png
+#  picture: /assets/img/Jack_Email.png
+  picture: /assets/img/author.jpg
   email: linternux@gmail.com 
   twitter: linternux
   links:

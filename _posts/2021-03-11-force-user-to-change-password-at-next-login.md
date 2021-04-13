@@ -3,8 +3,8 @@ layout: post
 title: Force user to change password
 date: 2021-03-11 09:28:10
 date_updated: 2021-03-11 09:29:10 
-tags: SysAdmin chage Password 
-categories: SysAdmin Password
+tags: chage password 
+categories: sysadmin 
 ---
 
 

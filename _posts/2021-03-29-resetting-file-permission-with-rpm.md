@@ -3,7 +3,7 @@ title: Resetting file permission with rpm
 date: 2021-03-29 10:34 
 layout: post
 categories:
-  - SysAdmin 
+  - sysadmin 
 tags:
   - rpm
   - permission
