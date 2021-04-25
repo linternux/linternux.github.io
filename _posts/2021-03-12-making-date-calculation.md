@@ -1,21 +1,27 @@
 ---
 title: Making Date Calculation
 date: 2021-03-12 10:03:03
-layout: page
+layout: post
 categories:
   - Scripting 
 tags:
-  - Date
+  - date
 ---
 
 You&#8217;re doing a script and you need to know what was the date 35 days ago or what will the date be in 21 days. This is where  the &#8220;date&#8221; command can help you doing that kind of calculation. In this little article we will present some examples to help us making some data calculation. I would like to point out, that all of these date calculation take in consideration the leap year.   
+
+<!--more-->
+
 <br>
 <img src="/assets/img/sadm_calendar.jpg" class="align-left" alt="">
+<center>
 Image by <a href="https://pixabay.com/users/amber_avalona-1512238/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2290045">Amber Avalona</a> from <a href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=2290045">Pixabay</a>
-
+</center>
 
 Revision 1.1   
 2 March 2021 - [Download a pdf version](/assets/pdf/making-date-calculation.pdf)   
+
+{% include toc %}
 
 ## Current date and time
 
